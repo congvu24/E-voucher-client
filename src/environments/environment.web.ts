@@ -1,5 +1,5 @@
 export const APP_CONFIG = {
-  apiUrl: 'http://103.142.137.207:6968',
+  apiUrl: "http://34.87.41.29:3000/",
   production: false,
-  environment: 'WEB'
+  environment: "WEB"
 };

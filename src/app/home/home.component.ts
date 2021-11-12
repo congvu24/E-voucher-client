@@ -1,16 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { HttpService } from "../core/services";
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  selector: "app-home",
+  templateUrl: "./home.component.html",
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
+  constructor(private _http: HttpService) {}
+  ngOnInit(): void {}
 
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
-    console.log('HomeComponent INIT');
+  login() {
+    this._http.patch("auth/user", { email: "duy", password: "213" });
   }
-
 }

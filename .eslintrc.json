@@ -26,7 +26,7 @@
       ],
       "rules": {
         "prefer-arrow/prefer-arrow-functions": 0,
-        "@angular-eslint/directive-selector":  0,
+        "@angular-eslint/directive-selector": 0,
         "@angular-eslint/component-selector": [
           "error",
           {
@@ -34,6 +34,17 @@
             "prefix": "app",
             "style": "kebab-case"
           }
+        ],
+        "no-underscore-dangle": [
+          "error",
+          {
+            "allowAfterThis": true
+          }
+        ],
+        "quotes": "off",
+        "@typescript-eslint/quotes": [
+          "error",
+          "double"
         ]
       }
     },
@@ -44,8 +55,7 @@
       "extends": [
         "plugin:@angular-eslint/template/recommended"
       ],
-      "rules": {
-      }
+      "rules": {}
     }
   ]
 }

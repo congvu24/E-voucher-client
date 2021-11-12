@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 
-import { DetailComponent } from './detail.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { DetailComponent } from "./detail.component";
+import { TranslateModule } from "@ngx-translate/core";
 
-import { RouterTestingModule } from '@angular/router/testing';
+import { RouterTestingModule } from "@angular/router/testing";
 
-describe('DetailComponent', () => {
+describe("DetailComponent", () => {
   let component: DetailComponent;
   let fixture: ComponentFixture<DetailComponent>;
 
@@ -22,14 +22,14 @@ describe('DetailComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 
-  it('should render title in a h1 tag', waitForAsync(() => {
+  it("should render title in a h1 tag", waitForAsync(() => {
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('h1').textContent).toContain(
-      'PAGES.DETAIL.TITLE'
+    expect(compiled.querySelector("h1").textContent).toContain(
+      "PAGES.DETAIL.TITLE"
     );
   }));
 });

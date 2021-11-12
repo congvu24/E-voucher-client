@@ -1,6 +1,6 @@
-const APPLICATION = require('spectron').Application;
-const ELECTRON_PATH = require('electron'); // Require Electron from the binaries included in node_modules.
-const PATH = require('path');
+const APPLICATION = require("spectron").Application;
+const ELECTRON_PATH = require("electron"); // Require Electron from the binaries included in node_modules.
+const PATH = require("path");
 
 export default function setup(): void {
   beforeEach(async function() {
@@ -11,7 +11,7 @@ export default function setup(): void {
       path: ELECTRON_PATH,
       // The following line tells spectron to look and use the main.js file
       // and the package.json located in app folder.
-      args: [PATH.join(__dirname, '../app/main.js'), PATH.join(__dirname, '../app/package.json')],
+      args: [PATH.join(__dirname, "../app/main.js"), PATH.join(__dirname, "../app/package.json")],
       webdriverOptions: {}
     });
 

@@ -1,7 +1,7 @@
-import { NgModule } from '@angular/core';
+import { NgModule } from "@angular/core";
 
 // ANTD modules
-import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzButtonModule } from "ng-zorro-antd/button";
 
 @NgModule({
   exports: [
