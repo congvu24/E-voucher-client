@@ -2,6 +2,8 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
+    "baseUrl": "./",
+    "paths": {"@shared/*":["app/shared/*"]},
     "module": "es2020",
     "sourceMap": true,
     "declaration": false,
@@ -20,9 +22,11 @@
       "dom"
     ]
   },
-  "include": [
-    "src/**/*.d.ts"
-  ],
+  // "include": [
+  //   "src/**/*.d.ts",
+  //   "src/app/index.d.ts"
+  // ],
+  "include": [],
   "exclude": [
     "node_modules"
   ]
