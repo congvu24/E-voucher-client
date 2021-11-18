@@ -1,0 +1,27 @@
+<div class="flex items-end justify-between w-full">
+ <h4 class="text-primary uppercase">Logged in as {{role}}</h4>
+ <div>
+  <nz-badge [nzCount]="5" style="margin-right: 24px">
+    <nz-avatar nzIcon="bell" [nzShape]="'square'"></nz-avatar>
+  </nz-badge>
+  <ng-container>
+    <nz-avatar
+      class="cursor-pointer"
+      nzIcon="user"
+      nzSize="large"
+      [ngStyle]="{ 'background-color': '#1DA57A' }"
+      nz-dropdown
+      [nzDropdownMenu]="menu"
+      [nzClickHide]="false"
+      [(nzVisible)]="visible"
+      [nzPlacement]="'bottomRight'"
+    ></nz-avatar>
+    <nz-dropdown-menu #menu="nzDropdownMenu">
+      <ul nz-menu>
+        <li nz-menu-item>Logout</li>
+        <li nz-menu-item>Change password</li>
+      </ul>
+    </nz-dropdown-menu>
+  </ng-container>
+ </div>
+</div>

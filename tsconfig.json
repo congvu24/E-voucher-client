@@ -2,23 +2,20 @@
   "compileOnSave": false,
   "compilerOptions": {
     "outDir": "./dist/out-tsc",
-    "baseUrl": "./",
-    "paths": {"@shared/*":["app/shared/*"]},
-    "module": "es2020",
     "sourceMap": true,
     "declaration": false,
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
+    "importHelpers": true,
     "experimentalDecorators": true,
     "allowJs": true,
-    "target": "es5",
     "typeRoots": [
       "node_modules/@types"
     ],
+    "target": "es2017",
+    "module": "es2020",
     "lib": [
-      "es2017",
-      "es2016",
-      "es2015",
+      "es2020",
       "dom"
     ]
   },
