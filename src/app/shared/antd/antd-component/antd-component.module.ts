@@ -28,7 +28,6 @@ import { NzEmptyModule } from "ng-zorro-antd/empty";
 import { NzFormModule } from "ng-zorro-antd/form";
 import { NzGridModule } from "ng-zorro-antd/grid";
 import { NzI18nModule } from "ng-zorro-antd/i18n";
-import { NzIconModule } from "ng-zorro-antd/icon";
 import { NzImageModule } from "ng-zorro-antd/image";
 import { NzInputModule } from "ng-zorro-antd/input";
 import { NzInputNumberModule } from "ng-zorro-antd/input-number";
@@ -67,6 +66,7 @@ import { NzTreeSelectModule } from "ng-zorro-antd/tree-select";
 import { NzTypographyModule } from "ng-zorro-antd/typography";
 import { NzUploadModule } from "ng-zorro-antd/upload";
 import { NzResizableModule } from "ng-zorro-antd/resizable";
+import { NzSpaceModule } from "ng-zorro-antd/space";
 import { NzPipesModule } from "ng-zorro-antd/pipes";
 @NgModule({
   exports: [
@@ -95,7 +95,6 @@ import { NzPipesModule } from "ng-zorro-antd/pipes";
     NzFormModule,
     NzGridModule,
     NzI18nModule,
-    NzIconModule,
     NzImageModule,
     NzInputModule,
     NzInputNumberModule,
@@ -138,6 +137,7 @@ import { NzPipesModule } from "ng-zorro-antd/pipes";
     NzWaveModule,
     NzResizableModule,
     NzPipesModule,
+    NzSpaceModule,
   ],
 })
 export class AntdComponentModule {}

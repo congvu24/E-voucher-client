@@ -1,17 +1,27 @@
+import { HttpClientModule } from "@angular/common/http";
 import { NgModule, Optional, SkipSelf } from "@angular/core";
-import { ErrorService, HttpService, StorageService, UiService } from "./services";
+import {
+  ErrorService,
+  HttpService,
+  StorageService,
+  UiService,
+} from "./services";
 import { UntilService } from "./services/until/until.service";
 @NgModule({
-  providers:[ ErrorService,
+  providers: [
+    ErrorService,
     HttpService,
     StorageService,
     UiService,
-    UntilService]
+    UntilService,
+  ],
 })
 export class CoreModule {
-  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
     if (parentModule) {
-      throw new Error("CoreModule has already been loaded. You should only import Core modules in the AppModule only.");
+      throw new Error(
+        "CoreModule has already been loaded. You should only import Core modules in the AppModule only."
+      );
     }
   }
 }
