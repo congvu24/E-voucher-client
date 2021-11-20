@@ -9,6 +9,8 @@ import {
   KeyOutline,
   BellOutline,
   LogoutOutline,
+  PlusOutline,
+  LoadingOutline,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -21,6 +23,8 @@ const icons: IconDefinition[] = [
   BellOutline,
   KeyOutline,
   LogoutOutline,
+  PlusOutline,
+  LoadingOutline,
 ];
 @NgModule({
   declarations: [],
