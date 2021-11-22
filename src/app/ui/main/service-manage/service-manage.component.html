@@ -1,16 +1,100 @@
-<div class="grid grid-cols-12 grid-rows-10 gap-6 h-full">
-  <div class="col-span-full self-end">
-    <div class="flex justify-between">
-      <app-page-title title="Services"></app-page-title>
-    </div>
-  </div>
-  <div class="row-start-2 row-span-full col-span-full">
-    <div class="grid grid-cols-3 gap-6">
-       <div class="hover:shadow-xl transform transition duration-200 h-530 border-2 border-primary bg-primary" *ngFor="let item of items">
 <div>
-
-</div>
-    </div>
+  <div class="flex w-full justify-between items-center">
+    <app-page-title title="Services"></app-page-title>
+    <nz-badge [nzCount]="getSelectedFilterNumbers()">
+      <button
+        nz-button
+        nz-dropdown
+        nzType="primary"
+        [nzDropdownMenu]="filter"
+        [nzClickHide]="false"
+        [(nzVisible)]="filterVisible"
+        nzTrigger="click"
+        [nzPlacement]="'bottomRight'"
+      >
+        <i nz-icon nzType="filter" nzTheme="outline"></i>
+      </button>
+    </nz-badge>
+  </div>
+  <div class="flex flex-wrap">
+    <div class="p-4 w-1/3" *ngFor="let item of items">
+      <service-card [openView]="openView" [endView]="endView" [service]="item" [openEdit]="openEdit" [endEdit]="endEdit"></service-card>
     </div>
   </div>
+
+  <!-- filter -->
+  <nz-dropdown-menu #filter="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item>
+        <nz-space [nzDirection]="'vertical'">
+          <nz-checkbox-group [(ngModel)]="selected"></nz-checkbox-group>
+        </nz-space>
+      </li>
+      <li class="flex justify-between items-end gap-x-1 px-2 py-2 gap-2">
+        <button
+          nz-button
+          nzType="nzGhost"
+          nzSize="small"
+          (click)="onClearFilter()"
+        >
+          Clear filter
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          (click)="onApplyFilter()"
+        >
+          Apply filter
+        </button>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <!-- service info -->
+  <nz-modal
+    [(nzVisible)]="viewing"
+    nzTitle="Service info"
+    (nzOnCancel)="endView()"
+  >
+    <ng-container *nzModalContent>
+      <nz-descriptions class="py-3" nzBordered [nzColumn]="1">
+        <nz-descriptions-item nzTitle="Id">#5342l1h32ln34</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Name"
+          >Cloud Database</nz-descriptions-item
+        >
+        <nz-descriptions-item nzTitle="Description"
+          >Prepaid</nz-descriptions-item
+        >
+        <nz-descriptions-item nzTitle="Min">10$</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Max Time">20$</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="In use">Yes</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Currently used by"
+          >UIT tech</nz-descriptions-item
+        >
+        <nz-descriptions-item nzTitle="Created at"
+          >12:00:00AM 12/11/2021</nz-descriptions-item
+        >
+      </nz-descriptions>
+    </ng-container>
+    <div *nzModalFooter>
+      <button nz-button nzType="primary" (click)="endView()">Close</button>
+    </div>
+  </nz-modal>
+
+  <!-- edit service -->
+  <nz-modal
+    [(nzVisible)]="editing"
+    nzTitle="Service editing"
+    (nzOnCancel)="endEdit()"
+  >
+  <ng-container *nzModalContent>
+<service-edit-form [service]="items" ></service-edit-form>
+  </ng-container>
+  
+    <div *nzModalFooter>
+      <button nz-button (click)="endEdit()">Close</button>
+      <button nz-button nzType="primary" (click)="runEditService()">Save and close</button>
+    </div>
+  </nz-modal>
 </div>

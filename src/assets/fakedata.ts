@@ -81,7 +81,7 @@ export const vouchers = [
   },
 ];
 
-export const service = [
+export const fakeservice = [
   {
     id: 1,
     name: "Sifaka, verreaux's",

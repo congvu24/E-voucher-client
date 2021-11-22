@@ -15,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "main/service-manage",
     pathMatch: "full",
   },
   {

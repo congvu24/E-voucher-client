@@ -1,14 +1,11 @@
-<div class="grid grid-cols-12 grid-rows-12  h-full ml-auto mr-auto bg-white">
-  <app-side-nav class="row-span-full col-start-1 row-start-1"></app-side-nav>
-  <app-header class="col-span-10 col-start-2 row-start-1"></app-header>
-  <div class="col-span-10 row-span-full row-start-2 col-start-2">
-    <div>
-      <nz-alert
-        style="margin-bottom:8px"
-        nzBanner
-        nzMessage="Warning text"
-      ></nz-alert>
+<div class="ml-auto mr-auto min-h-screen bg-white">
+  <div class="flex h-full">
+    <app-side-nav class="w-1/12"></app-side-nav>
+    <div class="flex-grow pt-6">
+      <app-header></app-header>
+      <nz-alert nzBanner nzMessage="Warning text"></nz-alert>
       <router-outlet></router-outlet>
     </div>
+    <div class="w-1/12"></div>
   </div>
 </div>

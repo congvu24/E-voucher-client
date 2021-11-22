@@ -1,0 +1,48 @@
+<ng-container>
+
+  <form
+      nz-form
+      [formGroup]="validateForm"
+      [nzLayout]="'vertical'"
+      (ngSubmit)="submitForm()"
+    >
+      <nz-form-item>
+        <nz-form-label nzRequired>Service name</nz-form-label>
+        <nz-form-control nzValidatingTip="Validating...">
+          <input nz-input formControlName="name" placeholder="Service name" />
+        </nz-form-control>
+      </nz-form-item>
+
+      <nz-form-item>
+        <nz-form-label nzRequired>Description</nz-form-label>
+        <nz-form-control>
+          <input
+            nz-input
+            formControlName="description"
+            placeholder="Description"
+          />
+        </nz-form-control>
+      </nz-form-item>
+      <div nz-row nzGutter="8">
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzRequired>Min</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Only number is allowed">
+              <input nz-input type="number" formControlName="min" placeholder="in USD" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div nz-col nzSpan="6">
+          <nz-form-item>
+            <nz-form-label nzRequired>Max</nz-form-label>
+            <nz-form-control nzHasFeedback nzErrorTip="Only number is allowed">
+              <input nz-input type="number" formControlName="max" placeholder="in USD" />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+      </div>
+      <label nz-checkbox formControlName="isShow">
+        <span>Is show</span>
+      </label>
+    </form>
+</ng-container>

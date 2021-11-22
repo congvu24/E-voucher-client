@@ -2,9 +2,10 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-body{
+html body{
     background-color: black;
-    max-width: 1440px;
-    // max-height: 1024px;
-    padding: 18px;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: solid;
 }

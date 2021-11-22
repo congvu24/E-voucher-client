@@ -19,11 +19,14 @@
       "dom"
     ]
   },
-  "include": [
-    "src/**/*.d.ts",
-    "src/app/index.d.ts"
-  ],
+  // "include": [
+  //   "src/**/*.d.ts",
+  //   "src/index.d.ts"
+  // ],
   // "include": [],
+  "include": [
+    "src/**/*"
+],
   "exclude": [
     "node_modules"
   ]

@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
         }
       });
     }
+    window.location.replace("/");
   }
   login() {
     this._auth.login("duy", "gmail").subscribe((d) => console.log(d));

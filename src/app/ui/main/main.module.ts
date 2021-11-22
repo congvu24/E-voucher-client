@@ -16,9 +16,11 @@ import { CreateServiceComponent } from './create-service/create-service.componen
 import { StepOneComponent } from './create-service/step-one/step-one.component';
 import { StepTwoComponent } from './create-service/step-two/step-two.component';
 import { StepThreeComponent } from './create-service/step-three/step-three.component';
+import { CardComponent } from './service-manage/card/card.component';
+import { FormComponent } from './service-manage/form/form.component';
 const icon = [];
 @NgModule({
-  declarations: [MainComponent, VoucherManageComponent, ServiceManageComponent, CreateServiceComponent, StepOneComponent, StepTwoComponent, StepThreeComponent],
+  declarations: [MainComponent, VoucherManageComponent, ServiceManageComponent, CreateServiceComponent, StepOneComponent, StepTwoComponent, StepThreeComponent, CardComponent, FormComponent],
   imports: [
     CommonModule,
     MainRoutingModule,

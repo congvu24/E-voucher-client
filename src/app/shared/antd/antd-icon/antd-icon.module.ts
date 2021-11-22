@@ -11,6 +11,9 @@ import {
   LogoutOutline,
   PlusOutline,
   LoadingOutline,
+  DeleteFill,
+  EyeFill,
+  EditFill,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -20,11 +23,14 @@ const icons: IconDefinition[] = [
   DeleteOutline,
   KeyOutline,
   LogoutOutline,
+  DeleteFill,
   BellOutline,
   KeyOutline,
   LogoutOutline,
   PlusOutline,
   LoadingOutline,
+  EyeFill,
+  EditFill,
 ];
 @NgModule({
   declarations: [],
