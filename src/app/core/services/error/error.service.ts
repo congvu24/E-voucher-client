@@ -10,14 +10,11 @@ export enum ClientSuccess {
   HTTP_200_OK = 200,
 }
 
-
-
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class ErrorService {
-
-  constructor(private _ui: UiService) { }
+  constructor(private _ui: UiService) {}
   handleError(errorCode: number, msg: string) {
     switch (errorCode) {
       case ClientError.HTTP_400_BAD_REQUEST:
@@ -28,8 +25,8 @@ export class ErrorService {
         break;
 
       default:
-          this._ui.showError("Something bad happened");
-          break;
+        this._ui.showError("Something bad happened");
+        break;
     }
   }
 }
