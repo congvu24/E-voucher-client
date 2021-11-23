@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { HttpEndPoint } from "../../interface";
 import { ErrorService } from "../error/error.service";
 import { catchError } from "rxjs/operators";
 import { throwError } from "rxjs";
@@ -13,22 +12,22 @@ import { APP_CONFIG } from "../../../../environments/environment";
 export class HttpService {
   constructor(private _http: HttpClient, private _error: ErrorService) {}
 
-  get(endpoint: HttpEndPoint, customHeader?: any) {
+  get(endpoint: string, customHeader?: any) {
     return this._http
       .get(`${APP_CONFIG.apiUrl}${endpoint}}`, ...customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
-  post(endpoint: HttpEndPoint, data: any, customHeader?: any) {
+  post(endpoint: string, data: any, customHeader?: any) {
     return this._http
       .post(`${APP_CONFIG.apiUrl}${endpoint}}`, data, ...customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
-  patch(endpoint: HttpEndPoint, data: any, customHeader?: any) {
+  patch(endpoint: string, data: any, customHeader?: any) {
     return this._http
       .patch(`${APP_CONFIG.apiUrl}${endpoint}}`, { ...data }, ...customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
-  delete(endpoint: HttpEndPoint, customHeader?: any) {
+  delete(endpoint: string, customHeader?: any) {
     return this._http
       .delete(`${APP_CONFIG.apiUrl}${endpoint}}`, ...customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));

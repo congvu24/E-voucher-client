@@ -1,9 +1,15 @@
 <div>
   <div class="flex w-full justify-center items-center">
-    <app-page-title title="Scan QR code"></app-page-title>
+    <app-page-title title="Scan your code" subtitle="Put your code inside red box"></app-page-title>
   </div>
-<!-- scan here -->
-  <div>
-
+  <!-- scan here -->
+  <div class="w-530 h-530 m-auto relative flex items-center flex-col justify-center overflow-hidden">
+    <video id="video" class="min-h-full min-w-full"></video>
+    <div class="min-h-full min-w-full border-2 border-solid border-red-700 absolute top-0 left-0 z-40"></div>
+  </div>
+ 
+  <div class="flex justify-center w-full gap-2 py-8">
+    <button  nz-button *ngIf="!!result" [disabled]="!result" (click)="commitVoucher()" nzSize="large" >Rescan</button>
+    <button  nz-button nzType="primary" [disabled]="!result" (click)="commitVoucher()" nzSize="large" >Done</button>
   </div>
 </div>
