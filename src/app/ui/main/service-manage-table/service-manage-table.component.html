@@ -1,0 +1,124 @@
+<div>
+  <!-- page title and filter -->
+  <div class="flex justify-between items-center">
+    <app-page-title title="Services"></app-page-title>
+    <div>
+      <button
+        nz-button
+        nz-tooltip
+        nzTooltipTitle="Add new service"
+        class="border border-solid border-primary text-primary mr-2"
+      >
+        <a href="/main/services/create">
+          <i nz-icon nzType="plus" nzTheme="outline"></i
+        ></a>
+      </button>
+      <nz-badge [nzCount]="getSelectedFilterNumbers()">
+        <button
+          nz-button
+          nz-dropdown
+          nzType="primary"
+          nz-tooltip
+          nzTooltipTitle="Filter"
+          [nzDropdownMenu]="filter"
+          [nzClickHide]="false"
+          [(nzVisible)]="filterVisible"
+          nzTrigger="click"
+          [nzPlacement]="'bottomRight'"
+        >
+          <i nz-icon nzType="filter" nzTheme="outline"></i>
+        </button>
+      </nz-badge>
+    </div>
+  </div>
+  <!-- table -->
+  <div>
+    <nz-table #basicTable [nzData]="service">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Type</th>
+          <th>Worth</th>
+          <th>Supplier name</th>
+          <th>Create</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.id }}</td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.type }}</td>
+          <td>{{ data.worth }}</td>
+          <td>{{ data.supplierName }}</td>
+          <td>{{ data.createAt }}</td>
+          <td>
+            <nz-tag
+              nzColor="error"
+              class="cursor-pointer"
+              (click)="showDeleteConfirm()"
+            >
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+              <span>Delete</span>
+            </nz-tag>
+
+            <nz-tag
+              nzColor="warning"
+              class="cursor-pointer"
+              (click)="loadEditForm()"
+            >
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+              <span>Edit</span>
+            </nz-tag>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+  <nz-dropdown-menu #filter="nzDropdownMenu">
+    <ul nz-menu>
+      <li nz-menu-item>
+        <nz-space [nzDirection]="'vertical'">
+          <nz-checkbox-group [(ngModel)]="selected"></nz-checkbox-group>
+        </nz-space>
+      </li>
+      <li class="flex justify-between items-end gap-x-1 px-2 py-2 gap-2">
+        <button
+          nz-button
+          nzType="nzGhost"
+          nzSize="small"
+          (click)="onClearFilter()"
+        >
+          Clear filter
+        </button>
+        <button
+          nz-button
+          nzType="primary"
+          nzSize="small"
+          (click)="onApplyFilter()"
+        >
+          Apply filter
+        </button>
+      </li>
+    </ul>
+  </nz-dropdown-menu>
+
+  <!-- edit service -->
+  <nz-modal
+    [(nzVisible)]="editing"
+    nzTitle="Service editing"
+    (nzOnCancel)="endEdit()"
+  >
+    <ng-container *nzModalContent>
+      <service-edit-form [service]="editData"></service-edit-form>
+    </ng-container>
+
+    <div *nzModalFooter>
+      <button nz-button (click)="endEdit()">Close</button>
+      <button nz-button nzType="primary" (click)="runEditService()">
+        Save and close
+      </button>
+    </div>
+  </nz-modal>
+</div>

@@ -1,6 +1,8 @@
+/* eslint-disable @angular-eslint/no-output-on-prefix */
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { NzModalService } from "ng-zorro-antd/modal";
+
 import { Package } from "../../../../core/interface/package";
 @Component({
   selector: "service-card",
@@ -15,7 +17,7 @@ export class CardComponent implements OnInit {
   @Input() openEdit: () => void;
   @Input() endEdit: () => void;
 
-  constructor(private _modal: NzModalService) {}
+  constructor() {}
 
   openChildView() {
     this.openView();
@@ -23,21 +25,8 @@ export class CardComponent implements OnInit {
   endChildView() {
     this.endView();
   }
-  openChildEdit() {
-    this.openEdit();
-  }
   endChildEdit() {
     this.endEdit();
   }
-  showDeleteConfirm(): void {
-    this._modal.confirm({
-      nzTitle: "<i>Do you Want to delete these items?</i>",
-      nzContent: "<b>Some descriptions</b>",
-      nzOkText: "OK",
-      nzCancelText: "Canel",
-      nzOnOk: () => console.log("OK"),
-    });
-  }
-
   ngOnInit(): void {}
 }

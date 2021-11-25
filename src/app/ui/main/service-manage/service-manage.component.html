@@ -1,6 +1,6 @@
 <div>
-  <div class="flex w-full justify-between items-center">
-    <app-page-title title="Services"></app-page-title>
+  <div class="flex justify-between items-center">
+    <app-page-title title="Select services"></app-page-title>
     <nz-badge [nzCount]="getSelectedFilterNumbers()">
       <button
         nz-button
@@ -18,7 +18,13 @@
   </div>
   <div class="flex flex-wrap">
     <div class="p-4 w-1/3" *ngFor="let item of items">
-      <service-card [openView]="openView" [endView]="endView" [service]="item" [openEdit]="openEdit" [endEdit]="endEdit"></service-card>
+      <service-card
+        [openView]="openView"
+        [endView]="endView"
+        [service]="item"
+        [endEdit]="endEdit"
+        
+      ></service-card>
     </div>
   </div>
 
@@ -82,19 +88,5 @@
     </div>
   </nz-modal>
 
-  <!-- edit service -->
-  <nz-modal
-    [(nzVisible)]="editing"
-    nzTitle="Service editing"
-    (nzOnCancel)="endEdit()"
-  >
-  <ng-container *nzModalContent>
-<service-edit-form [service]="items" ></service-edit-form>
-  </ng-container>
-  
-    <div *nzModalFooter>
-      <button nz-button (click)="endEdit()">Close</button>
-      <button nz-button nzType="primary" (click)="runEditService()">Save and close</button>
-    </div>
-  </nz-modal>
+
 </div>

@@ -1,13 +1,11 @@
 import { Observable } from "rxjs";
 import { Package } from "../core/interface/package";
 
-// Package to crete dealer Package
-export interface IPackageService {
-  deletePackage(): void;
-
-  createPackage(p: Package): Observable<any>;
-  getPackages(): Package[];
-  getPackageByIds(): Package[];
-  editPackageById(): Package;
-  addPackage(p: Package): Package[];
+export abstract class IPackageService {
+  abstract deletePackage(): void;
+  abstract createPackage(p: Package): Observable<any>;
+  abstract getPackages(): Package[];
+  abstract getPackageByIds(): Package[];
+  abstract editPackageById(): Package;
+  abstract addPackage(p: Package): Package[];
 }

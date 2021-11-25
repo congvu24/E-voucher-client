@@ -8,7 +8,7 @@ import { UntilService } from "../until/until.service";
 export class StorageService {
   constructor(private _until: UntilService) {}
 
-  saveToken(token: string, name = "user"): boolean {
+  setToken(name = "user", token: string): boolean {
     try {
       this._until.setCookie(name, token, TOKEN_EXPRISE_DAY);
       return true;

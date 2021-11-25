@@ -1,8 +1,6 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-
 import { TranslateModule } from "@ngx-translate/core";
-
 import {
   HeaderComponent,
   PageNotFoundComponent,
@@ -13,6 +11,7 @@ import { WebviewDirective } from "./directives/";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AntdIconModule } from "./antd/antd-icon/antd-icon.module";
 import { AntdComponentModule } from "./antd/antd-component/antd-component.module";
+import { ServiceFormDirective } from "./directives/dealer/service-form.directive";
 
 const components = [
   HeaderComponent,
@@ -28,9 +27,8 @@ const modules = [
   AntdIconModule,
   AntdComponentModule,
 ];
-
 @NgModule({
-  declarations: [WebviewDirective, components],
+  declarations: [WebviewDirective, components, ServiceFormDirective],
   imports: [CommonModule, modules],
   exports: [WebviewDirective, modules, components],
 })

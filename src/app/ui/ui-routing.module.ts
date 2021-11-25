@@ -1,7 +1,9 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
+import { DEALER_ROLE, SUPPLIER_ROLE } from "../core/constant";
 import { PageNotFoundComponent } from "../shared/components";
+import { AuthGuard } from "../shared/guard/auth.guard";
 
 const routes: Routes = [
   {
@@ -12,10 +14,23 @@ const routes: Routes = [
   {
     path: "main",
     loadChildren: () => import("./main/main.module").then((m) => m.MainModule),
+    canActivate: [AuthGuard],
+    data: {
+      role: DEALER_ROLE,
+    },
+  },
+  {
+    path: "supplier",
+    loadChildren: () =>
+      import("./suplier/supplier.module").then((m) => m.SupplierModule),
+    // canActivate: [AuthGuard],
+    // data: {
+    //   role: SUPPLIER_ROLE,
+    // },
   },
   {
     path: "",
-    redirectTo: "main/service-manage",
+    redirectTo: "/login",
     pathMatch: "full",
   },
   {

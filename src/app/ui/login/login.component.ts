@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { RouterService } from "../../core/services";
 import { AuthService } from "../../service";
 
 @Component({
@@ -9,7 +11,11 @@ import { AuthService } from "../../service";
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
-  constructor(private _auth: AuthService, private fb: FormBuilder) {
+  constructor(
+    private _auth: AuthService,
+    private fb: FormBuilder,
+    private _router: RouterService
+  ) {
     this.validateForm = this.fb.group({
       userName: [null, [Validators.required]],
       password: [null, [Validators.required]],
@@ -19,7 +25,11 @@ export class LoginComponent implements OnInit {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      console.log("submit", this.validateForm.value);
+      const { password, userName } = this.validateForm.value;
+      this._auth
+        .login(userName, password)
+        .pipe(mergeMap((role) => this._auth.saveCredential(role)))
+        .subscribe((data) => this._router.goto("/supplier"));
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {
@@ -28,7 +38,7 @@ export class LoginComponent implements OnInit {
         }
       });
     }
-    window.location.replace("/");
+    // window.location.replace("/");
   }
   login() {
     this._auth.login("duy", "gmail").subscribe((d) => console.log(d));

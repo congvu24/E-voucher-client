@@ -1,10 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -12,10 +7,8 @@ import {
   ValidationErrors,
   Validators,
 } from "@angular/forms";
-import { NzMessageService } from "ng-zorro-antd/message";
-import { NzUploadFile } from "ng-zorro-antd/upload";
+
 import { Observable, Observer } from "rxjs";
-import { Package } from "../../../../core/interface/package";
 
 @Component({
   selector: "service-edit-form",
@@ -23,7 +16,7 @@ import { Package } from "../../../../core/interface/package";
   styleUrls: ["./form.component.scss"],
 })
 export class FormComponent implements OnInit {
-  @Input() service: number[]; // fake service, it should in type of Package
+  @Input() service: number; // fake service, it should in type of Package
   validateForm: FormGroup;
 
   constructor(private fb: FormBuilder) {
@@ -35,9 +28,15 @@ export class FormComponent implements OnInit {
       isShow: ["", [Validators.required]],
     });
   }
-  submitForm(): void {
+  /**
+   * validate and submit editservice form using service
+   * @returns true if submit success, fale if not
+   */
+  submitForm(): boolean {
     console.log("submit", this.validateForm.value);
+    return true;
   }
+
   validateConfirmPassword(): void {
     setTimeout(() =>
       this.validateForm.controls.confirm.updateValueAndValidity()

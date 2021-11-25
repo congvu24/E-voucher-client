@@ -12,7 +12,6 @@
     nz-dropdown
     [nzDropdownMenu]="more"
     nzTrigger="click"
-
     >More</a
   >
   <div class="w-full h-350 bg-primary"></div>
@@ -23,33 +22,37 @@
         <p>Lorem ipsum dolor sit amet</p>
         <h1>99 ~ 1000$</h1>
       </div>
-      <div
+      <a
+      href="main/voucher/select-service/{{service}}/scanner"
         class="
           bg-primary
+          block
           cursor-pointer
           text-center
           py-4
           text-white
           uppercase
           font-medium
+          hover:text-white
+          text-base
         "
-        (click)="openChildView()"
       >
-        View
-      </div>
+    <span class="flex items-center justify-center gap-2">
+      <span style="font-size: 1em;">
+        Scan voucher
+      </span>
+      <i nz-icon nzType="scan" nzTheme="outline" style="font-size: 1.5em;"></i>
+    </span>
+      </a>
     </div>
   </div>
 
   <!-- more dropdown -->
   <nz-dropdown-menu #more="nzDropdownMenu">
     <ul nz-menu nzSelectable>
-      <li nz-menu-item (click)="openChildEdit()">
+      <li nz-menu-item (click)="openChildView()">
         <i nz-icon style="font-size: large" nzType="edit" nzTheme="fill"> </i>
-        Edit information
-      </li>
-      <li nz-menu-item nzDanger (click)="showDeleteConfirm()">
-        <i nz-icon style="font-size: large" nzType="delete" nzTheme="fill"> </i
-        >Delete pernamently
+        View information
       </li>
     </ul>
   </nz-dropdown-menu>

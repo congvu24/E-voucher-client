@@ -1,2 +1,5 @@
-<h3 class="text-4xl mt-4">{{title}}</h3>
-<p class="text-base text-center" >{{subtitle}}</p>
+<div [ngClass]="center ? 'text-center' : ''">
+    <h3 class="text-4xl mt-4" >{{title}}</h3>
+<p class="text-base text-center" [ngStyle]="{'text-align': true}">{{subtitle}}</p>
+
+</div>

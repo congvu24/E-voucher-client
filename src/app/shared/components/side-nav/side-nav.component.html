@@ -1,9 +1,15 @@
-<div class="top-1/2 sticky">
-  <div class="flex flex-col items-center justify-center">
-   <a href="/main/service-create">service create</a>
-   <a href="/main/service-manage">service manage</a>
-   <a href="/main/voucher-manage">voucher manage</a>
-   <a href="/main/voucher-scan">scan</a>
-   
-  </div>
+ 
+<div class="w-16">
+  <nz-affix [nzOffsetTop]="180">
+    <div class="flex flex-col justify-center items-center" >
+      <ng-container *ngFor="let route of routes">
+        <a href="{{ route.path }}" class="p-5">
+          <i nz-icon nzType="{{ route.iconType }}" nzTheme="outline" style="font-size: 24px; opacity: 0.8; color: #555555;"></i>
+        </a>
+      </ng-container>
+  
+      
+    </div>
+  </nz-affix>
+
 </div>

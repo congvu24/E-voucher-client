@@ -7,13 +7,20 @@ import {
   FilterOutline,
   DeleteOutline,
   KeyOutline,
-  BellOutline,
   LogoutOutline,
   PlusOutline,
   LoadingOutline,
   DeleteFill,
   EyeFill,
   EditFill,
+  TagsOutline,
+  SecurityScanOutline,
+  WalletOutline,
+  BellFill,
+  ScanOutline,
+  ArrowLeftOutline,
+  HomeOutline,
+  HistoryOutline,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -24,16 +31,24 @@ const icons: IconDefinition[] = [
   KeyOutline,
   LogoutOutline,
   DeleteFill,
-  BellOutline,
   KeyOutline,
   LogoutOutline,
   PlusOutline,
   LoadingOutline,
   EyeFill,
   EditFill,
+  TagsOutline,
+  SecurityScanOutline,
+  WalletOutline,
+  BellFill,
+  ScanOutline,
+  ArrowLeftOutline,
+  HomeOutline,
+  HistoryOutline,
 ];
 @NgModule({
   declarations: [],
   imports: [NzIconModule.forRoot(icons)],
+  exports: [NzIconModule],
 })
 export class AntdIconModule {}
