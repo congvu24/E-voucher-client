@@ -4,24 +4,25 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { StorageService } from "..";
 
-
 @Injectable({
-    providedIn: "root"
-  })
+  providedIn: "root",
+})
 export class TokenInterceptor implements HttpInterceptor {
   constructor(public _storage: StorageService) {}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
+  intercept(
+    request: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<HttpEvent<any>> {
     request = request.clone({
       setHeaders: {
         // Authorization: `Bearer ${this._storage.getToken()}`
-        Authorization: `Bearer ${"dsa"}`
-      }
+        Authorization: `Bearer ${this._storage.getToken("auth")}`,
+      },
     });
     return next.handle(request);
   }

@@ -21,6 +21,10 @@ import {
   ArrowLeftOutline,
   HomeOutline,
   HistoryOutline,
+  CheckOutline,
+  CloseOutline,
+  SearchOutline,
+  ArrowUpOutline,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -45,6 +49,10 @@ const icons: IconDefinition[] = [
   ArrowLeftOutline,
   HomeOutline,
   HistoryOutline,
+  CheckOutline,
+  CloseOutline,
+  SearchOutline,
+  ArrowUpOutline,
 ];
 @NgModule({
   declarations: [],

@@ -1,63 +1,72 @@
-<div >
-    <div>
-      <div class="flex justify-between">
-        <app-page-title title="Voucher created"></app-page-title>
-        <nz-badge [nzCount]="2">
-          <button
-            nz-button
-            nz-dropdown
-            nzType="primary"
-            [nzDropdownMenu]="filter"
-            [nzClickHide]="false"
-            [(nzVisible)]="filterVisible"
-            nzTrigger="click"
-            [nzPlacement]="'bottomRight'"
-          >
-            <i nz-icon nzType="filter" nzTheme="outline"></i>
-          </button>
-        </nz-badge>
+<div>
+ 
+    <app-page-title title="Voucher created"></app-page-title>
+    <div >
+      <nz-input-group class="max-w-3xl" [nzPrefix]="suffixIconSearch">
+        <input type="text" nz-input placeholder="Search voucher by Id" />
+      </nz-input-group>
+      <ng-template #suffixIconSearch>
+        <i nz-icon nzType="search"></i>
+      </ng-template>
+
+      
+      <!-- <app-filter-voucher></app-filter-voucher> -->
+      <button nz-button (click)="onFilterClick(true)" nzType="primary">
+        <i nz-icon nzType="filter" nzTheme="outline"></i>
+      </button>
+    </div>
+   
+    <div *ngIf="filterVisible" class="py-2 pb-4">
+     <div class="mb-2">
+      <strong class="pr-4">Type:</strong>
+      <nz-tag
+        *ngFor="let s of status"
+        nzMode="checkable"
+        [nzChecked]="selectedStatus.indexOf(s) > -1"
+        (nzCheckedChange)="handleStatusChange($event, s)"
+      >
+        {{ s }}
+      </nz-tag>
+     </div>
+     <div> <strong class="pr-4">Status:</strong>
+      <nz-tag
+        *ngFor="let t of type"
+        nzMode="checkable"
+        [nzChecked]="selectedType.indexOf(t) > -1"
+        (nzCheckedChange)="handleTypeChange($event, t)"
+      >
+        {{ t }}
+      </nz-tag></div>
+      <div class="mt-2">
+        <button nz-button (click)="onFilterClick(false)" class="mr-2" nzSize="small">Cancel</button>
+        <button nz-button nzType="primary" nzSize="small">Apply filter</button>
       </div>
     </div>
-    <div>
-      <nz-table #basicTable [nzData]="vouchers">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Voucher id</th>
-            <th>Type</th>
-            <th>Value</th>
-            <th>Status</th>
-            <th>Valid until</th>
-            <th>Create</th>
-
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of basicTable.data">
-            <td>{{ data.id }}</td>
-            <td>{{ data.id }}</td>  
-            <td>{{ data.type }}</td>
-            <td>{{ data.value }}</td>
-            <td>{{ data.status }}</td>
-            <td>{{ data.validDate }}</td>
-            <td>{{ data.createdAt }}</td>
-            
-          </tr>
-        </tbody>
-      </nz-table>
-    </div>
-    <nz-dropdown-menu #filter="nzDropdownMenu">
-      <ul nz-menu>
-        <li nz-menu-item >
-          <nz-space [nzDirection]="'vertical'">
-              <nz-checkbox-group [(ngModel)]="selected"></nz-checkbox-group>
-          </nz-space>
-        </li>
-        <li class="flex justify-between items-end gap-x-1 px-2 py-2 gap-2">
-          <button nz-button nzType="nzGhost" nzSize="small" (click)="onClearFilter()">Clear filter</button>
-          <button nz-button nzType="primary" nzSize="small" (click)="onApplyFilter()">Apply filter</button>
-        </li>
-      </ul>
-    </nz-dropdown-menu>
+  <div>
+    <nz-table #basicTable [nzData]="vouchers">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Voucher id</th>
+          <th>Type</th>
+          <th>Value</th>
+          <th>Status</th>
+          <th>Start day</th>
+          <th>End day</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ data.id }}</td>
+          <td>{{ data.type }}</td>
+          <td>{{ data.value }}</td>
+          <td>{{ data.status }}</td>
+          <td>{{ data.createdAt }}</td>
+          <td>{{ data.validDate }}</td>
+        </tr>
+      </tbody>
+    </nz-table>
   </div>
-  
+
+</div>

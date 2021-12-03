@@ -29,6 +29,15 @@ const routes: Routes = [
     // },
   },
   {
+    path: "agency",
+    loadChildren: () =>
+      import("./agency/agency.module").then((m) => m.AgencyModule),
+    // canActivate: [AuthGuard],
+    // data: {
+    //   role: SUPPLIER_ROLE,
+    // },
+  },
+  {
     path: "",
     redirectTo: "/login",
     pathMatch: "full",

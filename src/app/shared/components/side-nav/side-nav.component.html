@@ -1,15 +1,7 @@
- 
-<div class="w-16">
-  <nz-affix [nzOffsetTop]="180">
-    <div class="flex flex-col justify-center items-center" >
-      <ng-container *ngFor="let route of routes">
-        <a href="{{ route.path }}" class="p-5">
+    <div class="h-full affix">
+      <div class="h-40"></div>
+        <a href="{{ route.path }}" class="p-5 block" *ngFor="let route of routes">
           <i nz-icon nzType="{{ route.iconType }}" nzTheme="outline" style="font-size: 24px; opacity: 0.8; color: #555555;"></i>
         </a>
-      </ng-container>
-  
-      
     </div>
-  </nz-affix>
 
-</div>

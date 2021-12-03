@@ -6,6 +6,8 @@ import {
   PageNotFoundComponent,
   PageTitleComponent,
   SideNavComponent,
+  FilterTagComponent,
+  FilterVoucherComponent,
 } from "./components/";
 import { WebviewDirective } from "./directives/";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -18,6 +20,8 @@ const components = [
   PageNotFoundComponent,
   PageTitleComponent,
   SideNavComponent,
+  FilterTagComponent,
+  FilterVoucherComponent,
 ];
 
 const modules = [

@@ -1,4 +1,4 @@
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgModule, Optional, SkipSelf } from "@angular/core";
 import {
   ErrorService,
@@ -6,6 +6,7 @@ import {
   StorageService,
   UiService,
 } from "./services";
+import { TokenInterceptor } from "./services/interceptor/token.interceptor";
 import { UntilService } from "./services/until/until.service";
 @NgModule({
   providers: [
@@ -14,6 +15,7 @@ import { UntilService } from "./services/until/until.service";
     StorageService,
     UiService,
     UntilService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
 })
 export class CoreModule {

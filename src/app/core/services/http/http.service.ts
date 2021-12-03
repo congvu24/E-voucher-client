@@ -1,9 +1,13 @@
 /* eslint-disable no-underscore-dangle */
-import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpParams,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ErrorService } from "../error/error.service";
 import { catchError } from "rxjs/operators";
-import { throwError } from "rxjs";
+import { Observable, throwError } from "rxjs";
 import { APP_CONFIG } from "../../../../environments/environment";
 
 @Injectable({
@@ -12,24 +16,30 @@ import { APP_CONFIG } from "../../../../environments/environment";
 export class HttpService {
   constructor(private _http: HttpClient, private _error: ErrorService) {}
 
-  get(endpoint: string, customHeader?: any) {
+  get(endpoint: string, customHeader?: any): Observable<any> {
     return this._http
-      .get(`${APP_CONFIG.apiUrl}${endpoint}}`, ...customHeader)
+      .get(`${APP_CONFIG.apiUrl}${endpoint}`, customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
   post(endpoint: string, data: any, customHeader?: any) {
     return this._http
-      .post(`${APP_CONFIG.apiUrl}${endpoint}}`, data, ...customHeader)
+      .post(`${APP_CONFIG.apiUrl}${endpoint}}`, data, customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
+  put(endpoint: string, data: any, customHeader?: any) {
+    return this._http
+      .put(`${APP_CONFIG.apiUrl}${endpoint}}`, data, customHeader)
+      .pipe(catchError((err) => this.handleError(err, this)));
+  }
+
   patch(endpoint: string, data: any, customHeader?: any) {
     return this._http
-      .patch(`${APP_CONFIG.apiUrl}${endpoint}}`, { ...data }, ...customHeader)
+      .patch(`${APP_CONFIG.apiUrl}${endpoint}`, data, customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
   delete(endpoint: string, customHeader?: any) {
     return this._http
-      .delete(`${APP_CONFIG.apiUrl}${endpoint}}`, ...customHeader)
+      .delete(`${APP_CONFIG.apiUrl}${endpoint}`, customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
 

@@ -12,6 +12,7 @@ module.exports = {
       red: colors.rose,
       yellow: colors.amber,
       primary: "#1DA57A",
+      secondary:"#F2FFFB",
       "base-gray": "#DEDEDE",
     },
     extend: {
@@ -36,6 +37,7 @@ module.exports = {
       },
       boxShadow: {
         app: " 0 1px 2px -2px rgba(0, 0, 0, 0.16), 0 3px 6px 0 rgba(0, 0, 0, 0.12),0 5px 12px 4px rgba(0, 0, 0, 0.09)",
+        app1: " rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;"
       },
     },
   },

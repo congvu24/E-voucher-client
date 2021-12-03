@@ -8,7 +8,7 @@ export type Request = {
 };
 
 export enum RequesetStatus {
-  pending = "pending",
-  accepted = "accepted",
-  rejected = "rejected",
+  pending = "PENDING",
+  accepted = "ACCEPTED",
+  rejected = "REJECTED",
 }
