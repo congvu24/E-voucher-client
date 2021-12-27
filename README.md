@@ -27,7 +27,7 @@ Currently runs with:
 *Clone this repository locally:*
 
 ``` bash
-git clone 
+git clone https://github.com/congvu24/E-voucher-client.git
 ```
 
 *Install dependencies with npm (used by Electron renderer process):*
