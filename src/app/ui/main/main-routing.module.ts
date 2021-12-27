@@ -15,7 +15,7 @@ const routes: Routes = [
       { path: "", component: ServiceManageComponent },
       { path: "services/create", component: CreateServiceComponent },
       {
-        path: "voucher/select-service/:id/scanner",
+        path: "vouchers/select-service/:id/scanner",
         component: QrScanComponent,
       },
       { path: "voucher/select-service", component: ServiceManageComponent },

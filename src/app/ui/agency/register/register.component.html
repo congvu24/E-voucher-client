@@ -3,7 +3,7 @@
     <div>
       <app-page-title title="Pending register"></app-page-title>
     </div>
-    <div>
+    <div class="mx-6">
       <nz-table
         #basicTable
         [nzData]="registers"
@@ -30,12 +30,12 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of basicTable.data">
+          <tr *ngFor="let data of basicTable.data; let i= index">
             <td
               [nzChecked]="setOfCheckedId.has(data.id)"
               (nzCheckedChange)="onItemChecked(data.id, $event)"
             ></td>
-            <td>{{ data.id }}</td>
+            <td>{{ i + 1 + meta?.take * (page-1) }}</td>
             <td>{{ data.name }}</td>
             <td>{{ data.identify }}</td>
             <td>{{ data.job }}</td>
@@ -76,16 +76,16 @@
       bg-secondary
       shadow-app1
     "
-    style="padding-left: 70px; padding-top: 0.4rem; padding-bottom: 0.4rem"
+    style="padding-left: 70px; padding-right: 40px; padding-top: 0.4rem; padding-bottom: 0.4rem"
     *ngIf="setOfCheckedId.size > 0"
   >
-    <p class="mb-0">
+    <p class="mb-0 text-white">
       Selected
-      <span class="text-primary font-bold">{{ setOfCheckedId.size }}</span> rows
+      <span class=" font-bold">{{ setOfCheckedId.size }}</span> rows
     </p>
     <div>
-      <button nz-button class="mr-2 inline" >Reject selected</button>
-      <button nz-button nzType="primary" class="inline" >Accept selected</button>
+      <button nz-button class="mr-2 inline" nzType="primary"  (click)="rejectBulk()">Reject selected</button>
+      <button nz-button class="inline" (click)="acceptBulk()" >Accept selected</button>
     </div>
   </div>
 </div>

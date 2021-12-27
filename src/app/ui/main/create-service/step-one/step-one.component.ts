@@ -1,9 +1,11 @@
 import { Component } from "@angular/core";
 import {
+  AbstractControl,
   FormBuilder,
   FormControl,
   FormGroup,
   ValidationErrors,
+  ValidatorFn,
   Validators,
 } from "@angular/forms";
 import { NzMessageService } from "ng-zorro-antd/message";
@@ -16,50 +18,41 @@ import { Observable, Observer } from "rxjs";
   styleUrls: ["./step-one.component.scss"],
 })
 export class StepOneComponent {
-  validateForm: FormGroup;
+  packageForm: FormGroup;
   avatarUrl?: string;
   loading = false; // upload loading
 
   constructor(private fb: FormBuilder, private msg: NzMessageService) {
-    this.validateForm = this.fb.group({
-      name: ["", [Validators.required], [this.userNameAsyncValidator]],
-      description: ["", [Validators.email, Validators.required]],
-      min: ["", [Validators.required]],
-      max: ["", [this.confirmValidator]],
-      isShow: ["", [Validators.required]],
+    this.packageForm = new FormGroup({
+      name: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+      description: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+      min: new FormControl(3, [Validators.required, Validators.min(0)]),
+      max: new FormControl(1, [Validators.required, Validators.min(0)]),
     });
+  }
+  get min() {
+    return this.packageForm.get("min");
+  }
+  get max() {
+    return this.packageForm.get("max");
   }
   submitForm(): void {
-    console.log("submit", this.validateForm.value);
-  }
-  validateConfirmPassword(): void {
-    setTimeout(() =>
-      this.validateForm.controls.confirm.updateValueAndValidity()
-    );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === "JasonWood") {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
+    if (this.packageForm.valid) {
+    } else {
+      Object.values(this.packageForm.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
         }
-        observer.complete();
-      }, 1000);
-    });
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
+      });
     }
-    return {};
-  };
+  }
 
   beforeUpload = (
     file: NzUploadFile,

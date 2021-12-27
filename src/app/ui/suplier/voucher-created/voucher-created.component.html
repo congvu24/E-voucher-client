@@ -1,48 +1,77 @@
 <div>
- 
-    <app-page-title title="Voucher created"></app-page-title>
-    <div >
-      <nz-input-group class="max-w-3xl" [nzPrefix]="suffixIconSearch">
-        <input type="text" nz-input placeholder="Search voucher by Id" />
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i nz-icon nzType="search"></i>
-      </ng-template>
-
-      
-      <!-- <app-filter-voucher></app-filter-voucher> -->
-      <button nz-button (click)="onFilterClick(true)" nzType="primary">
-        <i nz-icon nzType="filter" nzTheme="outline"></i>
-      </button>
-    </div>
-   
-    <div *ngIf="filterVisible" class="py-2 pb-4">
-     <div class="mb-2">
-      <strong class="pr-4">Type:</strong>
-      <nz-tag
-        *ngFor="let s of status"
-        nzMode="checkable"
-        [nzChecked]="selectedStatus.indexOf(s) > -1"
-        (nzCheckedChange)="handleStatusChange($event, s)"
-      >
-        {{ s }}
-      </nz-tag>
-     </div>
-     <div> <strong class="pr-4">Status:</strong>
-      <nz-tag
-        *ngFor="let t of type"
-        nzMode="checkable"
-        [nzChecked]="selectedType.indexOf(t) > -1"
-        (nzCheckedChange)="handleTypeChange($event, t)"
-      >
-        {{ t }}
-      </nz-tag></div>
-      <div class="mt-2">
-        <button nz-button (click)="onFilterClick(false)" class="mr-2" nzSize="small">Cancel</button>
-        <button nz-button nzType="primary" nzSize="small">Apply filter</button>
+  <app-page-title title="Voucher created"></app-page-title>
+  <div class="m-6 py-6 bg-white px-2">
+    <form
+      nz-form
+      [formGroup]="filter"
+      (ngSubmit)="onFilter()"
+      nzLayout="horizontal"
+    >
+      <div class="antform grid grid-cols-24 gap-4">
+        <div class="col-span-6">
+          <nz-form-item class="mb-0">
+            <nz-form-label>Id</nz-form-label>
+            <nz-form-control>
+              <input
+                type="text"
+                nz-input
+                placeholder="xxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx"
+                formControlName="name"
+              />
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-span-4">
+          <nz-form-item class="mb-0">
+            <nz-form-label>Type</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                formControlName="type"
+                nzPlaceHolder="All"
+              >
+                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+                <nz-option
+                  *ngFor="let item of type | keyvalue"
+                  [nzValue]="item.value"
+                  nzLabel="{{ item.key | titlecase }}"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
+        <div class="col-span-4">
+          <nz-form-item class="mb-0">
+            <nz-form-label>Status</nz-form-label>
+            <nz-form-control>
+              <nz-select
+                formControlName="status"
+                nzPlaceHolder="All"
+              >
+                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+                <nz-option
+                  *ngFor="let item of status | keyvalue"
+                  [nzValue]="item.value"
+                  nzLabel="{{ item.key | titlecase }}"
+                >
+                </nz-option>
+              </nz-select>
+            </nz-form-control>
+          </nz-form-item>
+        </div>
       </div>
-    </div>
-  <div>
+
+      <div>
+        <div nz-col [nzSpan]="24" class="text-right">
+          <button nz-button [nzType]="'primary'" class="mr-2">Search</button>
+          <button nz-button (click)="resetForm()">Clear</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <!-- table -->
+  <div class="mx-6">
     <nz-table #basicTable [nzData]="vouchers">
       <thead>
         <tr>
@@ -57,16 +86,20 @@
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
-          <td>{{ i + 1 }}</td>
-          <td>{{ data.id }}</td>
-          <td>{{ data.type }}</td>
+          <td>{{ i + 1 + meta?.take * (page -1) }}</td>
+          <p
+            nz-typography
+            nzCopyable
+            [nzCopyTooltips]="'Copy voucher id'"
+            [(nzContent)]="data.id"
+          ></p>
+          <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td>{{ data.value }}</td>
-          <td>{{ data.status }}</td>
-          <td>{{ data.createdAt }}</td>
-          <td>{{ data.validDate }}</td>
+          <td><app-v-status-tag [status]="data.status"></app-v-status-tag></td>
+          <td>{{ data.createdAt | date }}</td>
+          <td>{{ data.validDate | date }}</td>
         </tr>
       </tbody>
     </nz-table>
   </div>
-
 </div>

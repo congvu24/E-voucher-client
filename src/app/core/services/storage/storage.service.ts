@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 
-import { TOKEN_EXPRISE_DAY } from "../../constant";
+import { TOKEN_EXPRISE_SEC } from "../../constant";
 import { UntilService } from "../until/until.service";
 @Injectable({
   providedIn: "root",
@@ -8,9 +8,13 @@ import { UntilService } from "../until/until.service";
 export class StorageService {
   constructor(private _until: UntilService) {}
 
-  setToken(name = "user", token: string): boolean {
+  setToken(
+    name = "user",
+    token: string,
+    expiresIn = TOKEN_EXPRISE_SEC
+  ): boolean {
     try {
-      this._until.setCookie(name, token, TOKEN_EXPRISE_DAY);
+      this._until.setCookie(name, token, expiresIn);
       return true;
     } catch (error) {
       return false;

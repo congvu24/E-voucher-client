@@ -27,6 +27,9 @@ export class UiService {
         break;
     }
   }
+  showInfo(mgs = "Comming soon") {
+    this._notification.info("Info", mgs);
+  }
 }
 
 export enum MessageType {

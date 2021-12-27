@@ -4,6 +4,7 @@ import {
   Component,
   OnInit,
 } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd/modal";
 import { Register } from "../../../core/interface/register";
 import { StorageService, UiService } from "../../../core/services";
@@ -16,9 +17,8 @@ import { RegisterService } from "../../../service/register/register.service";
   styleUrls: ["./register.component.scss"],
   providers: [{ provide: IRegisterService, useExisting: RegisterService }],
 })
-export class RegisterComponent implements OnInit, AfterViewInit {
+export class RegisterComponent implements OnInit {
   filterVisible: boolean;
-  pagesize = 20;
   registers: Register[];
   meta: any;
 
@@ -27,9 +27,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   indeterminate = false;
   setOfCheckedId = new Set<string>();
 
+  //ui control
+  filter: FormGroup;
+  page = 1;
+
   constructor(
     private _register: IRegisterService,
-    private _store: StorageService,
     private _ui: UiService,
     private _modal: NzModalService
   ) {}
@@ -52,7 +55,12 @@ export class RegisterComponent implements OnInit, AfterViewInit {
       }
     });
   }
-
+  acceptBulk(): void {
+    this._ui.showInfo();
+  }
+  rejectBulk(): void {
+    this._ui.showInfo();
+  }
   confirmReject(id: string): void {
     const user = this.registers.find((item) => item.id === id);
     this._modal.confirm({
@@ -93,6 +101,7 @@ export class RegisterComponent implements OnInit, AfterViewInit {
   }
 
   onPageIndexChange(page: number): void {
+    this.page = page;
     this._register
       // eslint-disable-next-line @typescript-eslint/naming-convention
       .getRegisters({ is_valid: false })
@@ -121,9 +130,5 @@ export class RegisterComponent implements OnInit, AfterViewInit {
         this.registers = data;
         this.meta = meta;
       });
-  }
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
   }
 }

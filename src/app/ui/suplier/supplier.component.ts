@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserRole } from "../../core/constant";
 
 @Component({
   selector: "app-supplier",
@@ -8,7 +9,7 @@ import { Component, OnInit } from "@angular/core";
 export class SupplierComponent implements OnInit {
   role: string;
   constructor() {
-    this.role = "supplier";
+    this.role = UserRole.suppier;
   }
 
   ngOnInit(): void {}

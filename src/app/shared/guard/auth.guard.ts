@@ -68,11 +68,10 @@ export class AuthGuard
     if (this._auth.isLoggedIn()) {
       const userRole = this._auth.getRole();
       if (route.data.role && route.data.role.indexOf(userRole) === -1) {
-        this._router.navigate(["/login"]); // default path
+        this._router.navigate(["/login"]); // authentication failed
         console.log("auth route failed");
         return false;
       }
-      console.log("auth route success");
       return true;
     }
 

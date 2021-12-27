@@ -4,7 +4,8 @@ import { UiService } from "..";
 
 export enum ClientError {
   HTTP_404_NOT_FOUND = 404,
-  HTTP_400_BAD_REQUEST = 404,
+  HTTP_400_BAD_REQUEST = 400,
+  HTTP_500_INTERNAL_SERVER_ERROR = 500,
 }
 export enum ClientSuccess {
   HTTP_200_OK = 200,
@@ -23,9 +24,12 @@ export class ErrorService {
       case ClientError.HTTP_404_NOT_FOUND:
         this._ui.showError("Item not found");
         break;
+      case ClientError.HTTP_500_INTERNAL_SERVER_ERROR:
+        this._ui.showError("Server down, contact administrator");
+        break;
 
       default:
-        this._ui.showError("Something bad happened");
+        this._ui.showError("Unhandeled error, code " + errorCode);
         break;
     }
   }

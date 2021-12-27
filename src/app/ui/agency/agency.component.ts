@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserRole } from "../../core/constant";
 
 @Component({
   selector: "app-agency",
@@ -8,7 +9,7 @@ import { Component, OnInit } from "@angular/core";
 export class AgencyComponent implements OnInit {
   role: string;
   constructor() {
-    this.role = "dealer";
+    this.role = UserRole.agency;
   }
 
   ngOnInit(): void {}

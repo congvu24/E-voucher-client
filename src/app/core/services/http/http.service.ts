@@ -9,6 +9,7 @@ import { ErrorService } from "../error/error.service";
 import { catchError } from "rxjs/operators";
 import { Observable, throwError } from "rxjs";
 import { APP_CONFIG } from "../../../../environments/environment";
+import { cleanObject } from "../../../until";
 
 @Injectable({
   providedIn: "root",
@@ -16,30 +17,39 @@ import { APP_CONFIG } from "../../../../environments/environment";
 export class HttpService {
   constructor(private _http: HttpClient, private _error: ErrorService) {}
 
-  get(endpoint: string, customHeader?: any): Observable<any> {
+  get(endpoint: string, data?: any): Observable<any> {
+    console.log(cleanObject(data));
     return this._http
-      .get(`${APP_CONFIG.apiUrl}${endpoint}`, customHeader)
+      .get(`${APP_CONFIG.apiUrl}${endpoint}`, { params: cleanObject(data) })
       .pipe(catchError((err) => this.handleError(err, this)));
   }
-  post(endpoint: string, data: any, customHeader?: any) {
+  post<T>(endpoint: string, data: any, customHeader?: any) {
     return this._http
-      .post(`${APP_CONFIG.apiUrl}${endpoint}}`, data, customHeader)
+      .post<T>(
+        `${APP_CONFIG.apiUrl}${endpoint}}`,
+        cleanObject(data),
+        customHeader
+      )
       .pipe(catchError((err) => this.handleError(err, this)));
   }
   put(endpoint: string, data: any, customHeader?: any) {
     return this._http
-      .put(`${APP_CONFIG.apiUrl}${endpoint}}`, data, customHeader)
+      .put(`${APP_CONFIG.apiUrl}${endpoint}}`, cleanObject(data), customHeader)
       .pipe(catchError((err) => this.handleError(err, this)));
   }
 
-  patch(endpoint: string, data: any, customHeader?: any) {
+  patch<T>(endpoint: string, data: any, customHeader?: any) {
     return this._http
-      .patch(`${APP_CONFIG.apiUrl}${endpoint}`, data, customHeader)
+      .patch<T>(
+        `${APP_CONFIG.apiUrl}${endpoint}`,
+        cleanObject(data),
+        customHeader
+      )
       .pipe(catchError((err) => this.handleError(err, this)));
   }
-  delete(endpoint: string, customHeader?: any) {
+  delete(endpoint: string, data?: any) {
     return this._http
-      .delete(`${APP_CONFIG.apiUrl}${endpoint}`, customHeader)
+      .delete(`${APP_CONFIG.apiUrl}${endpoint}`, cleanObject(data))
       .pipe(catchError((err) => this.handleError(err, this)));
   }
 

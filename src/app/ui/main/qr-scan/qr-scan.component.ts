@@ -1,3 +1,4 @@
+import { Location } from "@angular/common";
 import { AfterViewInit, Component, OnInit } from "@angular/core";
 import QrScanner from "qr-scanner";
 import { IVoucherService } from "../../../interface/voucher-service.";
@@ -12,7 +13,10 @@ import { VoucherService } from "../../../service/voucher/voucher.service";
 export class QrScanComponent implements OnInit, AfterViewInit {
   result: string;
   isScanned = false;
-  constructor(private _voucherService: IVoucherService) {
+  constructor(
+    private _voucherService: IVoucherService,
+    private _location: Location
+  ) {
     // woker MUST in assert folder
     QrScanner.WORKER_PATH =
       "../../../../assets/qr-scan-worker/qr-scan-woker.min.js";
@@ -20,13 +24,16 @@ export class QrScanComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {}
   ngAfterViewInit(): void {
-    // const video = document.getElementById("video") as HTMLVideoElement;
-    // const scanner = new QrScanner(video, (r) => {
-    //   this.result = r;
-    // });
-    // scanner.start();
+    const video = document.getElementById("video") as HTMLVideoElement;
+    const scanner = new QrScanner(video, (r) => {
+      this.result = r;
+    });
+    scanner.start();
   }
   commitVoucher() {
     this._voucherService.commitVoucher(this.result);
+  }
+  back() {
+    this._location.back();
   }
 }

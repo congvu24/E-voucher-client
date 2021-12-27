@@ -1,3 +1,5 @@
+import { VoucherType } from "./voucher";
+
 export type Request = {
   id: UUID;
   userId: UUID;
@@ -5,6 +7,7 @@ export type Request = {
   voucherId?: UUID;
   note?: string;
   createdAt: DateTimeString;
+  type: VoucherType;
 };
 
 export enum RequesetStatus {

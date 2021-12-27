@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Voucher } from "../core/interface/voucher";
+import { Voucher, VoucherType } from "../core/interface/voucher";
 
 @Injectable()
 export abstract class IVoucherService {
-  abstract createVoucher(): void;
+  abstract createVoucher(id: UUID, type: VoucherType): Observable<any>;
   abstract getVouchers(
     params?: any
   ): Observable<{ data: Voucher[]; meta: any }>;

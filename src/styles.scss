@@ -3,8 +3,17 @@
 @import 'tailwindcss/utilities';
 
 html body{
-    margin: 0;
+    margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
     height: 100vh;
+    // max-width: 1440px;
+
+    // background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+
+
+background-image:  url("./assets/ant_bg.svg") ;
+background-size: cover;
+background-repeat: no-repeat;
+    // background-image: linear-gradient(to right, #ff8177 0%, #ff867a 0%, #ff8c7f 21%, #f99185 52%, #cf556c 78%, #b12a5b 100%);
 }

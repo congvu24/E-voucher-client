@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
+import { UserRole } from "../../core/constant";
 import { RouterService } from "../../core/services";
 import { AuthService } from "../../service";
 
@@ -11,6 +12,9 @@ import { AuthService } from "../../service";
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
+
+  //ui control
+  passwordVisible = false;
   constructor(
     private _auth: AuthService,
     private fb: FormBuilder,
@@ -26,10 +30,19 @@ export class LoginComponent implements OnInit {
   submitForm(): void {
     if (this.validateForm.valid) {
       const { password, userName } = this.validateForm.value;
-      this._auth
+      const request = this._auth
         .login(userName, password)
-        .pipe(mergeMap((role) => this._auth.saveCredential(role)))
-        .subscribe((data) => this._router.goto("/supplier"));
+        .pipe(
+          switchMap((res: any) =>
+            this._auth.saveCredential(res.user, res.token)
+          )
+        );
+
+      request.subscribe((res) => {
+        if (res.success) {
+          this._router.goto(res.role.toLowerCase());
+        }
+      });
     } else {
       Object.values(this.validateForm.controls).forEach((control) => {
         if (control.invalid) {
@@ -38,7 +51,6 @@ export class LoginComponent implements OnInit {
         }
       });
     }
-    // window.location.replace("/");
   }
   login() {
     this._auth.login("duy", "gmail").subscribe((d) => console.log(d));

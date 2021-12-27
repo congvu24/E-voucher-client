@@ -14,14 +14,15 @@ import { IVoucherService } from "../../interface/voucher-service.";
 })
 export class VoucherService implements IVoucherService {
   constructor(private _http: HttpService) {}
-  getVouchers(params?: any): Observable<{ data: Voucher[]; meta: any }> {
-    return this._http
-      .get("voucher", { params })
-      .pipe(map((res) => ({ data: res.data, meta: res.meta })));
-  }
-  createVoucher(): void {
+  createVoucher(id: string, type: VoucherType): Observable<any> {
     throw new Error("Method not implemented.");
   }
+  getVouchers(params?: any): Observable<{ data: Voucher[]; meta: any }> {
+    return this._http
+      .get("voucher", params)
+      .pipe(map((res) => ({ data: res.data, meta: res.meta })));
+  }
+
   // getVouchers(): Voucher[] {
   //   const vouchers: Array<Voucher> = [];
   //   for (let index = 0; index < 12; index++) {

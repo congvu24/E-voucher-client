@@ -1,11 +1,9 @@
-<div class="bg-white h-full">
-    <div class="wraper">
-      <app-side-nav [role]="role"></app-side-nav>
-      <div class=" pt-6">
-        <app-header [role]="role"></app-header>
-        <nz-alert nzBanner nzMessage="Warning text"></nz-alert>
-        <router-outlet></router-outlet>
-      </div>
+<div class="bg-background" >
+  <app-header [role]="role"></app-header>
+  <div class="flex">
+    <app-side-nav [role]="role" class="inline"></app-side-nav>
+    <div class="flex-grow">
+      <router-outlet></router-outlet>
     </div>
   </div>
-  
+</div>

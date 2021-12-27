@@ -1,20 +1,10 @@
 <div>
-  <div class="flex justify-between items-center">
-    <app-page-title title="Select services"></app-page-title>
-    <nz-badge [nzCount]="getSelectedFilterNumbers()">
-      <button
-        nz-button
-        nz-dropdown
-        nzType="primary"
-        [nzDropdownMenu]="filter"
-        [nzClickHide]="false"
-        [(nzVisible)]="filterVisible"
-        nzTrigger="click"
-        [nzPlacement]="'bottomRight'"
-      >
-        <i nz-icon nzType="filter" nzTheme="outline"></i>
-      </button>
-    </nz-badge>
+  <div class="flex justify-between pt-3 pb-1 bg-white px-6">
+   <div>
+    <h1 class="mb-0">Select service</h1>
+    <p class="text-lg">Select a service to scan or have a quick look at service information  <i nz-icon nzType="info-circle" nzTheme="outline"></i></p>
+   </div>
+   <img src="../../../../assets/card_title.png" width="160px" >
   </div>
   <div class="flex flex-wrap">
     <div class="p-4 w-1/3" *ngFor="let item of items">
@@ -28,34 +18,6 @@
     </div>
   </div>
 
-  <!-- filter -->
-  <nz-dropdown-menu #filter="nzDropdownMenu">
-    <ul nz-menu>
-      <li nz-menu-item>
-        <nz-space [nzDirection]="'vertical'">
-          <nz-checkbox-group [(ngModel)]="selected"></nz-checkbox-group>
-        </nz-space>
-      </li>
-      <li class="flex justify-between items-end gap-x-1 px-2 py-2 gap-2">
-        <button
-          nz-button
-          nzType="nzGhost"
-          nzSize="small"
-          (click)="onClearFilter()"
-        >
-          Clear filter
-        </button>
-        <button
-          nz-button
-          nzType="primary"
-          nzSize="small"
-          (click)="onApplyFilter()"
-        >
-          Apply filter
-        </button>
-      </li>
-    </ul>
-  </nz-dropdown-menu>
 
   <!-- service info -->
   <nz-modal

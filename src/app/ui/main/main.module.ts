@@ -20,6 +20,7 @@ import { StepThreeComponent } from "./create-service/step-three/step-three.compo
 import { CardComponent } from "./service-manage/card/card.component";
 import { FormComponent } from "./service-manage-table/form/form.component";
 import { QrScanComponent } from "./qr-scan/qr-scan.component";
+import { RouterModule } from "@angular/router";
 const icon = [GithubOutline];
 @NgModule({
   declarations: [

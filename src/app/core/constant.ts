@@ -10,7 +10,10 @@ export enum ServiceType {
   type2 = "type2",
   type3 = "type3",
 }
+export enum UserRole {
+  dealer = "DEALER",
+  suppier = "SUPPLIER",
+  agency = "AGENCY",
+}
 
-export const TOKEN_EXPRISE_DAY = 14;
-export const DEALER_ROLE = "DEALER";
-export const SUPPLIER_ROLE = "SUPPLIER";
+export const TOKEN_EXPRISE_SEC = 3600;

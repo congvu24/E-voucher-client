@@ -9,7 +9,7 @@ import { RouterService } from "../../../../core/services/router/router.service";
 export class StepThreeComponent implements OnInit {
   constructor(private _router: RouterService) {}
   done() {
-    this._router.goto("/main/services");
+    this._router.goto("/dealer/services");
   }
   again() {
     this._router.reload();

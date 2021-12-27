@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { UserRole } from "../../core/constant";
 import { StorageService } from "../../core/services";
 
 @Component({
@@ -11,7 +12,7 @@ export class MainComponent implements OnInit {
 
   constructor(private _storage: StorageService) {
     // this.role = this._storage.getToken("role");
-    this.role = "dealer";
+    this.role = UserRole.dealer;
   }
 
   ngOnInit(): void {}

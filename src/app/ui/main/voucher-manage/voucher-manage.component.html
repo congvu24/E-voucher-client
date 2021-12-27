@@ -1,9 +1,33 @@
 <div>
-  <app-page-title
-    class="col-span-full self-end"
-    title="Redeemed vouchers"
-  ></app-page-title>
-  <div>
+  <div class=" bg-white mb-6  pt-3 pb-1 px-6">
+    <h1>Claimed voucher</h1>
+  </div>
+
+  <!-- filter -->
+  <div class="m-6 py-6 bg-white px-2">
+    <form nz-form [formGroup]="filter" (ngSubmit)="onFilter()" nzLayout="horizontal">
+     <div nz-row [nzGutter]="16">
+      <div nz-col nzSpan="12">
+        <nz-form-item class="mb-0"   >
+          <nz-form-label>User name</nz-form-label>
+          <nz-form-control >
+            <input type="text" nz-input placeholder="Service namne" formControlName="name">
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+     
+     </div>
+     <div>
+      <div nz-col [nzSpan]="24" class="text-right">
+        <button nz-button [nzType]="'primary'" class="mr-2">Search</button>
+        <button nz-button (click)="resetForm()">Clear</button>
+       
+      </div>
+    </div>
+    </form>
+  </div>
+  
+  <div class="mx-6">
     <nz-table #basicTable [nzData]="dataSet">
         <thead>
           <tr>

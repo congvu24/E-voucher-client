@@ -1,6 +1,6 @@
-<div class="grid grid-cols-8 gap-12">
+<div class="flex">
   <!-- left -->
-  <div class="col-span-3 justify-self-end">
+  <div class="">
     <nz-upload
       class="avatar-uploader"
       nzAction="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -23,23 +23,23 @@
   </div>
 
   <!-- right -->
-  <div class="col-span-5 col-start-4">
+  <div class="bg-white p-3 mb-3" >
     <form
       nz-form
-      [formGroup]="validateForm"
+      [formGroup]="packageForm"
       [nzLayout]="'vertical'"
       (ngSubmit)="submitForm()"
     >
       <nz-form-item>
-        <nz-form-label nzRequired>Service name</nz-form-label>
-        <nz-form-control nzValidatingTip="Validating...">
+        <nz-form-label nzRequired  >Service name</nz-form-label>
+        <nz-form-control nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="Length must be > 4">
           <input nz-input formControlName="name" placeholder="Service name" />
         </nz-form-control>
       </nz-form-item>
 
       <nz-form-item>
         <nz-form-label nzRequired>Description</nz-form-label>
-        <nz-form-control>
+        <nz-form-control nzHasFeedback nzValidatingTip="Validating..." nzErrorTip="Length must be > 4">
           <input
             nz-input
             formControlName="description"
@@ -51,23 +51,29 @@
         <div nz-col nzSpan="6">
           <nz-form-item>
             <nz-form-label nzRequired>Min</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Only number is allowed">
+            <nz-form-control nzHasFeedback  [nzErrorTip]="minErrorTpl" nzValidatingTip="Validating...">
               <input nz-input type="number" formControlName="min" placeholder="in USD" />
+              <ng-template #minErrorTpl let-control>
+                <ng-container *ngIf="packageForm.errors?.['invalidMaxValue'] && (packageForm.touched || packageForm.dirty)">Max can't smaller than Min</ng-container>
+              </ng-template>
+    
             </nz-form-control>
           </nz-form-item>
         </div>
         <div nz-col nzSpan="6">
           <nz-form-item>
             <nz-form-label nzRequired>Max</nz-form-label>
-            <nz-form-control nzHasFeedback nzErrorTip="Only number is allowed">
+            <nz-form-control nzHasFeedback [nzErrorTip]="maxErrorTpl" nzValidatingTip="Validating...">
               <input nz-input type="number" formControlName="max" placeholder="in USD" />
+              <ng-template #maxErrorTpl let-control>
+                <ng-container *ngIf="packageForm.errors?.['invalidMaxValue'] && (packageForm.touched || packageForm.dirty)">Max can't smaller than Min</ng-container>
+              </ng-template>
+    
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
-      <label nz-checkbox formControlName="isShow">
-        <span>Is show</span>
-      </label>
+      <button nz-button nzType="primary">Check</button>
     </form>
   </div>
 </div>

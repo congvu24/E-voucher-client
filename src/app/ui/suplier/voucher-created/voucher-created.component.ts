@@ -1,10 +1,12 @@
 import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormGroup } from "@angular/forms";
 import {
   Voucher,
   VoucherStatus,
   VoucherType,
 } from "../../../core/interface/voucher";
 import { IVoucherService } from "../../../interface/voucher-service.";
+
 import { VoucherService } from "../../../service/voucher/voucher.service";
 
 @Component({
@@ -19,45 +21,35 @@ export class VoucherCreatedComponent implements OnInit {
   meta: any;
 
   //ui control
-  filterVisible: boolean;
-  type: string[];
-  status: string[];
-  selectedStatus: string[] = [];
-  selectedType: string[] = [];
+  filter: FormGroup;
+  status = VoucherStatus;
+  type = VoucherType;
+  page = 1;
 
-  constructor(private _voucher: IVoucherService) {
-    this.type = Object.values(VoucherType).map((v) => v);
-    this.status = Object.values(VoucherStatus).map((v) => v);
-  }
-  onFilterClick(visible: boolean) {
-    this.filterVisible = visible;
-  }
-  handleStatusChange(checked: boolean, tag: string): void {
-    if (checked) {
-      this.selectedStatus.push(tag);
-    } else {
-      this.selectedStatus = this.selectedStatus.filter((t) => t !== tag);
-    }
-    console.log("You are interested in: ", this.selectedStatus);
-  }
-  handleTypeChange(checked: boolean, tag: string): void {
-    if (checked) {
-      this.selectedType.push(tag);
-    } else {
-      this.selectedType = this.selectedType.filter((t) => t !== tag);
-    }
-    console.log("You are interested in: ", this.selectedType);
-  }
-  onApplyFilter() {
-    //call api
-    console.log("s");
+  constructor(private _voucher: IVoucherService, private _fb: FormBuilder) {
+    this.filter = _fb.group({ name: [null], type: [null], status: [null] });
   }
 
+  onFilter() {
+    this._voucher
+      .getVouchers({ ...this.filter.value, page: this.page })
+      .subscribe((res) => {
+        this.vouchers = res.data;
+        this.meta = res.meta;
+      });
+  }
+
+  resetForm() {
+    this.filter = this._fb.group({
+      name: [null],
+      type: [null],
+      status: [null],
+    });
+  }
   ngOnInit(): void {
-    this._voucher.getVouchers().subscribe((res) => {
+    this._voucher.getVouchers({ page: this.page }).subscribe((res) => {
       this.vouchers = res.data;
       this.meta = res.meta;
     });
-    this.filterVisible = false;
   }
 }
