@@ -1,0 +1,9 @@
+.wraper{
+    display: grid;
+    grid-template-columns: 70px 1fr;
+
+    .content{
+        padding: 36px 24px;
+        padding-bottom: 0px;
+    }
+}

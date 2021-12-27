@@ -1,9 +1,69 @@
-<div>
-  <div class="flex w-full justify-center items-center">
-    <app-page-title title="Scan QR code"></app-page-title>
-  </div>
-<!-- scan here -->
-  <div>
+<!-- <div class="">
+  <div class="m-auto w-xl">
+    <div class="bg-white">
+      <button nz-button nzType="link" (click)="back()">
+        <i nz-icon nzType="arrow-left" nzTheme="outline" class="mt-5"> </i>
+        Back
+      </button>
+      <h1 class="text-center">Scan voucher code</h1>
+    </div>
 
-  </div>
+    <div
+      class="
+        w-530
+        h-530
+        m-auto
+        relative
+        flex
+        items-center
+        flex-col
+        justify-center
+        overflow-hidden
+      "
+    >
+      <video id="video" class="min-h-full min-w-full"></video>
+      <div
+        class="
+          min-h-full min-w-full
+          border-2 border-solid border-primary
+          absolute
+          top-0
+          left-0
+          z-40
+        "
+      ></div>
+    </div>
+  
+   
+</div> -->
+
+
+
+<div class="flex-grow h-full relative">
+  <!-- <p class="bg-gray-800 min-h-full min-w-full">s</p> -->
+  <video id="video" class="min-h-full min-w-full"></video>
+
+ <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+  <div class="w-350 h-350 border border-solid border-primary  "></div>
+ </div>
+ <div class="flex justify-center w-full gap-2 py-8">
+  <button
+    nz-button
+    *ngIf="!!result"
+    [disabled]="!result"
+    (click)="commitVoucher()"
+    nzSize="large"
+  >
+    Rescan
+  </button>
+  <button
+    nz-button
+    nzType="primary"
+    [disabled]="!result"
+    (click)="commitVoucher()"
+    nzSize="large"
+  >
+    Done
+  </button>
+</div>
 </div>

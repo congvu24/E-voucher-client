@@ -13,3 +13,4 @@ declare type UniqueId = string;
 declare type DateTimeString = string;
 declare type Email = string;
 declare type UUID = string;
+declare type UserRoute = { iconType: string; path: string; label: string };

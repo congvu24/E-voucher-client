@@ -1,10 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -12,32 +7,36 @@ import {
   ValidationErrors,
   Validators,
 } from "@angular/forms";
-import { NzMessageService } from "ng-zorro-antd/message";
-import { NzUploadFile } from "ng-zorro-antd/upload";
-import { Observable, Observer } from "rxjs";
+
+import { Observable, Observer, of } from "rxjs";
+import { map } from "rxjs/operators";
 import { Package } from "../../../../core/interface/package";
+import { IPackageService } from "../../../../interface/package-service";
+import { PackageService } from "../../../../service/package/package.service";
 
 @Component({
   selector: "service-edit-form",
   templateUrl: "./form.component.html",
   styleUrls: ["./form.component.scss"],
+  providers: [{ provide: IPackageService, useClass: PackageService }],
 })
 export class FormComponent implements OnInit {
-  @Input() service: number[]; // fake service, it should in type of Package
+  @Input() package: Package;
   validateForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
-    this.validateForm = this.fb.group({
-      name: ["", [Validators.required], [this.userNameAsyncValidator]],
-      description: ["", [Validators.email, Validators.required]],
-      min: ["", [Validators.required]],
-      max: ["", [this.confirmValidator]],
-      isShow: ["", [Validators.required]],
-    });
+  constructor(private fb: FormBuilder, private _package: IPackageService) {}
+
+  /**
+   * validate and submit editservice form using service
+   *
+   * @returns true if submit success, false if not
+   */
+  submitForm(): Observable<Package> {
+    const { id, ...updates } = this.validateForm.value;
+
+    return this._package.updatePackage(this.package.id, updates);
   }
-  submitForm(): void {
-    console.log("submit", this.validateForm.value);
-  }
+
   validateConfirmPassword(): void {
     setTimeout(() =>
       this.validateForm.controls.confirm.updateValueAndValidity()
@@ -66,5 +65,20 @@ export class FormComponent implements OnInit {
     }
     return {};
   };
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.validateForm = this.fb.group({
+      name: [
+        this.package?.name,
+        [Validators.required],
+        [this.userNameAsyncValidator],
+      ],
+      description: [
+        this.package?.description,
+        [Validators.email, Validators.required],
+      ],
+      min: [this.package?.min, [Validators.required]],
+      max: [this.package?.max, [this.confirmValidator]],
+      isShow: [this.package?.isShow, [Validators.required]],
+    });
+  }
 }

@@ -1,15 +1,22 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Type, ViewChild } from "@angular/core";
 import { NzModalService } from "ng-zorro-antd/modal";
 import { fakeservice } from "../../../../assets/fakedata";
 import { ServiceType } from "../../../core/constant";
+import { ServiceFormDirective } from "../../../shared/directives/dealer/service-form.directive";
+import { FormComponent } from "../service-manage-table/form/form.component";
 @Component({
   selector: "app-service-manage",
   templateUrl: "./service-manage.component.html",
   styleUrls: ["./service-manage.component.scss"],
 })
 export class ServiceManageComponent implements OnInit {
+  // load dynamic form
+  @ViewChild(ServiceFormDirective, { static: true })
+  serviceForm!: ServiceFormDirective;
+
   items = [1, 2, 3, 4, 5, 6, 12, 3, 3, 3, 4];
   service: any; // fake data
+  editData: number; // fake edit form data, it should be Package instead of number
   types = ServiceType;
   filterVisible = false;
   selected: { label: string; value: ServiceType; checked: boolean }[];
@@ -44,12 +51,6 @@ export class ServiceManageComponent implements OnInit {
   };
   openView = () => {
     this.viewing = true;
-  };
-  endEdit = () => {
-    this.editing = false;
-  };
-  openEdit = () => {
-    this.editing = true;
   };
 
   ngOnInit(): void {}

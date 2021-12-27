@@ -7,10 +7,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 export class RouterService {
   constructor(private _router: Router, private _activeRoute: ActivatedRoute) {}
 
-  goto(url: string = "/") {
-    const destination = url;
+  goto(url: string = "") {
+    const destination = "/" + url;
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
-    this._router.onSameUrlNavigation = "reload";
+    // this._router.onSameUrlNavigation = "reload";
     this._router.navigate([destination]);
   }
 

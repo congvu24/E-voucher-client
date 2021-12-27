@@ -8,24 +8,34 @@ import {
   BellOutline,
   KeyOutline,
   LogoutOutline,
+  GithubOutline,
 } from "@ant-design/icons-angular/icons";
-import { NzIconModule } from "ng-zorro-antd/icon";
 import { VoucherManageComponent } from "./voucher-manage/voucher-manage.component";
 import { ServiceManageComponent } from "./service-manage/service-manage.component";
-import { CreateServiceComponent } from './create-service/create-service.component';
-import { StepOneComponent } from './create-service/step-one/step-one.component';
-import { StepTwoComponent } from './create-service/step-two/step-two.component';
-import { StepThreeComponent } from './create-service/step-three/step-three.component';
-import { CardComponent } from './service-manage/card/card.component';
-import { FormComponent } from './service-manage/form/form.component';
-const icon = [];
+import { ServiceManageTableComponent } from "./service-manage-table/service-manage.component";
+import { CreateServiceComponent } from "./create-service/create-service.component";
+import { StepOneComponent } from "./create-service/step-one/step-one.component";
+import { StepTwoComponent } from "./create-service/step-two/step-two.component";
+import { StepThreeComponent } from "./create-service/step-three/step-three.component";
+import { CardComponent } from "./service-manage/card/card.component";
+import { FormComponent } from "./service-manage-table/form/form.component";
+import { QrScanComponent } from "./qr-scan/qr-scan.component";
+import { RouterModule } from "@angular/router";
+const icon = [GithubOutline];
 @NgModule({
-  declarations: [MainComponent, VoucherManageComponent, ServiceManageComponent, CreateServiceComponent, StepOneComponent, StepTwoComponent, StepThreeComponent, CardComponent, FormComponent],
-  imports: [
-    CommonModule,
-    MainRoutingModule,
-    SharedModule,
-    NzIconModule.forChild(icon),
+  declarations: [
+    MainComponent,
+    VoucherManageComponent,
+    ServiceManageComponent,
+    CreateServiceComponent,
+    StepOneComponent,
+    StepTwoComponent,
+    StepThreeComponent,
+    CardComponent,
+    FormComponent,
+    QrScanComponent,
+    ServiceManageTableComponent,
   ],
+  imports: [CommonModule, MainRoutingModule, SharedModule],
 })
 export class MainModule {}

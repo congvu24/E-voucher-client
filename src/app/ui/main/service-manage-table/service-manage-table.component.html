@@ -1,0 +1,131 @@
+<div>
+  <!-- page title and filter -->
+  <div class="flex justify-between items-center bg-white mb-6 pt-3 pb-1 px-6">
+    <h1>Service</h1>
+    <!-- create service -->
+    <span nz-tooltip nzTooltipTitle="Create new sevice">
+      <a href="/dealer/services/create">
+        <i nz-icon nzType="plus" nzTheme="outline"></i
+      ></a>
+    </span>
+  </div>
+<!-- filter -->
+<div class="m-6 py-6 bg-white px-2">
+  <form 
+  class=""
+    nz-form
+    [formGroup]="filter"
+    (ngSubmit)="onFilter()"
+    nzLayout="horizontal"
+  >
+    <div class="antform grid grid-cols-24 gap-4">
+      <div class="col-span-6">
+        <nz-form-item>
+          <nz-form-label>Name</nz-form-label>
+          <nz-form-control>
+            <input
+              type="text"
+              nz-input
+              placeholder="Service namne"
+              formControlName="name"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div class="col-span-4">
+        <nz-form-item>
+          <nz-form-label>Value</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              formControlName="value"
+              nzPlaceHolder="All"
+              nzAllowClear
+            >
+              <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+              <nz-option [nzLabel]="100" [nzValue]="100"> </nz-option>
+              <nz-option [nzLabel]="200" [nzValue]="200"> </nz-option>
+              <nz-option [nzLabel]="300" [nzValue]="300"> </nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+     
+    </div>
+    <div>
+      <div nz-col [nzSpan]="24" class="text-right">
+        <button nz-button [nzType]="'primary'" class="mr-2">Search</button>
+        <button nz-button (click)="resetForm()">Clear</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+  <!-- table -->
+  <div class="mx-6">
+    <nz-table #basicTable [nzData]="packages" 
+   [nzPageIndex]="meta?.page"
+    [nzPageSize]="meta?.take"
+    [nzTotal]="meta?.itemCount"
+    (nzPageIndexChange)="onPageIndexChange($event)"
+    >
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Name</th>
+          <th>Description</th>
+          <th>Worth</th>
+          <th>Status</th>
+          <th>Create</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i= index">
+          <td>{{  i + 1 + meta?.take * (meta?.page - 1) }}</td>
+          <td>{{ data?.name | titlecase}}</td>
+          <td>{{ data?.description |titleCase }}</td>
+          <td>{{data?.minValue | minMaxCurrency: data?.maxValue}}</td>
+          <td><app-s-status-tag [isShow]="data?.isShow"></app-s-status-tag></td>
+          <td>{{ data?.createdAt |date }}</td>
+          <td>
+            <nz-tag
+              nzColor="warning"
+              class="cursor-pointer"
+              (click)="loadEditForm(data)"
+            >
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+              <span>Edit</span>
+            </nz-tag>
+            <nz-tag
+            nzColor="error"
+            class="cursor-pointer"
+            (click)="showDeleteConfirm(data.id, data.name)"
+          >
+            <i nz-icon nzType="delete" nzTheme="outline"></i>
+            <span>Delete</span>
+          </nz-tag>
+
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+
+  <!-- edit service -->
+  <nz-modal
+    [(nzVisible)]="editing"
+    nzTitle="Service editing"
+    (nzOnCancel)="endEdit()"
+  >
+    <ng-container *nzModalContent>
+      <service-edit-form [package]="editData"></service-edit-form>
+    </ng-container>
+
+    <div *nzModalFooter>
+      <button nz-button (click)="endEdit()">Close</button>
+      <button nz-button nzType="primary" (click)="saveResult()">
+        Save and close
+      </button>
+    </div>
+  </nz-modal>
+</div>

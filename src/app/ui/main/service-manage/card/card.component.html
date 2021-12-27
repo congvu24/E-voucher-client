@@ -1,56 +1,51 @@
-<div
-  class="
-    bg-white
-    border border-base-gray border-solid
-    rounded-sm
-    hover:shadow-app
-    relative
-  "
->
-  <a
-    class="absolute right-0 top-0 bg-white p-2 cursor-pointer"
-    nz-dropdown
-    [nzDropdownMenu]="more"
-    nzTrigger="click"
-
-    >More</a
-  >
-  <div class="w-full h-350 bg-primary"></div>
+<div class="bg-white rounded-sm hover:shadow-app relative">
+  <i
+    style="background-color: #c9d8b6"
+    class="absolute right-0 top-0 p-2 cursor-pointer hover:text-primary"
+    (click)="openChildView()"
+    nz-icon
+    nzType="info-circle"
+    nzTheme="outline"
+  ></i>
+  <div class="w-full h-350">
+    <img
+      src="https://source.unsplash.com/random?"
+      alt=""
+      class="object-cover w-full h-full"
+    />
+  </div>
   <div class="flex flex-col">
     <div class="flex-grow flex-shrink w-full">
       <div class="p-4 flex flex-col">
-        <h3>NET COMPANY</h3>
+        <h3>Lorem ipsum</h3>
         <p>Lorem ipsum dolor sit amet</p>
         <h1>99 ~ 1000$</h1>
       </div>
-      <div
+      <a
+        href="dealer/vouchers/select-service/{{ service }}/scanner"
         class="
           bg-primary
+          block
           cursor-pointer
           text-center
           py-4
           text-white
           uppercase
           font-medium
+          hover:text-white
+          text-base
         "
-        (click)="openChildView()"
       >
-        View
-      </div>
+        <span class="flex items-center justify-center gap-2">
+          <span style="font-size: 1em"> Scan voucher </span>
+          <i
+            nz-icon
+            nzType="scan"
+            nzTheme="outline"
+            style="font-size: 1.5em"
+          ></i>
+        </span>
+      </a>
     </div>
   </div>
-
-  <!-- more dropdown -->
-  <nz-dropdown-menu #more="nzDropdownMenu">
-    <ul nz-menu nzSelectable>
-      <li nz-menu-item (click)="openChildEdit()">
-        <i nz-icon style="font-size: large" nzType="edit" nzTheme="fill"> </i>
-        Edit information
-      </li>
-      <li nz-menu-item nzDanger (click)="showDeleteConfirm()">
-        <i nz-icon style="font-size: large" nzType="delete" nzTheme="fill"> </i
-        >Delete pernamently
-      </li>
-    </ul>
-  </nz-dropdown-menu>
 </div>

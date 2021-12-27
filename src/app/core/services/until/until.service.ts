@@ -1,25 +1,26 @@
 import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: "root"
+  providedIn: "root",
 })
 export class UntilService {
+  constructor() {}
+  setCookie(name, value, time, path = "/") {
+    // const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    const expires = time;
+    document.cookie =
+      name + "=" + encodeURIComponent(value) + "; expires=" + expires;
+  }
 
-  constructor() { }
-  setCookie = (name, value, days = 7, path = "/") => {
-    const expires = new Date(Date.now() + days * 864e5).toUTCString();
-    document.cookie = name + "=" + encodeURIComponent(value) + "; expires=" + expires + "; path=" + path;
-  };
+  getCookie(name) {
+    const value = document.cookie.split("; ").reduce((r, v) => {
+      const parts = v.split("=");
+      return parts[0] === name ? decodeURIComponent(parts[1]) : r;
+    }, "");
+    return value;
+  }
 
-  getCookie = (name) => document.cookie.split("; ").reduce((r, v) => {
-    const parts = v.split("=");
-    return parts[0] === name ? decodeURIComponent(parts[1]) : r;
-  }, "");
-
-  deleteCookie = (name, path = "/") => {
+  deleteCookie(name, path = "/") {
     this.setCookie(name, "", -1, path);
-  };
-
+  }
 }
-
-

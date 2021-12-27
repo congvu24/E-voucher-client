@@ -6,4 +6,6 @@ export type Package = {
   min: string;
   max: string;
   isShow: boolean;
+  createdAt: DateTimeString;
+  updatedAt: DateTimeString;
 };

@@ -1,9 +1,15 @@
-import { Voucher } from "../core/interface/voucher";
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs";
+import { Voucher, VoucherType } from "../core/interface/voucher";
 
-export interface IVoucherService {
-  createVoucher(): void;
-  getVouchers(): Voucher[];
-  getVoucherByIds(): Voucher[];
-  deleteVoucher(): void;
-  editVoucherById(): Voucher;
+@Injectable()
+export abstract class IVoucherService {
+  abstract createVoucher(id: UUID, type: VoucherType): Observable<any>;
+  abstract getVouchers(
+    params?: any
+  ): Observable<{ data: Voucher[]; meta: any }>;
+  abstract getVoucherByIds(): Voucher[];
+  abstract deleteVoucher(): void;
+  abstract editVoucherById(): Voucher;
+  abstract commitVoucher(info: string): boolean;
 }

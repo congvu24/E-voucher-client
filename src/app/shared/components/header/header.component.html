@@ -1,31 +1,40 @@
-<div class="flex items-end justify-between">
-  <h4 class="text-primary uppercase">Logged in as {{ role }}</h4>
+<div class="flex items-center justify-between px-4 bg-header py-1">
+  <!-- <h4 class="text-primary uppercase">Logged in as {{ role }}</h4> -->
+  <div class="full flex items-center gap-3">
+    <div class="rounded-full w-10  h-10 bg-white"></div>
+   <h3 class="font-semibold text-white"> E-voucher-client</h3>
+  </div>
   <div>
-    <nz-badge [nzCount]="5" style="margin-right: 24px">
-      <nz-avatar nzIcon="bell" [nzShape]="'square'"></nz-avatar>
+    <nz-badge nzDot class="align-middle mr-7 text-gray-500 cursor-pointer" nzTooltipTitle="You have new notification" nzTooltipPlacement="topCenter" nz-tooltip>
+      <i nz-icon nzType="bell" nzTheme="fill" style="font-size: 1.6em; color: white;"></i>
     </nz-badge>
     <ng-container>
+     <div class="inline text-white" nz-dropdown
+     [nzDropdownMenu]="menu"
+     [nzClickHide]="false"
+     [nzPlacement]="'bottomRight'">
       <nz-avatar
-        class="cursor-pointer"
-        nzIcon="user"
-        nzSize="large"
-        [ngStyle]="{ 'background-color': '#1DA57A' }"
-        nz-dropdown
-        [nzDropdownMenu]="menu"
-        [nzClickHide]="false"
-        [(nzVisible)]="visible"
-        [nzPlacement]="'bottomRight'"
-      ></nz-avatar>
+      class="cursor-pointer mr-2"
+      nzText="K"
+      nzSize="small"
+      [ngStyle]="{ 'background-color': '#9DBEB9' }"
+      
+    ></nz-avatar>
+    Khương Duy
+     </div>
       <nz-dropdown-menu #menu="nzDropdownMenu">
         <ul nz-menu>
           <li nz-menu-item>
- <span> <i  nz-icon nzType="key" nzTheme="outline"></i>
-
-  Change password</span>
+            <span>
+              <i nz-icon nzType="key" nzTheme="outline"></i>
+              Change password</span
+            >
           </li>
-          <li nz-menu-item>
-            <i nz-icon nzType="logout" nzTheme="outline"></i>
-            Logout
+          <li nz-menu-item nzDanger (click)="logout()">
+            <span>
+              <i nz-icon nzType="logout" nzTheme="outline"></i>
+              Logout
+            </span>
           </li>
         </ul>
       </nz-dropdown-menu>
