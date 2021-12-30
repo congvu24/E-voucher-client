@@ -14,18 +14,17 @@
       <div class="antform grid grid-cols-24 gap-4">
         <div class="col-span-7">
           <nz-form-item class="mb-0">
-            <nz-form-label>Voucher type</nz-form-label>
+            <nz-form-label>Request status</nz-form-label>
             <nz-form-control>
               <nz-select
-                formControlName="type"
+                formControlName="status"
                 nzPlaceHolder="All"
-              
               >
-                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+                <nz-option  [nzValue]="null" nzLabel="All"></nz-option>
                 <nz-option
-                  *ngFor="let item of type | keyvalue"
-                  [nzValue]="item.value"
+                  *ngFor="let item of status | keyvalue"
                   nzLabel="{{ item.key | titlecase }}"
+                  [nzValue]="item.value"
                 >
                 </nz-option>
               </nz-select>
@@ -34,17 +33,18 @@
         </div>
         <div class="col-span-7">
           <nz-form-item class="mb-0">
-            <nz-form-label>Request status</nz-form-label>
+            <nz-form-label>Voucher type</nz-form-label>
             <nz-form-control>
               <nz-select
-                formControlName="status"
+                formControlName="type"
                 nzPlaceHolder="All"
+              
               >
-                <nz-option  nzValue="{{null}}" nzLabel="All"></nz-option>
+                <nz-option [nzValue]="null" nzLabel="All"></nz-option>
                 <nz-option
-                  *ngFor="let item of status | keyvalue"
-                  nzLabel="{{ item.key | titlecase }}"
+                  *ngFor="let item of type | keyvalue"
                   [nzValue]="item.value"
+                  nzLabel="{{ item.key | titlecase }}"
                 >
                 </nz-option>
               </nz-select>
@@ -67,24 +67,25 @@
       [nzPageSize]="meta?.take"
       [nzTotal]="meta?.itemCount"
       (nzPageIndexChange)="onPageIndexChange($event)"
+      nzTableLayout="fixed"
     >
       <thead>
         <tr>
-          <th>#</th>
+          <th nzWidth="40px">#</th>
           <th>Email</th>
-          <th>Status</th>
-          <th>Note</th>
+          <th nzWidth="150px">Status</th>
+          <th nzWidth="500px">Note</th>
           <th>Create</th>
-          <th>Voucher Type</th>
+          <th nzWidth="150px">Voucher Type</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
-          <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
+          <td >{{ i + 1 + meta?.take * (page - 1) }}</td>
           <td>{{ data.name }}</td>
           <td><app-r-status-tag [status]="data.status"></app-r-status-tag></td>
-          <td>{{ data.note | titleCase }}</td>
+          <td nzEllipsis>sjdklasjdklsajdklsajdkl;asjkld;sajlk;dsajkl;dsajkl;jdkl;sfjdlk;sfjkldsafuiosdaufiewouriowqejnrkmlenwmndfskjfkdsjfkds;lk</td>
           <td>{{ data.createdAt | date }}</td>
           <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td class="flex gap-2">

@@ -25,7 +25,7 @@ export class PackageService implements IPackageService {
     return this._http.patch(`${PACKAGE_ENDPOINT}/${id}`, updates);
   }
 
-  getPackages(params: any): Observable<{ meta: Meta; data: Package[] }> {
+  getPackages(params?: any): Observable<{ meta: Meta; data: Package[] }> {
     return this._http.get(PACKAGE_ENDPOINT, { params }).pipe(
       map((res: any) => {
         const meta: Meta = res.meta;

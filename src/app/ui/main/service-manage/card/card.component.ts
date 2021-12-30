@@ -11,7 +11,7 @@ import { Package } from "../../../../core/interface/package";
 })
 export class CardComponent implements OnInit {
   // @Input() service: Package;
-  @Input() service: number;
+  @Input() service: Package;
   @Input() openView: () => void;
   @Input() endView: () => void;
   @Input() openEdit: () => void;

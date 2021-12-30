@@ -31,10 +31,12 @@ export class TokenInterceptor implements HttpInterceptor {
     let cleanedParams = new HttpParams();
     request.params.keys().forEach((x) => {
       const paramvalue = request.params.get(x);
-      if (paramvalue) {
+      if (paramvalue !== undefined && paramvalue != null && paramvalue !== "") {
         cleanedParams = cleanedParams.append(x, paramvalue);
       }
     });
+    console.log("http", cleanedParams);
+
     //clean body
     const cleanedBody = cleanObject(request.body);
     request = request.clone({

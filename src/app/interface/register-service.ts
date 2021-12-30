@@ -5,8 +5,6 @@ export abstract class IRegisterService {
   abstract getRegisters(
     params?: any
   ): Observable<{ data: Register[]; meta: any }>;
-  abstract editRegisterById(
-    citizenId: string,
-    isValid: boolean
-  ): Observable<Register>;
+  abstract acceptRegister(citizenId: UUID): Observable<Register>;
+  abstract rejectRegister(citizenId: UUID): Observable<Register>;
 }

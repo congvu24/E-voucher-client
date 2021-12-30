@@ -1,10 +1,9 @@
 <div class="max-w-lg mx-auto">
     <nz-alert nzType="info" nzMessage="Please check carefully!!" nzShowIcon></nz-alert>
-    <nz-descriptions class="p-3 mb-3 bg-white" nzTitle="Service info"  nzBordered [nzColumn]="1">
-        <nz-descriptions-item nzTitle="Name">Cloud Database</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Description">Prepaid</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Min">10$</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Max Time">20$</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Available">Yes</nz-descriptions-item>
+    <nz-descriptions class="p-3 mb-3 bg-white" nzTitle="Service info"  nzBordered [nzColumn]="1" *ngIf="package">
+        <nz-descriptions-item nzTitle="Name">{{package.name |titleCase}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Description">{{package.description |titleCase}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Min">{{package.minValue |currency}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Max ">{{package.maxValue |currency}}</nz-descriptions-item>
       </nz-descriptions>
 </div>

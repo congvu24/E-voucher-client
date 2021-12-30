@@ -12,10 +12,10 @@ const routes: Routes = [
     path: "",
     component: MainComponent,
     children: [
-      { path: "", component: ServiceManageComponent },
+      { path: "", redirectTo: "voucher/select-service" },
       { path: "services/create", component: CreateServiceComponent },
       {
-        path: "vouchers/select-service/:id/scanner",
+        path: "voucher/scanner/:id",
         component: QrScanComponent,
       },
       { path: "voucher/select-service", component: ServiceManageComponent },

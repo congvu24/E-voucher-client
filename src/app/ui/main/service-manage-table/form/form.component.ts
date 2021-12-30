@@ -76,8 +76,8 @@ export class FormComponent implements OnInit {
         this.package?.description,
         [Validators.email, Validators.required],
       ],
-      min: [this.package?.min, [Validators.required]],
-      max: [this.package?.max, [this.confirmValidator]],
+      min: [this.package?.minValue, [Validators.required]],
+      max: [this.package?.maxValue, [this.confirmValidator]],
       isShow: [this.package?.isShow, [Validators.required]],
     });
   }

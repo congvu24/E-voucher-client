@@ -10,10 +10,11 @@ import { cleanObject } from "../../until";
   providedIn: "root",
 })
 export class RequestService implements IRequestService {
-  constructor(private _http: HttpService, private hts: HttpClient) {}
+  constructor(private _http: HttpClient) {}
   getRequests(params?: any): Observable<any> {
     console.log(params);
-    return this._http.get("supplier/request", params).pipe(
+
+    return this._http.get("supplier/request", { params }).pipe(
       map((res: any) => ({
         data: res.data,
         meta: res.meta,

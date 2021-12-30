@@ -10,7 +10,7 @@ export class RouterService {
   goto(url: string = "") {
     const destination = "/" + url;
     this._router.routeReuseStrategy.shouldReuseRoute = () => false;
-    // this._router.onSameUrlNavigation = "reload";
+    this._router.onSameUrlNavigation = "reload";
     this._router.navigate([destination]);
   }
 

@@ -16,10 +16,11 @@ export const SUPPLIER_ROUTES: UserRoute[] = [
 ];
 export const AGENCY_ROUTES: UserRoute[] = [
   // { iconType: "home", path: "/agency" },
-  { iconType: "home", label: "Requests", path: "/agency" },
+  { iconType: "home", label: "Requests", path: "/goverment" },
 ];
 
 // api route
 
 export const PACKAGE_ENDPOINT = "package";
+export const VOUCHER_ENDPOINT = "voucher";
 export const LOGIN_ENDPOINT = "auth/login";

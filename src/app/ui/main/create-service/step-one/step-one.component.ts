@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
@@ -11,6 +11,8 @@ import {
 import { NzMessageService } from "ng-zorro-antd/message";
 import { NzUploadFile } from "ng-zorro-antd/upload";
 import { Observable, Observer } from "rxjs";
+import { Package } from "../../../../core/interface/package";
+import { CreatePackageService } from "../../../../service/package/create-package.service";
 
 @Component({
   selector: "app-step-one",
@@ -22,33 +24,39 @@ export class StepOneComponent {
   avatarUrl?: string;
   loading = false; // upload loading
 
-  constructor(private fb: FormBuilder, private msg: NzMessageService) {
+  constructor(
+    private fb: FormBuilder,
+    private msg: NzMessageService,
+    private _packageService: CreatePackageService
+  ) {
     this.packageForm = new FormGroup({
-      name: new FormControl(null, [
+      name: new FormControl("", [Validators.required, Validators.minLength(4)]),
+      description: new FormControl("", [
         Validators.required,
         Validators.minLength(4),
       ]),
-      description: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      min: new FormControl(3, [Validators.required, Validators.min(0)]),
-      max: new FormControl(1, [Validators.required, Validators.min(0)]),
+      min: new FormControl(null, [Validators.required, Validators.min(0)]),
+      max: new FormControl(null, [Validators.required, Validators.min(0)]),
     });
   }
-  get min() {
-    return this.packageForm.get("min");
-  }
-  get max() {
-    return this.packageForm.get("max");
-  }
-  submitForm(): void {
+
+  submitForm() {
     if (this.packageForm.valid) {
+      this._packageService.package = this._packageService.build(
+        this.packageForm.value
+      );
+      if (this._packageService.package.validateMinAndMax()) {
+      } else {
+        const min = this.packageForm.get("min");
+        const max = this.packageForm.get("max");
+        throw new Error("Min value must smaller than Max value");
+      }
     } else {
       Object.values(this.packageForm.controls).forEach((control) => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
+          throw new Error("invalid properties");
         }
       });
     }
@@ -72,7 +80,13 @@ export class StepOneComponent {
         observer.complete();
         return;
       }
-      observer.next(isJpgOrPng && isLt2M);
+      // observer.next(isJpgOrPng && isLt2M); validate complete, upload file
+      let base64: string;
+      this.getBase64(file.originFileObj, (img: string) => {
+        base64 = img;
+      });
+      this._packageService.package.setImage(base64);
+      observer.next(false);
       observer.complete();
     });
 
@@ -94,6 +108,7 @@ export class StepOneComponent {
         break;
     }
   }
+
   private getBase64(img: File, callback: (img: string) => void): void {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result?.toString()));

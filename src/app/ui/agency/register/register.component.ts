@@ -38,21 +38,16 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   rejectRegister(id: string): void {
-    this._register.editRegisterById(id, false).subscribe((res) => {
-      const index = this.registers.findIndex((item) => item.id === id);
-      if (index === -1) {
-        this.registers.splice(index, 1);
-        this._ui.showSuccess("Reject success");
-      }
+    this._register.rejectRegister(id).subscribe((res) => {
+      this.registers = this.registers.filter((r) => r.id !== id);
+      this._ui.showSuccess("Reject success");
     });
   }
   acceptRegister(id: string): void {
-    this._register.editRegisterById(id, true).subscribe((res) => {
+    this._register.acceptRegister(id).subscribe((res) => {
       const index = this.registers.findIndex((item) => item.id === id);
-      if (index === -1) {
-        this.registers.splice(index, 1);
-        this._ui.showSuccess("Accept success");
-      }
+      this.registers = this.registers.filter((r) => r.id !== id);
+      this._ui.showSuccess("Accept success");
     });
   }
   acceptBulk(): void {

@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 import { RouterService } from "../../../../core/services/router/router.service";
 
 @Component({
@@ -7,13 +8,21 @@ import { RouterService } from "../../../../core/services/router/router.service";
   styleUrls: ["./step-three.component.scss"],
 })
 export class StepThreeComponent implements OnInit {
-  constructor(private _router: RouterService) {}
+  @Input() status: string;
+  title = "There is an error when creating your service";
+  description = "Try again or contact administrator for help";
+  constructor(private _router: Router) {}
   done() {
-    this._router.goto("/dealer/services");
+    this._router.navigate(["/dealer/services"]);
   }
   again() {
-    this._router.reload();
+    window.location.reload();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.status === "success") {
+      this.title = "Service Created Successfully";
+      this.description = "Press Go Console to view your service.";
+    }
+  }
 }

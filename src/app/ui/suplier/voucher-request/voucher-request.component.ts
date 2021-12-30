@@ -77,6 +77,13 @@ export class VoucherRequestComponent implements OnInit {
 
   acceptRequest(id: UUID) {
     const item = this.request.find((i) => i.id === id);
+    const okCallback = () =>
+      this._voucherService
+        .createVoucher(item.id, item.type)
+        .subscribe((res) => {
+          this.request = this.request.filter((rq) => rq.id !== item.id);
+          this._ui.showSuccess("Accept success, voucher is ready to use");
+        });
 
     if (item.status !== RequesetStatus.accepted) {
       this._modal.warning({
@@ -84,14 +91,7 @@ export class VoucherRequestComponent implements OnInit {
         nzContent: `Accept <strong>#${id}</strong>, action canot be revert!!`,
         nzOkText: "OK",
         nzCancelText: "Cancel",
-        nzOnOk: () => {
-          this._voucherService
-            .createVoucher(item.id, item.type)
-            .subscribe((res) => {
-              this.request = this.request.filter((rq) => rq.id !== item.id);
-              this._ui.showSuccess("Accept success, voucher is ready to use");
-            });
-        },
+        nzOnOk: okCallback,
       });
     } else {
       this._ui.showMessage(MessageType.error, "Request already accepted");
