@@ -13,7 +13,7 @@ export class CreatePackageService {
   constructor(private _http: HttpClient, private _storage: StorageService) {}
   create(): Observable<Package> {
     return this._http
-      .post(PACKAGE_ENDPOINT, this.package)
+      .post(PACKAGE_ENDPOINT, { ...this.package, isShow: true })
       .pipe(
         map(
           (res: any) =>
