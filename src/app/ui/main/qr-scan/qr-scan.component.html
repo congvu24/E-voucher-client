@@ -27,16 +27,4 @@
 <!-- </div> -->
 
 <!-- service info -->
-<nz-modal
-[(nzVisible)]="viewing"
-nzTitle="Voucher id"
-(nzOnCancel)="endView()"
->
-<ng-container *nzModalContent>
-  <input type="text" [(ngModel)]="voucherId" placeholder="xxx-xx"/>
-</ng-container>
-<div *nzModalFooter>
-  <button nz-button nzType="primary" (click)="endView()">Claim</button>
-</div>
-</nz-modal>
 </div>

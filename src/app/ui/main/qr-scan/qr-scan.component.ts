@@ -36,36 +36,28 @@ export class QrScanComponent implements OnInit, AfterViewInit {
       "../../../../assets/qr-scan-worker/qr-scan-woker.min.js";
   }
 
-  endView() {
-    this.viewing = false;
-
-    // process to claim voucher
-    this.handleVideoResult(this.result);
-  }
-  openView() {
-    this.viewing = true;
-    this.voucherId = null;
-  }
-
-  handleVideoResult(result: any) {
+  async handleVideoResult(result: any) {
     // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { key, supplier_id, citizen_id } = JSON.parse(result);
-    const formatedResult: QrResult = {
-      key,
-      supplierId: supplier_id,
-      citizenId: citizen_id,
-      voucherId: this.voucherId,
-    };
+    const isOk = await confirm("Tiếp tục thanh toán?");
+    if (isOk) {
+      const { key, supplier_id, citizen_id, voucher_id } = JSON.parse(result);
+      const formatedResult: QrResult = {
+        key,
+        supplierId: supplier_id,
+        citizenId: citizen_id,
+        voucherId: voucher_id,
+      };
 
-    const req = this._voucherService.claimVoucher({
-      ...formatedResult,
-      packageId: this.id,
-    });
-    req.subscribe((res) => {
-      this._ui.showSuccess("Voucher claimed");
+      const req = this._voucherService.claimVoucher({
+        ...formatedResult,
+        packageId: this.id,
+      });
+      req.subscribe((res) => {
+        this._ui.showSuccess("Voucher claimed");
 
-      // this.scaner.stop();
-    });
+        // this.scaner.stop();
+      });
+    }
   }
 
   ngOnInit(): void {
@@ -80,9 +72,8 @@ export class QrScanComponent implements OnInit, AfterViewInit {
       this.result = result;
 
       //open voucher id modal:
-      this.openView();
       // process to claim voucher
-      // this.handleVideoResult(result);
+      this.handleVideoResult(result);
     });
 
     this.scaner.start();

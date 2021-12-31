@@ -21,7 +21,12 @@ export class VoucherService implements IVoucherService {
 
   claimVoucher(info: any): Observable<boolean> {
     return this._http
-      .put(`${VOUCHER_ENDPOINT}/claim`, info)
+      .put(
+        `${VOUCHER_ENDPOINT}/claim?${Object.keys(info)
+          .map((key) => `${key}=${info[key]}`)
+          .join("&")}`,
+        {}
+      )
       .pipe(map((res) => true));
   }
   createVoucher(id: string, type: VoucherType): Observable<any> {
