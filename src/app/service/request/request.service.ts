@@ -23,8 +23,6 @@ export class RequestService implements IRequestService {
     );
   }
   rejectRequest(id: UUID): Observable<any> {
-    console.log(id);
-
-    return this._http.delete(`${VOUCHER_REQUEST_ENDPOINT}/${id}`);
+    return this._http.put(`${VOUCHER_REQUEST_ENDPOINT}/reject/${id}`, {});
   }
 }
