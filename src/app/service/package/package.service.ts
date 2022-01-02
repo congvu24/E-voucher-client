@@ -21,7 +21,6 @@ export class PackageService implements IPackageService {
       .pipe(map((res) => true));
   }
   updatePackage(id: string, updates: any): Observable<any> {
-    console.log(updates);
     return this._http.patch(`${PACKAGE_ENDPOINT}/${id}`, updates);
   }
 

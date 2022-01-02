@@ -71,9 +71,8 @@ export class CreateServiceComponent implements OnInit {
         this._packageService.create().subscribe((res) => {
           step.percentage = 1;
           this.stepThreeStatus = "success";
+          this.current += 1;
         });
-
-        this.current += 1;
       } else {
         this.current += 1;
       }

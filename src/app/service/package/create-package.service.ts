@@ -1,5 +1,10 @@
-import { HttpClient, JsonpInterceptor } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpHeaders,
+  JsonpInterceptor,
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { NzUploadFile } from "ng-zorro-antd/upload";
 import { from, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Package } from "../../core/interface/package";
@@ -10,10 +15,19 @@ import { PackageService } from "./package.service";
 @Injectable()
 export class CreatePackageService {
   private _package: Package;
-  constructor(private _http: HttpClient, private _storage: StorageService) {}
+  private _thumbnail: any;
+  constructor(private _http: HttpClient) {}
+
   create(): Observable<Package> {
+    const f = new FormData();
+    f.append("thumbnail", this._thumbnail);
+    f.append("isShow", "true");
+    Object.keys(this.package).forEach((key) => {
+      f.append(key, this.package[key]);
+    });
+
     return this._http
-      .post(PACKAGE_ENDPOINT, { ...this.package, isShow: true })
+      .post(PACKAGE_ENDPOINT, f)
       .pipe(
         map(
           (res: any) =>
@@ -29,5 +43,11 @@ export class CreatePackageService {
   }
   get package(): Package {
     return this._package;
+  }
+  get thumbnail(): any {
+    return this._thumbnail;
+  }
+  set thumbnail(tn: any) {
+    this._thumbnail = tn;
   }
 }

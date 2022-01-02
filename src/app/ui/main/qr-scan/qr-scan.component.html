@@ -1,30 +1,28 @@
 <div class="flex-grow h-full relative">
-  <!-- <p class="bg-gray-800 min-h-full min-w-full">s</p> -->
-  <video id="video" class="min-h-full min-w-full"></video>
+  <nz-spin [nzTip]="'Loading...'" [nzSpinning]="loading">
+    <button
+      class="bottom-9 right-0 absolute z-30 rounded-full"
+      style="width: 80px; height: 80px"
+      nz-button
+      (click)="refresh()"
+    >
+      Refresh
+    </button>
+    <video id="video" class="h-full w-full"></video>
 
- <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-  <div class="w-350 h-350 border border-solid border-primary  "></div>
- </div>
- <!-- <div class="flex justify-center w-full gap-2 py-8">
-  <button
-    nz-button
-    *ngIf="!!result"
-    [disabled]="!result"
-    (click)="commitVoucher()"
-    nzSize="large"
-  >
-    Rescan
-  </button>
-  <button
-    nz-button
-    nzType="primary"
-    [disabled]="!result"
-    (click)="commitVoucher()"
-    nzSize="large"
-  >
-    Done
-  </button> -->
-<!-- </div> -->
-
-<!-- service info -->
+    <div
+      class="
+        absolute
+        top-0
+        left-0
+        w-full
+        h-full
+        flex
+        items-center
+        justify-center
+      "
+    >
+      <div class="w-350 h-350 border border-solid border-primary"></div>
+    </div>
+  </nz-spin>
 </div>

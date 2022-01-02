@@ -6,6 +6,7 @@ import { HttpService } from "../../core/services";
 import { HttpClient } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { cleanObject } from "../../until";
+import { VOUCHER_REQUEST_ENDPOINT } from "../../shared/router";
 @Injectable({
   providedIn: "root",
 })
@@ -21,10 +22,9 @@ export class RequestService implements IRequestService {
       }))
     );
   }
-  createRequest(p: Request): Observable<any> {
-    throw new Error("Method not implemented.");
-  }
-  rejectRequest(id: string): Observable<any> {
-    throw new Error("Method not implemented.");
+  rejectRequest(id: UUID): Observable<any> {
+    console.log(id);
+
+    return this._http.delete(`${VOUCHER_REQUEST_ENDPOINT}/${id}`);
   }
 }

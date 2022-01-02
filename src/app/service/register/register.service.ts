@@ -12,9 +12,9 @@ import { IRegisterService } from "../../interface/register-service";
 })
 export class RegisterService implements IRegisterService {
   constructor(private _http: HttpClient) {}
-  acceptRegister(citizenId: string): Observable<Register> {
+  acceptRegister(citizenId: UUID): Observable<Register> {
     return this._http
-      .put(`goverment/citizen/${citizenId}`, { isValid: true })
+      .put(`goverment/citizen/${citizenId}`, {}, { params: { isValid: true } })
       .pipe(map((res: unknown) => res as Register));
   }
   rejectRegister(citizenId: string): Observable<Register> {

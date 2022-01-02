@@ -7,5 +7,5 @@ export abstract class IPackageService {
   abstract getPackages(
     params?: any
   ): Observable<{ meta: Meta; data: Package[] }>;
-  abstract updatePackage(id: UUID, updates: any): Observable<any>;
+  abstract updatePackage(id: UUID, updates: any): Observable<Package>;
 }

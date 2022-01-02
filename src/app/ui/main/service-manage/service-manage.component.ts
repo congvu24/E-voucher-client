@@ -21,41 +21,24 @@ export class ServiceManageComponent implements OnInit {
   serviceForm!: ServiceFormDirective;
 
   items = [1, 2, 3, 4, 5, 6, 12, 3, 3, 3, 4];
-  service: any; // fake data
-  editData: number; // fake edit form data, it should be Package instead of number
   types = ServiceType;
   filterVisible = false;
-  selected: { label: string; value: ServiceType; checked: boolean }[];
-  viewing: boolean;
-  editing: boolean;
+  viewing = false;
+  editing = false;
   meta: Meta;
   packages: Package[];
+  viewingPackage: Package;
 
   constructor(
     private _modal: NzModalService,
     private _packageService: IPackageService
-  ) {
-    this.service = fakeservice;
-    this.viewing = false;
-    this.editing = false;
-  }
+  ) {}
 
-  onApplyFilter() {
-    //call service to update view
-    alert(
-      `call api with ${this.getSelectedFilterNumbers()} selected filter, selected`
-    );
-  }
-  onClearFilter() {
-    this.selected = this.selected.map((f) => ({ ...f, checked: false }));
-  }
-  getSelectedFilterNumbers(): number {
-    return this.selected.filter((f) => f.checked === true).length;
-  }
   endView = () => {
     this.viewing = false;
   };
-  openView = () => {
+  openView = (service: Package) => {
+    this.viewingPackage = service;
     this.viewing = true;
   };
 

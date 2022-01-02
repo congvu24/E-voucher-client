@@ -15,14 +15,12 @@ import { VoucherService } from "../../../service/voucher/voucher.service";
   styleUrls: ["./qr-scan.component.scss"],
   providers: [{ provide: IVoucherService, useExisting: VoucherService }],
 })
-export class QrScanComponent implements OnInit, AfterViewInit {
-  result: any;
-  isScanned = false;
-  id: UUID; // package/service id
+export class QrScanComponent implements OnInit, AfterViewInit, OnDestroy {
+  result: any | undefined = "";
+  packageId: UUID; // package/service id
   //temp input
-  voucherId: UUID;
-  // temp modal
-  viewing = false;
+  claimed = true;
+  loading = true;
   private scaner: QrScanner;
 
   constructor(
@@ -35,51 +33,62 @@ export class QrScanComponent implements OnInit, AfterViewInit {
     QrScanner.WORKER_PATH =
       "../../../../assets/qr-scan-worker/qr-scan-woker.min.js";
   }
-
-  async handleVideoResult(result: any) {
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const isOk = await confirm("Tiếp tục thanh toán?");
-    if (isOk) {
-      const { key, supplier_id, citizen_id, voucher_id } = JSON.parse(result);
-      const formatedResult: QrResult = {
-        key,
-        supplierId: supplier_id,
-        citizenId: citizen_id,
-        voucherId: voucher_id,
-      };
-
-      const req = this._voucherService.claimVoucher({
-        ...formatedResult,
-        packageId: this.id,
-      });
-      req.subscribe((res) => {
-        this._ui.showSuccess("Voucher claimed");
-
-        // this.scaner.stop();
-      });
-    }
+  ngOnDestroy(): void {
+    this.scaner.destroy();
+    this.scaner = null;
   }
 
+  handleVideoResult(result: any) {
+    console.log(result);
+
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { key, supplier_id, citizen_id, voucher_id } = JSON.parse(result);
+    const formatedResult: QrResult = {
+      key,
+      supplierId: supplier_id,
+      citizenId: citizen_id,
+      voucherId: voucher_id,
+    };
+
+    const req = this._voucherService.claimVoucher({
+      ...formatedResult,
+      packageId: this.packageId,
+    });
+    req.subscribe((res) => {
+      this._ui.showSuccess("Voucher claimed");
+
+      // this.scaner.stop();
+    });
+  }
+
+  refresh() {
+    this.result = "";
+  }
   ngOnInit(): void {
     this._router.params.subscribe((params) => {
-      this.id = params?.id;
+      this.packageId = params?.id;
     });
   }
   ngAfterViewInit(): void {
     const video = document.getElementById("video") as HTMLVideoElement;
     this.scaner = new QrScanner(video, (result) => {
-      //save qr result
-      this.result = result;
+      if (!this.result) {
+        //save qr result
+        this.result = result;
+        console.log("scanedd");
 
-      //open voucher id modal:
-      // process to claim voucher
-      this.handleVideoResult(result);
+        //open voucher id modal:
+        // process to claim voucher
+        this.handleVideoResult(result);
+      }
     });
 
-    this.scaner.start();
+    this.scaner
+      .start()
+      .then((_) => (this.loading = false))
+      .catch((_) => alert("Error occured"));
   }
   back() {
     this._location.back();
   }
 }
-// "key":"212bf8e6-71bf-4c16-bcd7-d3732fd6013a","supplier_id":"4db8bb43-cb7e-46a6-939b-13270bb0100c","citizen_id":"f2e2abd7-f952-44ab-994b-657c55222f04"}

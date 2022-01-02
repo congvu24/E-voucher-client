@@ -40,6 +40,8 @@ export class LoginComponent implements OnInit {
 
       request.subscribe((res) => {
         if (res.success) {
+          console.log(res.role);
+
           this._router.goto(res.role.toLowerCase());
         }
       });

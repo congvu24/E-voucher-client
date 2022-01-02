@@ -1,16 +1,16 @@
 <div class="flex">
   <!-- left -->
   <div class="">
+    <!-- (nzChange)="handleChange($event)" -->
     <nz-upload
       class="avatar-uploader"
       nzName="avatar"
       nzListType="picture-card"
       [nzShowUploadList]="false"
       [nzBeforeUpload]="beforeUpload"
-      (nzChange)="handleChange($event)"
       
     >
-      <ng-container *ngIf="!avatarUrl">
+      <ng-container *ngIf="!thumbnailString">
         <ng-container *ngIf="loading; else elseTemplate">
           <i class="upload-icon" nz-icon [nzType]="'loading'"></i>
         </ng-container>
@@ -18,8 +18,9 @@
           <i class="mr-1" nz-icon [nzType]="'plus'"></i>image
         </ng-template>
       </ng-container>
-      <img *ngIf="avatarUrl" [src]="avatarUrl" style="width: 100%" />
+      <img *ngIf="thumbnailString" [src]="thumbnailString" style="width: 100%" />
     </nz-upload>
+
   </div>
 
   <!-- right -->
@@ -67,5 +68,6 @@
         </div>
       </div>
     </form>
+   
   </div>
 </div>

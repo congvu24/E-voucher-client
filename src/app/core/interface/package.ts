@@ -9,6 +9,7 @@ export class Package {
   createdAt: DateTimeString;
   updatedAt: DateTimeString;
   img: string;
+  thumbnail: string; // url
 
   constructor(name: string, description: string, min: number, max: number) {
     this.name = name;

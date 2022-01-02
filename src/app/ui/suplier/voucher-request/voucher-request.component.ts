@@ -35,6 +35,7 @@ export class VoucherRequestComponent implements OnInit {
   page = 1;
   type = VoucherType; //voucher type
   status = RequesetStatus; //request status
+  loading = false;
 
   constructor(
     private _requestService: IRequestService,
@@ -57,44 +58,55 @@ export class VoucherRequestComponent implements OnInit {
   }
   rejectRequest(id: UUID) {
     const item = this.request.find((i) => i.id === id);
+    const okCallback = () => {
+      this._requestService.rejectRequest(item.id).subscribe((res) => {
+        this.request = this.request.filter((rq) => rq.id !== item.id);
+        this._ui.showSuccess("Reject success");
+      });
+    };
 
-    if (item.status !== RequesetStatus.rejected) {
+    if (item.status !== RequesetStatus.pending) {
+      this._ui.showMessage(
+        MessageType.error,
+        `Request already ${item.status.toLowerCase()} `
+      );
+    } else {
       this._modal.warning({
         nzTitle: "Reject request",
         nzContent: `Reject <strong>#${id}</strong>, action canot be revert!!`,
         nzOkText: "OK",
         nzCancelText: "Cancel",
-        nzOnOk: () =>
-          this._requestService.rejectRequest(item.id).subscribe((res) => {
-            this.request = this.request.filter((rq) => rq.id !== item.id);
-            this._ui.showSuccess("Reject success");
-          }),
+        nzOnOk: okCallback,
+        nzOkLoading: this.loading,
       });
-    } else {
-      this._ui.showMessage(MessageType.error, "Request already rejected");
     }
   }
 
   acceptRequest(id: UUID) {
     const item = this.request.find((i) => i.id === id);
-    const okCallback = () =>
+    const okCallback = () => {
       this._voucherService
         .createVoucher(item.id, item.type)
         .subscribe((res) => {
           this.request = this.request.filter((rq) => rq.id !== item.id);
           this._ui.showSuccess("Accept success, voucher is ready to use");
         });
+    };
 
-    if (item.status !== RequesetStatus.accepted) {
+    if (item.status !== RequesetStatus.pending) {
+      this._ui.showMessage(
+        MessageType.error,
+        `Request already ${item.status.toLowerCase()} `
+      );
+    } else {
       this._modal.warning({
-        nzTitle: "Reject request",
+        nzTitle: "Accept request",
         nzContent: `Accept <strong>#${id}</strong>, action canot be revert!!`,
         nzOkText: "OK",
         nzCancelText: "Cancel",
         nzOnOk: okCallback,
+        nzOkLoading: this.loading,
       });
-    } else {
-      this._ui.showMessage(MessageType.error, "Request already accepted");
     }
   }
 

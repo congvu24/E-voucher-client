@@ -21,11 +21,11 @@ import { CreatePackageService } from "../../../../service/package/create-package
 })
 export class StepOneComponent {
   packageForm: FormGroup;
-  avatarUrl?: string;
+  thumbnail: NzUploadFile; // package thumbnail
+  thumbnailString: string | undefined = ""; // package thumbnail converted to base64
   loading = false; // upload loading
 
   constructor(
-    private fb: FormBuilder,
     private msg: NzMessageService,
     private _packageService: CreatePackageService
   ) {
@@ -41,15 +41,20 @@ export class StepOneComponent {
   }
 
   submitForm() {
+    if (!this.thumbnailString) {
+      throw new Error("Thumbnail is missing");
+    }
     if (this.packageForm.valid) {
       this._packageService.package = this._packageService.build(
         this.packageForm.value
       );
       if (this._packageService.package.validateMinAndMax()) {
       } else {
-        const min = this.packageForm.get("min");
-        const max = this.packageForm.get("max");
-        throw new Error("Min value must smaller than Max value");
+        const min = this.packageForm.get("min").value;
+        const max = this.packageForm.get("max").value;
+        if (min >= max) {
+          throw new Error("Min value must smaller than Max value");
+        }
       }
     } else {
       Object.values(this.packageForm.controls).forEach((control) => {
@@ -80,34 +85,17 @@ export class StepOneComponent {
         observer.complete();
         return;
       }
-      // observer.next(isJpgOrPng && isLt2M); validate complete, upload file
-      let base64: string;
-      this.getBase64(file.originFileObj, (img: string) => {
-        base64 = img;
+      const convert: unknown = file as unknown;
+      this._packageService.thumbnail = file;
+      this.loading = true;
+      this.getBase64(convert as File, (img: string) => {
+        this.loading = false;
+        this.thumbnailString = img;
       });
-      this._packageService.package.setImage(base64);
       observer.next(false);
+
       observer.complete();
     });
-
-  handleChange(info: { file: NzUploadFile }): void {
-    switch (info.file.status) {
-      case "uploading":
-        this.loading = true;
-        break;
-      case "done":
-        // Get this url from response in real world.
-        this.getBase64(info.file?.originFileObj, (img: string) => {
-          this.loading = false;
-          this.avatarUrl = img;
-        });
-        break;
-      case "error":
-        this.msg.error("Network error");
-        this.loading = false;
-        break;
-    }
-  }
 
   private getBase64(img: File, callback: (img: string) => void): void {
     const reader = new FileReader();

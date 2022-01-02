@@ -43,11 +43,11 @@ export class RegisterComponent implements OnInit {
       this._ui.showSuccess("Reject success");
     });
   }
-  acceptRegister(id: string): void {
+  acceptRegister(id: UUID): void {
     this._register.acceptRegister(id).subscribe((res) => {
-      const index = this.registers.findIndex((item) => item.id === id);
       this.registers = this.registers.filter((r) => r.id !== id);
       this._ui.showSuccess("Accept success");
+      console.log(res);
     });
   }
   acceptBulk(): void {

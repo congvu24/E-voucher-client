@@ -9,5 +9,8 @@ export abstract class IVoucherService {
   abstract getVouchers(
     params?: any
   ): Observable<{ data: Voucher[]; meta: any }>;
+  abstract getClaimedVouchers(
+    params?: any
+  ): Observable<{ data: Voucher[]; meta: any }>;
   abstract claimVoucher(info: any): Observable<boolean>;
 }

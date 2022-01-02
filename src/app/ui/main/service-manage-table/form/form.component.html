@@ -1,7 +1,7 @@
 <ng-container>
-  <form
+  <form *ngIf="!loading"
       nz-form
-      [formGroup]="validateForm"
+      [formGroup]="packageForm||null"
       [nzLayout]="'vertical'"
       (ngSubmit)="submitForm()"
       
@@ -28,7 +28,7 @@
           <nz-form-item>
             <nz-form-label nzRequired>Min</nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Only number is allowed">
-              <input nz-input type="number" formControlName="min" placeholder="in USD" />
+              <input nz-input type="number" formControlName="minValue" placeholder="in USD" />
             </nz-form-control>
           </nz-form-item>
         </div>
@@ -36,13 +36,14 @@
           <nz-form-item>
             <nz-form-label nzRequired>Max</nz-form-label>
             <nz-form-control nzHasFeedback nzErrorTip="Only number is allowed">
-              <input nz-input type="number" formControlName="max" placeholder="in USD" />
+              <input nz-input type="number" formControlName="maxValue" placeholder="in USD" />
             </nz-form-control>
           </nz-form-item>
         </div>
       </div>
-      <label nz-checkbox formControlName="isShow">
-        <span>Is show</span>
+      <label nz-checkbox formControlName="isShow" [nzDisabled]="true">
+        <span>Package currently in use</span>
       </label>
     </form>
+    <p *ngIf="loading">loading..</p>
 </ng-container>

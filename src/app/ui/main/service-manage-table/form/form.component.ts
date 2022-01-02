@@ -1,5 +1,5 @@
 /* eslint-disable @angular-eslint/component-selector */
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import {
   FormBuilder,
   FormControl,
@@ -7,10 +7,12 @@ import {
   ValidationErrors,
   Validators,
 } from "@angular/forms";
+import { truncate } from "fs";
 
 import { Observable, Observer, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { Package } from "../../../../core/interface/package";
+import { UiService } from "../../../../core/services";
 import { IPackageService } from "../../../../interface/package-service";
 import { PackageService } from "../../../../service/package/package.service";
 
@@ -22,63 +24,54 @@ import { PackageService } from "../../../../service/package/package.service";
 })
 export class FormComponent implements OnInit {
   @Input() package: Package;
-  validateForm: FormGroup;
+  packageForm: FormGroup;
+  loading = true;
+  constructor(
+    private fb: FormBuilder,
+    private _packageService: IPackageService
+  ) {
+    this.packageForm = new FormGroup({
+      name: new FormControl("", [Validators.required, Validators.minLength(4)]),
+      description: new FormControl("", [
+        Validators.required,
+        Validators.minLength(4),
+      ]),
+      minValue: new FormControl(null, [Validators.required, Validators.min(0)]),
+      maxValue: new FormControl(null, [Validators.required, Validators.min(0)]),
+      isShow: new FormControl(true),
+    });
+  }
 
-  constructor(private fb: FormBuilder, private _package: IPackageService) {}
-
-  /**
-   * validate and submit editservice form using service
-   *
-   * @returns true if submit success, false if not
-   */
   submitForm(): Observable<Package> {
-    const { id, ...updates } = this.validateForm.value;
+    if (this.packageForm.valid) {
+      const min = this.packageForm.get("minValue").value;
+      const max = this.packageForm.get("maxValue").value;
+      if (min >= max) {
+        throw new Error("Min value must smaller than Max value");
+      }
+      const { id, ...updates } = this.packageForm.value;
 
-    return this._package.updatePackage(this.package.id, updates);
-  }
-
-  validateConfirmPassword(): void {
-    setTimeout(() =>
-      this.validateForm.controls.confirm.updateValueAndValidity()
-    );
-  }
-
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  userNameAsyncValidator = (control: FormControl) =>
-    new Observable((observer: Observer<ValidationErrors | null>) => {
-      setTimeout(() => {
-        if (control.value === "JasonWood") {
-          // you have to return `{error: true}` to mark it as an error event
-          observer.next({ error: true, duplicated: true });
-        } else {
-          observer.next(null);
+      return this._packageService.updatePackage(this.package.id, updates);
+    } else {
+      Object.values(this.packageForm.controls).forEach((control) => {
+        if (control.invalid) {
+          control.markAsDirty();
+          control.updateValueAndValidity({ onlySelf: true });
+          throw new Error("invalid properties");
         }
-        observer.complete();
-      }, 1000);
-    });
-
-  confirmValidator = (control: FormControl): { [s: string]: boolean } => {
-    if (!control.value) {
-      return { error: true, required: true };
-    } else if (control.value !== this.validateForm.controls.password.value) {
-      return { confirm: true, error: true };
+      });
+      return;
     }
-    return {};
-  };
+  }
+
   ngOnInit(): void {
-    this.validateForm = this.fb.group({
-      name: [
-        this.package?.name,
-        [Validators.required],
-        [this.userNameAsyncValidator],
-      ],
-      description: [
-        this.package?.description,
-        [Validators.email, Validators.required],
-      ],
-      min: [this.package?.minValue, [Validators.required]],
-      max: [this.package?.maxValue, [this.confirmValidator]],
-      isShow: [this.package?.isShow, [Validators.required]],
+    this.packageForm.setValue({
+      name: this.package.name,
+      description: this.package.description,
+      minValue: this.package.minValue,
+      maxValue: this.package.maxValue,
+      isShow: true,
     });
+    this.loading = false;
   }
 }

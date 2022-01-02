@@ -11,6 +11,7 @@ import { NzModalService } from "ng-zorro-antd/modal";
 import { fakeservice } from "../../../../assets/fakedata";
 import { ServiceType } from "../../../core/constant";
 import { Package } from "../../../core/interface/package";
+import { UiService } from "../../../core/services";
 import { Meta } from "../../../interface/api";
 import { IPackageService } from "../../../interface/package-service";
 import { PackageService } from "../../../service/package/package.service";
@@ -37,7 +38,8 @@ export class ServiceManageTableComponent implements OnInit {
   constructor(
     private _modal: NzModalService,
     private _fb: FormBuilder,
-    private _package: IPackageService
+    private _package: IPackageService,
+    private _ui: UiService
   ) {
     this.filter = _fb.group({
       name: [null],
@@ -72,18 +74,22 @@ export class ServiceManageTableComponent implements OnInit {
    * save edit result
    */
   saveResult() {
-    this.editForm.submitForm().subscribe((update: Package) => {
-      //update UI
-      const item = this.packages.find((p) => p.id === update.id);
-      Object.assign(item, update);
-      this.editing = false;
-    });
+    try {
+      this.editForm.submitForm().subscribe((update: Package) => {
+        //update UI
+        const item = this.packages.find((p) => p.id === update.id);
+        Object.assign(item, update);
+        this.editing = false;
+        this._ui.showSuccess("Package updated");
+      });
+    } catch (error: any) {
+      this._ui.showError(error.message);
+    }
   }
-
   deletePackage(id: UUID) {
     this._package.deletePackage(id).subscribe((res) => {
-      const index = this.packages.findIndex((p) => p.id === id);
-      this.packages = this.packages.splice(index, 1);
+      this.packages = this.packages.filter((p) => p.id !== id);
+      this._ui.showSuccess("Service deleted");
     });
   }
   showDeleteConfirm(id: UUID, name: string): void {

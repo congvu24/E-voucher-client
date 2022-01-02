@@ -3,14 +3,11 @@ import { Injectable } from "@angular/core";
 import { UiService } from "..";
 
 export enum ClientError {
+  HTTP_403_FORBIDDEN_RESOURCE = 403,
   HTTP_404_NOT_FOUND = 404,
   HTTP_400_BAD_REQUEST = 400,
   HTTP_500_INTERNAL_SERVER_ERROR = 500,
 }
-export enum ClientSuccess {
-  HTTP_200_OK = 200,
-}
-
 @Injectable({
   providedIn: "root",
 })
@@ -18,6 +15,9 @@ export class ErrorService {
   constructor(private _ui: UiService) {}
   handleError(errorCode: number, msg: string) {
     switch (errorCode) {
+      case ClientError.HTTP_403_FORBIDDEN_RESOURCE:
+        this._ui.showError("Cant access this resource, try login again");
+        break;
       case ClientError.HTTP_400_BAD_REQUEST:
         this._ui.showError("Bad input!");
         break;
@@ -29,7 +29,9 @@ export class ErrorService {
         break;
 
       default:
-        this._ui.showError("Unhandeled error, code " + errorCode);
+        this._ui.showError(
+          "Unhandeled error, code " + errorCode + ", message :" + msg
+        );
         break;
     }
   }

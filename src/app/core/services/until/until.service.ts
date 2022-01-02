@@ -9,7 +9,13 @@ export class UntilService {
     // const expires = new Date(Date.now() + days * 864e5).toUTCString();
     const expires = time;
     document.cookie =
-      name + "=" + encodeURIComponent(value) + "; expires=" + expires;
+      name +
+      "=" +
+      encodeURIComponent(value) +
+      "; path=" +
+      path +
+      "; expires=" +
+      expires;
   }
 
   getCookie(name) {

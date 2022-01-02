@@ -67,25 +67,26 @@
       [nzPageSize]="meta?.take"
       [nzTotal]="meta?.itemCount"
       (nzPageIndexChange)="onPageIndexChange($event)"
-      nzTableLayout="fixed"
     >
       <thead>
         <tr>
-          <th nzWidth="40px">#</th>
+          <th >#</th>
+          <th>Name</th>
           <th>Email</th>
-          <th nzWidth="150px">Status</th>
-          <th nzWidth="500px">Note</th>
+          <th >Status</th>
+          <th >Note</th>
           <th>Create</th>
-          <th nzWidth="150px">Voucher Type</th>
+          <th >Voucher Type</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
           <td >{{ i + 1 + meta?.take * (page - 1) }}</td>
-          <td>{{ data.name }}</td>
+          <td>{{ data.citizen.name }}</td>
+          <td>{{ data.citizen.email }}</td>
           <td><app-r-status-tag [status]="data.status"></app-r-status-tag></td>
-          <td nzEllipsis>sjdklasjdklsajdklsajdkl;asjkld;sajlk;dsajkl;dsajkl;jdkl;sfjdlk;sfjkldsafuiosdaufiewouriowqejnrkmlenwmndfskjfkdsjfkds;lk</td>
+          <td >{{data.note}}</td>
           <td>{{ data.createdAt | date }}</td>
           <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td class="flex gap-2">
@@ -100,7 +101,7 @@
             <nz-tag
               nzColor="error"
               class="cursor-pointer"
-              (click)="confirmReject(data.id)"
+              (click)="rejectRequest(data.id)"
             >
               <i nz-icon nzType="close" nzTheme="outline"></i>
               <span>Reject</span>

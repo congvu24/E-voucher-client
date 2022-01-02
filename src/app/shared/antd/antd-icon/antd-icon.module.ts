@@ -26,6 +26,8 @@ import {
   SearchOutline,
   ArrowUpOutline,
   EyeInvisibleOutline,
+  PieChartOutline,
+  ForkOutline,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -55,6 +57,8 @@ const icons: IconDefinition[] = [
   SearchOutline,
   ArrowUpOutline,
   EyeInvisibleOutline,
+  PieChartOutline,
+  ForkOutline,
 ];
 @NgModule({
   declarations: [],

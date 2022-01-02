@@ -9,9 +9,9 @@
      <div nz-row [nzGutter]="16">
       <div nz-col nzSpan="12">
         <nz-form-item class="mb-0"   >
-          <nz-form-label>User name</nz-form-label>
+          <nz-form-label>Name</nz-form-label>
           <nz-form-control >
-            <input type="text" nz-input placeholder="Service namne" formControlName="name">
+            <input type="text" nz-input placeholder="Citizen nane" formControlName="name">
           </nz-form-control>
         </nz-form-item>
       </div>
@@ -28,31 +28,50 @@
   </div>
   
   <div class="mx-6">
-    <nz-table #basicTable [nzData]="dataSet">
+    <nz-table #basicTable  [nzData]="data"
+    [nzPageSize]="meta?.take"
+    [nzTotal]="meta?.itemCount"
+    (nzPageIndexChange)="onPageIndexChange($event)"
+    nzTableLayout="fixed">
         <thead>
           <tr>
-            <th>#</th>
+            <th [width]="50">#</th>
             <th>Name</th>
-            <th>Age</th>
-            <th>Address</th>
-            <th>Phone</th>
+            <th>Email</th>
+            <th>Package name</th>
+            <th>Value</th>
             <th>Time redeemed</th>
             <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let data of basicTable.data">
-            <td>{{data.id}}</td>
-            <td>{{data.name}}</td>
-            <td>{{data.age}}</td>
-            <td>{{data.address}}</td>
-            <td>{{data.phone}}</td>
-            <td>{{data.time}}</td>
+          <tr *ngFor="let data of basicTable.data; let i = index">
+            <td >{{ i + 1 + meta?.take * (page - 1) }}</td>
+            <td>{{data.citizenName}}</td>
+            <td>{{data.citizenEmail}}</td>
+            <td>{{data.servicePackage.name}}</td>
+            <td>{{data.value | currency}}</td>
+            <td>{{data.updatedAt|date}}</td>
             <td>
-              <a>Detail</a>
+              <a (click)="openDetailForm(data)">Detail</a>
             </td>
           </tr>
         </tbody>
       </nz-table>
   </div>
+  
+  <!-- edit service -->
+  <nz-modal
+    [(nzVisible)]="detailVisible"
+    nzTitle="Service editing"
+    (nzOnCancel)="closeDetail()"
+  >
+    <ng-container *nzModalContent>
+      <app-detail-form [data]="detail"></app-detail-form>
+    </ng-container>
+
+    <div *nzModalFooter>
+      <button nz-button (click)="closeDetail()">Close</button>
+    </div>
+  </nz-modal>
 </div>

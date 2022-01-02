@@ -25,11 +25,8 @@
           <nz-form-item class="mb-0">
             <nz-form-label>Type</nz-form-label>
             <nz-form-control>
-              <nz-select
-                formControlName="type"
-                nzPlaceHolder="All"
-              >
-                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+              <nz-select formControlName="type" nzPlaceHolder="All">
+                <nz-option nzValue="{{ null }}" nzLabel="All"></nz-option>
                 <nz-option
                   *ngFor="let item of type | keyvalue"
                   [nzValue]="item.value"
@@ -44,11 +41,8 @@
           <nz-form-item class="mb-0">
             <nz-form-label>Status</nz-form-label>
             <nz-form-control>
-              <nz-select
-                formControlName="status"
-                nzPlaceHolder="All"
-              >
-                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+              <nz-select formControlName="status" nzPlaceHolder="All">
+                <nz-option nzValue="{{ null }}" nzLabel="All"></nz-option>
                 <nz-option
                   *ngFor="let item of status | keyvalue"
                   [nzValue]="item.value"
@@ -81,18 +75,21 @@
           <th>Value</th>
           <th>Status</th>
           <th>Start day</th>
-          <th>End day</th>
+          <th>Expries day</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
-          <td>{{ i + 1 + meta?.take * (page -1) }}</td>
-          <p
-            nz-typography
-            nzCopyable
-            [nzCopyTooltips]="'Copy voucher id'"
-            [(nzContent)]="data.id"
-          ></p>
+          <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
+          <td>
+            <p
+              class="mb-0"
+              nz-typography
+              nzCopyable
+              [nzCopyTooltips]="'Copy voucher id'"
+              [(nzContent)]="data.id"
+            ></p>
+          </td>
           <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td>{{ data.value }}</td>
           <td><app-v-status-tag [status]="data.status"></app-v-status-tag></td>

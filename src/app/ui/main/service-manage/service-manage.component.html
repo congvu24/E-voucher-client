@@ -27,21 +27,18 @@
   >
     <ng-container *nzModalContent>
       <nz-descriptions class="py-3" nzBordered [nzColumn]="1">
-        <nz-descriptions-item nzTitle="Id">#5342l1h32ln34</nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="Id"></nz-descriptions-item> -->
         <nz-descriptions-item nzTitle="Name"
-          >Cloud Database</nz-descriptions-item
+          >{{viewingPackage?.name |titleCase}}</nz-descriptions-item
         >
         <nz-descriptions-item nzTitle="Description"
-          >Prepaid</nz-descriptions-item
+        >{{viewingPackage?.description |titleCase}}</nz-descriptions-item
         >
-        <nz-descriptions-item nzTitle="Min">10$</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Max Time">20$</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Min">{{viewingPackage?.minValue |currency}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Max Time">{{viewingPackage?.maxValue |currency}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="In use">Yes</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Currently used by"
-          >UIT tech</nz-descriptions-item
-        >
         <nz-descriptions-item nzTitle="Created at"
-          >12:00:00AM 12/11/2021</nz-descriptions-item
+          >{{viewingPackage?.createdAt|date}}</nz-descriptions-item
         >
       </nz-descriptions>
     </ng-container>
