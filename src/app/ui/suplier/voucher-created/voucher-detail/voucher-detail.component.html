@@ -1,0 +1,29 @@
+<div  *ngIf="data" >
+    <nz-descriptions nzTitle="Citizen" [nzColumn]="2">
+      <nz-descriptions-item nzTitle="Citizen name">{{citizen.name | titlecase}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Email">{{citizen.email |titleCase}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Birth">{{citizen.dob|date}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Phone">{{citizen.phone}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="National number">{{citizen.identify}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Job">{{citizen.job|titleCase}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Joined">{{citizen.createdAt|date}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Live">{{citizen.address}}</nz-descriptions-item>
+    </nz-descriptions>
+    <nz-divider></nz-divider>
+    <nz-descriptions nzTitle="Voucher" [nzColumn]="2">
+        <nz-descriptions-item nzTitle="id"
+        ><p
+          class="mb-0"
+          nz-typography
+          nzCopyable
+          [nzCopyTooltips]="[tooltip]"
+          nzContent="Id"
+          [nzCopyText]="data.id"
+        ></p>
+        <ng-template #tooltip> {{ data.id }} </ng-template>
+      </nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Time created">{{data.createdAt|date}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Voucher"><app-v-type-tag [type]="data.type"></app-v-type-tag></nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Status"><app-v-status-tag [status]="data.status" ></app-v-status-tag></nz-descriptions-item>
+    </nz-descriptions>
+</div>

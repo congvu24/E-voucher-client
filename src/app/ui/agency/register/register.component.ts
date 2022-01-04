@@ -6,6 +6,7 @@ import {
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd/modal";
+import { isThisTypeNode } from "typescript/lib/tsserverlibrary";
 import { Register } from "../../../core/interface/register";
 import { StorageService, UiService } from "../../../core/services";
 import { IRegisterService } from "../../../interface/register-service";
@@ -30,6 +31,7 @@ export class RegisterComponent implements OnInit {
   //ui control
   filter: FormGroup;
   page = 1;
+  loading = false;
 
   constructor(
     private _register: IRegisterService,
@@ -38,16 +40,18 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   rejectRegister(id: string): void {
+    this._ui.showInfo("Processing");
     this._register.rejectRegister(id).subscribe((res) => {
       this.registers = this.registers.filter((r) => r.id !== id);
       this._ui.showSuccess("Reject success");
+      this.loading = false;
     });
   }
   acceptRegister(id: UUID): void {
+    this._ui.showInfo("Processing");
     this._register.acceptRegister(id).subscribe((res) => {
       this.registers = this.registers.filter((r) => r.id !== id);
       this._ui.showSuccess("Accept success");
-      console.log(res);
     });
   }
   acceptBulk(): void {

@@ -21,16 +21,16 @@ import {
 })
 export class VoucherService implements IVoucherService {
   constructor(private _http: HttpClient) {}
-
-  claimVoucher(info: any): Observable<boolean> {
-    return this._http
-      .put(
-        `${VOUCHER_ENDPOINT}/claim?${Object.keys(info)
-          .map((key) => `${key}=${info[key]}`)
-          .join("&")}`,
-        {}
-      )
-      .pipe(map((res) => true));
+  deleteVoucher(id: UUID): Observable<any> {
+    return this._http.delete(`${VOUCHER_ENDPOINT}`, { params: { id } });
+  }
+  claimVoucher(info: any): Observable<any> {
+    return this._http.put(
+      `${VOUCHER_ENDPOINT}/claim?${Object.keys(info)
+        .map((key) => `${key}=${info[key]}`)
+        .join("&")}`,
+      {}
+    );
   }
   createVoucher(requestId: UUID, type: VoucherType): Observable<any> {
     return this._http.post(`${VOUCHER_ENDPOINT}/create`, {

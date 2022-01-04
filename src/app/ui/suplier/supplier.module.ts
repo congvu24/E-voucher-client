@@ -7,6 +7,8 @@ import { VoucherRequestComponent } from "./voucher-request/voucher-request.compo
 import { SharedModule } from "../../shared/shared.module";
 import { VoucherCreatedComponent } from "./voucher-created/voucher-created.component";
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { UserInfoComponent } from './voucher-request/user-info/user-info.component';
+import { VoucherDetailComponent } from './voucher-created/voucher-detail/voucher-detail.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +16,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     VoucherRequestComponent,
     VoucherCreatedComponent,
     DashboardComponent,
+    UserInfoComponent,
+    VoucherDetailComponent,
   ],
   imports: [CommonModule, SupplierRoutingModule, SharedModule],
 })

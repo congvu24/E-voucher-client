@@ -28,6 +28,11 @@ import {
   EyeInvisibleOutline,
   PieChartOutline,
   ForkOutline,
+  FileExcelOutline,
+  CheckCircleTwoTone,
+  QrcodeOutline,
+  CodeSandboxOutline,
+  SafetyCertificateTwoTone,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -59,6 +64,11 @@ const icons: IconDefinition[] = [
   EyeInvisibleOutline,
   PieChartOutline,
   ForkOutline,
+  FileExcelOutline,
+  CheckCircleTwoTone,
+  QrcodeOutline,
+  CodeSandboxOutline,
+  SafetyCertificateTwoTone,
 ];
 @NgModule({
   declarations: [],

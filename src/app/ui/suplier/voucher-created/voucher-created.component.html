@@ -15,7 +15,7 @@
               <input
                 type="text"
                 nz-input
-                placeholder="xxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx"
+                placeholder="Voucher id"
                 formControlName="name"
               />
             </nz-form-control>
@@ -74,8 +74,9 @@
           <th>Type</th>
           <th>Value</th>
           <th>Status</th>
-          <th>Start day</th>
+          <th>Created day</th>
           <th>Expries day</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -95,6 +96,20 @@
           <td><app-v-status-tag [status]="data.status"></app-v-status-tag></td>
           <td>{{ data.createdAt | date }}</td>
           <td>{{ data.validDate | date }}</td>
+          <td>
+            <nz-tag
+              class="cursor-pointer"
+              nzColor="processing"
+              (click)="viewVoucherDetail(data.id)"
+              >View detail</nz-tag
+            >
+            <nz-tag
+              nzColor="error"
+              class="cursor-pointer"
+              (click)="deleteVoucher(data.id)"
+              >Delete</nz-tag
+            >
+          </td>
         </tr>
       </tbody>
     </nz-table>

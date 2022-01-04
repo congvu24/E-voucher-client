@@ -1,16 +1,15 @@
 <div class="flex-grow h-full relative">
-  <nz-spin [nzTip]="'Loading...'" [nzSpinning]="loading">
-    <button
-      class="bottom-9 right-0 absolute z-30 rounded-full"
-      style="width: 80px; height: 80px"
-      nz-button
-      (click)="refresh()"
-    >
-      Refresh
-    </button>
+  <span
+    class="absolute top-10 left-52 z-20 text-white cursor-pointer"
+    (click)="backPreviousPage()"
+  >
+    < Back
+  </span>
+  <nz-spin [nzTip]="'Scaner initializing...'" [nzSpinning]="loading">
     <video id="video" class="h-full w-full"></video>
 
     <div
+      *ngIf="!loading"
       class="
         absolute
         top-0
@@ -25,4 +24,35 @@
       <div class="w-350 h-350 border border-solid border-primary"></div>
     </div>
   </nz-spin>
+  <nz-modal
+    [(nzVisible)]="result"
+    (nzOnOk)="handleOk()"
+    nzOkText="Process to checkout"
+    nzWidth="600px"
+    [nzClosable]="false"
+    [nzMaskClosable]="false"
+  >
+    <ng-container *nzModalTitle>
+      <div class="flex items-center gap-2">
+        <i
+          nz-icon
+          [nzType]="'check-circle'"
+          [nzTheme]="'twotone'"
+          style="font-size: 1.4em"
+          [nzTwotoneColor]="'#52c41a'"
+        ></i>
+        <span> Scan success</span>
+      </div>
+    </ng-container>
+    <ng-container *nzModalContent>
+      <app-checkout [checkoutInfo]="result"></app-checkout>
+    </ng-container>
+    <ng-container *nzModalFooter="">
+      <button nz-button (click)="back()" [nzLoading]="loading">Cancel</button>
+      <button nz-button nzType="primary" nz-icon (click)="claimVoucher()" [nzLoading]="loading">
+        <i nz-icon nzType="safety-certificate" nzTheme="twotone" nzTwotoneColor="#1DA57A"></i>
+        Process to checkout
+      </button>
+    </ng-container>
+  </nz-modal>
 </div>

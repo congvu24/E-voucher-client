@@ -21,8 +21,8 @@ export class LoginComponent implements OnInit {
     private _router: RouterService
   ) {
     this.validateForm = this.fb.group({
-      userName: [null, [Validators.required]],
-      password: [null, [Validators.required]],
+      userName: [null, [Validators.required, Validators.email]],
+      password: [null, [Validators.required, Validators.minLength(6)]],
       remember: [true],
     });
   }

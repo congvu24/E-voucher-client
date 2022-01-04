@@ -1,12 +1,21 @@
 //side navigation route
 export const DEALER_ROUTES: UserRoute[] = [
   {
-    iconType: "scan",
+    iconType: "qrcode",
     label: "Scan voucher",
     path: "/dealer/voucher/select-service",
   },
-  { iconType: "wallet", label: "Manage service", path: "/dealer/services" },
+  {
+    iconType: "code-sandbox",
+    label: "Manage service",
+    path: "/dealer/services",
+  },
   { iconType: "tags", label: "Claimed voucher", path: "/dealer/vouchers" },
+  {
+    iconType: "wallet",
+    label: "Claimed voucher",
+    path: "/dealer/voucher/scanner/b8fc84c9-c8d7-4e16-b690-dd2dbe6ff174/checkout",
+  },
 ];
 export const SUPPLIER_ROUTES: UserRoute[] = [
   {

@@ -93,7 +93,7 @@
             <nz-tag
               nzColor="success"
               class="cursor-pointer"
-              (click)="acceptRequest(data.id)"
+              (click)="handleAction(data.id, 'accept')"
             >
               <i nz-icon nzType="check" nzTheme="outline"></i>
               <span>Accept</span>
@@ -101,7 +101,7 @@
             <nz-tag
               nzColor="error"
               class="cursor-pointer"
-              (click)="rejectRequest(data.id)"
+              (click)="handleAction(data.id, 'reject')"
             >
               <i nz-icon nzType="close" nzTheme="outline"></i>
               <span>Reject</span>
@@ -110,5 +110,12 @@
         </tr>
       </tbody>
     </nz-table>
+
+    
+    <nz-modal [(nzVisible)]="userInfoVisible" nzTitle="Preview information" nzWidth="800px" [nzOkDanger]="okText=== 'reject'" [nzOkLoading]="loading" (nzOnOk)="handleOk()" (nzOnCancel)="closeInfo()" [nzOkText]="okText|titleCase" >
+      <ng-container *nzModalContent>
+      <app-user-info [data]="requestInfo"></app-user-info>
+      </ng-container>
+    </nz-modal>
   </div>
 </div>

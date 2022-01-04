@@ -22,15 +22,10 @@ export class ErrorInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        if (error.status === 0) {
-          // Request timeout
-          alert("Request timeout, try again");
-        } else {
-          console.error(
-            `Backend returned code ${error.status}, body was: `,
-            error.error
-          );
-        }
+        console.error(
+          `Backend returned code ${error.status}, body was: `,
+          error.error
+        );
         //handle error
         this._error.handleError(error.status, error.message);
         return EMPTY;

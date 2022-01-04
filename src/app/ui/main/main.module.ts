@@ -22,6 +22,8 @@ import { FormComponent } from "./service-manage-table/form/form.component";
 import { QrScanComponent } from "./qr-scan/qr-scan.component";
 import { RouterModule } from "@angular/router";
 import { DetailFormComponent } from './voucher-manage/detail-form/detail-form.component';
+import { CheckoutComponent } from './qr-scan/checkout/checkout.component';
+import { InvoiceComponent } from './qr-scan/invoice/invoice.component';
 const icon = [GithubOutline];
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ const icon = [GithubOutline];
     QrScanComponent,
     ServiceManageTableComponent,
     DetailFormComponent,
+    CheckoutComponent,
+    InvoiceComponent,
   ],
   imports: [CommonModule, MainRoutingModule, SharedModule],
 })

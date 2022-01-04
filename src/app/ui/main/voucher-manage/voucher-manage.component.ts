@@ -20,13 +20,16 @@ export class VoucherManageComponent implements OnInit {
   detail: any;
   constructor(private _voucherService: IVoucherService) {
     this.filter = new FormGroup({
-      name: new FormControl(null),
-      phone: new FormControl(null),
+      citizenName: new FormControl(null),
     });
   }
   onFilter() {
-    console.log(this.filter.value);
-    return true;
+    this._voucherService
+      .getClaimedVouchers({ ...this.filter.value, page: this.page })
+      .subscribe(({ data, meta }) => {
+        this.data = data;
+        this.meta = meta;
+      });
   }
   resetForm() {
     this.filter.reset();
@@ -53,8 +56,6 @@ export class VoucherManageComponent implements OnInit {
       .getClaimedVouchers({ page: this.page })
       .subscribe(({ data, meta }) => {
         this.data = data;
-        console.log(data);
-
         this.meta = meta;
       });
   }

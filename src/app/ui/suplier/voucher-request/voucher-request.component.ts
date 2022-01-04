@@ -14,6 +14,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 
 import { VoucherService } from "../../../service/voucher/voucher.service";
 import { IVoucherService } from "../../../interface/voucher-service.";
+import { throwIfEmpty } from "rxjs/operators";
 @Component({
   selector: "app-voucher-request",
   templateUrl: "./voucher-request.component.html",
@@ -28,7 +29,6 @@ export class VoucherRequestComponent implements OnInit {
   types = ServiceType;
 
   //ui control
-  filterVisible = false;
   filter: FormGroup;
   meta: any;
   id: string;
@@ -36,15 +36,19 @@ export class VoucherRequestComponent implements OnInit {
   type = VoucherType; //voucher type
   status = RequesetStatus; //request status
   loading = false;
+  userInfoVisible = false;
+  requestInfo: any;
+
+  okText: "accept" | "reject" = "reject";
+  handleOk: () => void;
 
   constructor(
     private _requestService: IRequestService,
     private _voucherService: IVoucherService,
-    private _modal: NzModalService,
     private _ui: UiService,
     private _fb: FormBuilder
   ) {
-    this.filter = _fb.group({ type: [null], status: [null] });
+    this.filter = _fb.group({ type: [null], status: [RequesetStatus.pending] });
   }
 
   onFilter() {
@@ -56,63 +60,54 @@ export class VoucherRequestComponent implements OnInit {
         this.meta = meta;
       });
   }
-  rejectRequest(id: UUID) {
-    const item = this.request.find((i) => i.id === id);
-    const okCallback = () => {
-      this._requestService.rejectRequest(item.id).subscribe((res) => {
-        this.request = this.request.filter((rq) => rq.id !== item.id);
-        this._ui.showSuccess("Reject success");
+  acceptRequest(requestInfo: any): void {
+    this.loading = true;
+    this._voucherService
+      .createVoucher(requestInfo.id, requestInfo.type)
+      .subscribe((res) => {
+        this.request = this.request.filter((rq) => rq.id !== requestInfo.id);
+        this._ui.showSuccess("Accept success, voucher is ready to use");
+        this.userInfoVisible = false;
+        this.loading = false;
       });
-    };
-
-    if (item.status !== RequesetStatus.pending) {
-      this._ui.showMessage(
-        MessageType.error,
-        `Request already ${item.status.toLowerCase()} `
-      );
-    } else {
-      this._modal.warning({
-        nzTitle: "Reject request",
-        nzContent: `Reject <strong>#${id}</strong>, action canot be revert!!`,
-        nzOkText: "OK",
-        nzCancelText: "Cancel",
-        nzOnOk: okCallback,
-        nzOkLoading: this.loading,
-      });
-    }
   }
 
-  acceptRequest(id: UUID) {
-    const item = this.request.find((i) => i.id === id);
-    const okCallback = () => {
-      this._voucherService
-        .createVoucher(item.id, item.type)
-        .subscribe((res) => {
-          this.request = this.request.filter((rq) => rq.id !== item.id);
-          this._ui.showSuccess("Accept success, voucher is ready to use");
-        });
-    };
+  rejectRequest(requestInfo: any): void {
+    this.loading = true;
+    this._requestService.rejectRequest(requestInfo.id).subscribe((res) => {
+      this.request = this.request.filter((rq) => rq.id !== requestInfo.id);
+      this._ui.showSuccess("Reject success");
+      this.userInfoVisible = false;
+      this.loading = false;
+    });
+  }
 
-    if (item.status !== RequesetStatus.pending) {
+  handleAction(id: UUID, actionname: "accept" | "reject") {
+    this.requestInfo = this.request.find((i) => i.id === id);
+    if (this.requestInfo.status !== RequesetStatus.pending) {
       this._ui.showMessage(
         MessageType.error,
-        `Request already ${item.status.toLowerCase()} `
+        `Request already ${this.requestInfo.status.toLowerCase()} `
       );
     } else {
-      this._modal.warning({
-        nzTitle: "Accept request",
-        nzContent: `Accept <strong>#${id}</strong>, action canot be revert!!`,
-        nzOkText: "OK",
-        nzCancelText: "Cancel",
-        nzOnOk: okCallback,
-        nzOkLoading: this.loading,
-      });
+      this.okText = actionname;
+      if (actionname === "accept") {
+        this.handleOk = () => this.acceptRequest(this.requestInfo);
+      } else {
+        this.handleOk = () => this.rejectRequest(this.requestInfo);
+      }
+      this.userInfoVisible = true;
     }
   }
 
   resetForm() {
     this.filter = this._fb.group({ type: [null], status: [null] });
   }
+
+  closeInfo() {
+    this.userInfoVisible = false;
+  }
+
   onPageIndexChange(page: number) {
     this.page = page;
     this._requestService
@@ -124,7 +119,7 @@ export class VoucherRequestComponent implements OnInit {
   }
   ngOnInit(): void {
     this._requestService
-      .getRequests({ page: this.page })
+      .getRequests({ page: this.page, ...this.filter.value })
       .subscribe(({ data, meta }) => {
         this.request = data;
         this.meta = meta;
