@@ -1,220 +1,311 @@
 <!-- left -->
-<div class="mx-12 flex gap-12 pt-10">
-  <!-- card top -->
-  <div class="flex-grow ">
-    <div class="grid grid-cols-3 gap-7 mb-14">
-      <div class="rounded  px-3 py-5" style="background-color: #FFF7D6;">
-        <div class="flex justify-between">
-          <h2 class="uppercase mb-0 font-bold" style="color: #222">
-            Support
-          </h2>
-          <!-- tag -->
-          <span style="background-color:#FBE590;" class="flex items-center px-1 rounded">
-            <p class="font-semibold mb-0 tracking-tight " style="color:#333 ;">+ 12%</p>
-          </span>
-        </div>
+<div class="bg-white h-full">
+  <div class="mx-12 flex gap-12 pt-10">
+    <!-- card top -->
+    <div class="flex-grow">
+      <div class="grid grid-cols-3 gap-7 mb-14">
+        <div class="rounded px-3 py-5" style="background-color: #fff7d6">
+          <div class="flex justify-between">
+            <h2 class="uppercase mb-0 font-bold" style="color: #663737">
+              Support
+            </h2>
+            <!-- tag -->
+            <span
+              style="background-color: #fbe590"
+              class="flex items-center px-1 rounded"
+            >
+              <p
+                class="font-semibold mb-0 tracking-tight"
+                style="color: #663737"
+              >
+                + 80%
+              </p>
+            </span>
+          </div>
 
-        <p class="font-semibold" style="color: rgb(66, 66, 66)">
-          {{ "Compare with last month" | titleCase }}
-        </p>
-        <!-- chart -->
-        <div style="height: 150px" class="bg-gray-300"></div>
-        <div>
-          <h2 class="font-black text-4xl mb-0">{{ 20000 | number }}</h2>
-          <p class="text-gray-300 tracking-wide" style="color: rgb(66, 66, 66)">
-            Support voucher created
+          <p class="font-semibold" style="color: rgb(66, 66, 66)">
+            {{ "Compare with last month" | titleCase }}
           </p>
-        </div>
-      </div>
-      <div class="rounded bg-gray-400 shadow px-3 py-5">
-        <div class="flex justify-between">
-          <h2 class="uppercase mb-0 font-bold" style="color: #222">
-            Help
-          </h2>
-          <!-- tag -->
-          <div class="bg-gray-500 w-1/3 h-full">
-            <p class="text-gray-800 font-semibold">+ 12%</p>
+          <!-- chart -->
+          <div style="height: 150px" #containerRef>
+            <ngx-charts-area-chart
+              [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+              [results]="supportVoucherData"
+              activate="true"
+              [scheme]="orange"
+              [gradient]="true"
+              [curve]="curve"
+            >
+            </ngx-charts-area-chart>
+          </div>
+          <div>
+            <h2 class="font-bold text-4xl mb-0">{{ 2342 | number }}</h2>
+            <p class="tracking-wide" style="color: #777">
+              Support voucher created
+            </p>
           </div>
         </div>
 
-        <p class="font-semibold" style="color: rgb(66, 66, 66)">
-          {{ "Compare with last month" | titleCase }}
-        </p>
-        <!-- chart -->
-        <div style="height: 150px" class="bg-gray-300"></div>
-        <div>
-          <h2 class="font-black text-4xl mb-0">{{ 20000 | number }}</h2>
-          <p class="text-gray-300 tracking-wide" style="color: rgb(66, 66, 66)">
-            Help voucher created
+        <div class="rounded px-3 py-5" style="background-color: #dbf7e8">
+          <div class="flex justify-between">
+            <h2 class="uppercase mb-0 font-bold" style="color: #2d5a66">
+              Help
+            </h2>
+            <!-- tag -->
+            <span
+              style="background-color: #a8d2be"
+              class="flex items-center px-1 rounded"
+            >
+              <p
+                class="font-semibold mb-0 tracking-tight"
+                style="color: #2d5a66"
+              >
+                - 42%
+              </p>
+            </span>
+          </div>
+
+          <p class="font-semibold" style="color: rgb(66, 66, 66)">
+            {{ "Compare with last month" | titleCase }}
           </p>
-        </div>
-      </div>
-      <div class="rounded bg-gray-400 shadow px-3 py-5">
-        <div class="flex justify-between">
-          <h2 class="uppercase mb-0 font-bold" style="color: #222">
-            Urgent
-          </h2>
-          <!-- tag -->
-          <div class="bg-gray-500 w-1/3 h-full">
-            <p class="text-gray-800 font-semibold">+ 12%</p>
+          <!-- chart -->
+          <div style="height: 150px" #containerRef>
+            <ngx-charts-area-chart
+              [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+              [results]="helpVoucherData"
+              activate="true"
+              [scheme]="green"
+              [gradient]="true"
+              [curve]="curveSmall"
+            >
+            </ngx-charts-area-chart>
+          </div>
+          <div>
+            <h2 class="font-bold text-4xl mb-0">{{ 2359 | number }}</h2>
+            <p class="tracking-wide" style="color: #777">
+              Help voucher created
+            </p>
           </div>
         </div>
 
-        <p class="font-semibold" style="color: rgb(66, 66, 66)">
-          {{ "Compare with last month" | titleCase }}
-        </p>
-        <!-- chart -->
-        <div style="height: 150px" class="bg-gray-300"></div>
-        <div>
-          <h2 class="font-black text-4xl mb-0">{{ 20000 | number }}</h2>
-          <p class="text-gray-300 tracking-wide" style="color: rgb(66, 66, 66)">
-            Urgent voucher created
+        <div class="rounded px-3 py-5" style="background-color: #ffe1e1">
+          <div class="flex justify-between">
+            <h2 class="uppercase mb-0 font-bold" style="color: #663737">
+              Urgent
+            </h2>
+            <!-- tag -->
+            <span
+              style="background-color: #e09d9e"
+              class="flex items-center px-1 rounded"
+            >
+              <p
+                class="font-semibold mb-0 tracking-tight"
+                style="color: #663737"
+              >
+                + 9%
+              </p>
+            </span>
+          </div>
+
+          <p class="font-semibold" style="color: rgb(66, 66, 66)">
+            {{ "Compare with last month" | titleCase }}
           </p>
+          <!-- chart -->
+          <div style="height: 150px" #containerRef>
+            <ngx-charts-area-chart
+              [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+              [results]="urgentVoucherData"
+              activate="true"
+              [scheme]="red"
+              [gradient]="true"
+              [curve]="curve"
+            >
+            </ngx-charts-area-chart>
+          </div>
+          <div>
+            <h2 class="font-bold text-4xl mb-0">{{ 1875 | number }}</h2>
+            <p class="tracking-wide" style="color: #777">
+              Urgen voucher created
+            </p>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- card bottom -->
-    <div class="grid grid-cols-2 gap-10">
-      <div class="bg-white px-3 py-5 "> 
+      <!-- card bottom -->
+      <div class="grid grid-cols-2 gap-10">
+        <div class="bg-white px-3 py-5">
           <div class="flex justify-between items-center">
-            <h3 class="mb-6 text-xl font-bold">{{'Request history'|titlecase}}</h3>
+            <h3 class="mb-6 text-xl font-bold">
+              {{ "Request history" | titlecase }}
+            </h3>
             <nz-select nzPlaceHolder="6 Month" nzAllowClear>
-              <nz-option
-                [nzLabel]="'3 Month'"
-                [nzValue]="'3 Month'"
-                >
+              <nz-option [nzLabel]="'3 Month'" [nzValue]="'3 Month'">
               </nz-option>
-              <nz-option
-                [nzLabel]="'6 Month'"
-                [nzValue]="'6 Month'"
-                >
+              <nz-option [nzLabel]="'6 Month'" [nzValue]="'6 Month'">
               </nz-option>
-              <nz-option
-                [nzLabel]="'9 Month'"
-                [nzValue]="'9 Month'"
-                >
+              <nz-option [nzLabel]="'9 Month'" [nzValue]="'9 Month'">
               </nz-option>
-              <nz-option
-                [nzLabel]="'12 Month'"
-                [nzValue]="'12 Month'"
-                >
+              <nz-option [nzLabel]="'12 Month'" [nzValue]="'12 Month'">
               </nz-option>
             </nz-select>
           </div>
-         
+
           <div>
-            <h5 class="mb-0 tracking-tight font-semibold" style="color: #777">Request in January 2022</h5>
-            <h2 class="font-bold">{{20000|number}} times</h2>
+            <h5 class="mb-0 tracking-tight font-semibold" style="color: #777">
+              Request in January 2022
+            </h5>
+            <h2 class="font-bold">{{ 20000 | number }} times</h2>
           </div>
-          <div class="bg-gray-400 h-72"></div>
-      </div>
-      <div class="bg-gray-300 px-3 py-5 "> 
-        <div class="flex justify-between items-center">
-          <h3 class="mb-6 text-xl font-bold">{{'Request history'|titlecase}}</h3>
-          <nz-select nzPlaceHolder="6 Month" nzAllowClear>
-            <nz-option
-              [nzLabel]="'3 Month'"
-              [nzValue]="'3 Month'"
-              >
-            </nz-option>
-            <nz-option
-              [nzLabel]="'6 Month'"
-              [nzValue]="'6 Month'"
-              >
-            </nz-option>
-            <nz-option
-              [nzLabel]="'9 Month'"
-              [nzValue]="'9 Month'"
-              >
-            </nz-option>
-            <nz-option
-              [nzLabel]="'12 Month'"
-              [nzValue]="'12 Month'"
-              >
-            </nz-option>
-          </nz-select>
+          <div class="h-72" #requestContainter>
+            <ngx-charts-line-chart
+              [results]="requestHistoryData"
+              [view]="[
+                requestContainter.offsetWidth,
+                requestContainter.offsetHeight
+              ]"
+              activate="true"
+              [scheme]="blue"
+              [gradient]="true"
+              [curve]="curve"
+              [showXAxisLabel]="true"
+              [xAxis]="true"
+              [activeEntries]="reqHistoryActive"
+              [showGridLines]="false"
+            ></ngx-charts-line-chart>
+          </div>
         </div>
-       
-        <div>
-          <h5 class="mb-0 tracking-tight font-semibold" style="color: #777">Request in January 2022</h5>
-          <h2 class="font-bold">{{20000|number}} times</h2>
-        </div>
-        <div class="bg-gray-400 h-72"></div>
-    </div>
-    </div>
-  </div>
 
-  <!-- right -->
-  <div class="px-14 pr-20 border-0 border-solid border-l border-black">
-    <!-- total number -->
-    <div class="flex gap-4 items-center">
-      <div class="bg-gray-500 p-3">
-        <div class="bg-gray-600 h-6 w-6"></div>
+        <div class="px-3 py-5">
+          <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-bold">
+              {{ "Recent voucher" | titlecase }}
+            </h3>
+            <button nz-button (click)="openVoucherRequest()">View more</button>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="font-medium" style="color: hsl(0, 0%, 75%)">
+              {{ "type" | uppercase }}
+            </p>
+            <p class="font-medium" style="color: hsl(0, 0%, 75%)">
+              {{ "value" | uppercase }}
+            </p>
+          </div>
+          <nz-list nzItemLayout="horizontal">
+            <nz-list-item *ngFor="let item of recentVoucherData; let i =  index">
+              <nz-list-item-meta
+                [nzAvatar]="avt"
+                nzDescription="Created at Jan 4, 2022"
+              >
+                <nz-list-item-meta-title>
+                  {{ item.title }}
+                </nz-list-item-meta-title>
+                <ng-template #avt>
+                  <div class="flex items-center rounded-full border border-solid border-base-gray px-2 py-2" style="border-color:#FEE7E8 ;">
+                    <i
+                      nz-icon
+                      nzType="fire"
+                      nzTheme="outline"
+                      style="color: #f5222d; font-size: large;"
+                    ></i>
+                  </div>
+                </ng-template>
+              </nz-list-item-meta>
+              <p class="font-bold text-base">{{ item.value | currency }}</p>
+            </nz-list-item>
+            <nz-list-empty
+              *ngIf="recentVoucherData.length === 0"
+            ></nz-list-empty>
+          </nz-list>
+        </div>
       </div>
-      <div>
-        <h5 class="mb-0 tracking-tight font-bold" style="color: #777">
-          {{ "TOTAL USER" | uppercase }}
-        </h5>
-        <h2
-          class="font-bold mb-0 text-2xl leading-none"
-          style="font-size: 1.6rem"
+    </div>
+    <!-- right -->
+    <div class="px-14 pr-20 border-0 border-solid border-l border-base-gray">
+      <!-- total number -->
+      <div class="flex gap-4 items-center">
+        <div class="p-3 rounded-sm" style="background-color: #e7f1fe">
+          <i
+            nz-icon
+            nzType="dollar"
+            nzTheme="twotone"
+            nzTwotoneColor="#1C6DD0"
+            style="font-size: 2em"
+          ></i>
+        </div>
+        <div>
+          <h5
+            class="mb-0 tracking-wide font-semibold"
+            style="color: rgb(100, 100, 100)"
+          >
+            {{ "estimated capital" | uppercase }}
+          </h5>
+          <h2
+            class="font-bold mb-0 text-2xl leading-none"
+            style="font-size: 1.6rem"
+          >
+            {{ "5596" | currency }}
+          </h2>
+        </div>
+      </div>
+      <div class="py-16">
+        <nz-divider></nz-divider>
+      </div>
+      <div class="flex flex-col gap-20">
+        <div class="flex gap-4 items-center">
+          <div class="p-3 rounded-sm" style="background-color: #defacc">
+            <i
+              nz-icon
+              nzType="carry-out"
+              nzTheme="outline"
+              style="font-size: 2em; color: #3e7c17"
+            ></i>
+          </div>
+          <div>
+            <h5
+              class="mb-0 tracking-wide font-semibold"
+              style="color: rgb(100, 100, 100)"
+            >
+              {{ "Used" | uppercase }}
+            </h5>
+            <h2
+              class="font-bold mb-0 text-2xl leading-none"
+              style="font-size: 1.6rem"
+            >
+              {{ "3982" | currency }}
+            </h2>
+          </div>
+        </div>
+
+        <div class="flex gap-4 items-center">
+          <div class="p-3 rounded-sm" style="background-color: #fff6eb">
+            <i
+              nz-icon
+              nzType="transaction"
+              nzTheme="outline"
+              style="font-size: 2em; color: #ff9300"
+            ></i>
+          </div>
+          <div>
+            <h5
+              class="mb-0 tracking-wide font-semibold"
+              style="color: rgb(100, 100, 100)"
+            >
+              {{ "Remain" | uppercase }}
+            </h5>
+            <h2
+              class="font-bold mb-0 text-2xl leading-none"
+              style="font-size: 1.6rem"
+            >
+              {{ "1414" | currency }}
+            </h2>
+          </div>
+        </div>
+
+        <div
+          class="px-4 py-4 text-base font-medium text-white cursor-pointer rounded-sm text-center hover:opacity-90"
+          style="background-color: #4ca216"
+          (click)="openVoucherRequest()"
         >
-          {{ "5596" | number }}
-        </h2>
-      </div>
-    </div>
-    <div class="py-16">
-      <nz-divider></nz-divider>
-    </div>
-    <div class="flex flex-col gap-20">
-      <div class="flex gap-4 items-center">
-        <div class="bg-gray-500 p-3">
-          <div class="bg-gray-600 h-6 w-6"></div>
-        </div>
-        <div>
-          <h5 class="mb-0 tracking-tight font-bold" style="color: #777">
-            {{ "TOTAL USER" | uppercase }}
-          </h5>
-          <h2
-            class="font-bold mb-0 text-2xl leading-none"
-            style="font-size: 1.6rem"
-          >
-            {{ "5596" | number }}
-          </h2>
-        </div>
-      </div>
-
-      <div class="flex gap-4 items-center">
-        <div class="bg-gray-500 p-3">
-          <div class="bg-gray-600 h-6 w-6"></div>
-        </div>
-        <div>
-          <h5 class="mb-0 tracking-tight font-bold" style="color: #777">
-            {{ "TOTAL USER" | uppercase }}
-          </h5>
-          <h2
-            class="font-bold mb-0 text-2xl leading-none"
-            style="font-size: 1.6rem"
-          >
-            {{ "5596" | number }}
-          </h2>
-        </div>
-      </div>
-
-      <div class="flex gap-4 items-center">
-        <div class="bg-gray-500 p-3">
-          <div class="bg-gray-600 h-6 w-6"></div>
-        </div>
-        <div>
-          <h5 class="mb-0 tracking-tight font-bold" style="color: #777">
-            {{ "TOTAL USER" | uppercase }}
-          </h5>
-          <h2
-            class="font-bold mb-0 text-2xl leading-none"
-            style="font-size: 1.6rem"
-          >
-            {{ "5596" | number }}
-          </h2>
+          Create a Voucher
         </div>
       </div>
     </div>

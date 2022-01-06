@@ -14,4 +14,5 @@ export abstract class IVoucherService {
   ): Observable<{ data: Voucher[]; meta: any }>;
   abstract claimVoucher(info: any): Observable<any>;
   abstract deleteVoucher(id: UUID): Observable<any>;
+  abstract downloadReport(): Observable<any>;
 }

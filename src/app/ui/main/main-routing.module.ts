@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { CreateServiceComponent } from "./create-service/create-service.component";
+import { MainDashboardComponent } from "./main-dashboard/main-dashboard.component";
 import { MainComponent } from "./main.component";
 import { CheckoutComponent } from "./qr-scan/checkout/checkout.component";
 import { QrScanComponent } from "./qr-scan/qr-scan.component";
@@ -13,7 +14,7 @@ const routes: Routes = [
     path: "",
     component: MainComponent,
     children: [
-      { path: "", redirectTo: "voucher/select-service" },
+      { path: "", redirectTo: "statistic" },
       { path: "services/create", component: CreateServiceComponent },
       {
         path: "voucher/scanner/:id/checkout",
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: "voucher/select-service", component: ServiceManageComponent },
       { path: "services", component: ServiceManageTableComponent },
       { path: "vouchers", component: VoucherManageComponent },
+      { path: "statistic", component: MainDashboardComponent },
     ],
   },
 ];

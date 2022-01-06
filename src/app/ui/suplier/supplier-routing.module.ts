@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DashboardComponent } from "./dashboard/dashboard.component";
+import { SupplierDashboardComponent } from "./dashboard/dashboard.component";
 import { SupplierComponent } from "./supplier.component";
 import { VoucherCreatedComponent } from "./voucher-created/voucher-created.component";
 import { VoucherRequestComponent } from "./voucher-request/voucher-request.component";
@@ -20,11 +20,11 @@ const routes: Routes = [
       },
       {
         path: "statistic",
-        component: DashboardComponent,
+        component: SupplierDashboardComponent,
       },
       {
         path: "",
-        redirectTo: "request",
+        redirectTo: "statistic",
       },
     ],
   },

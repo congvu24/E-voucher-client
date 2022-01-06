@@ -15,11 +15,21 @@ import { PACKAGE_ENDPOINT } from "../../shared/router";
 })
 export class PackageService implements IPackageService {
   constructor(private _http: HttpClient) {}
+
+  downloadReport(): Observable<any> {
+    const MAX_LENGTH = 20;
+    return this._http.get(`${PACKAGE_ENDPOINT}/export`, {
+      responseType: "arraybuffer",
+      params: { page: 1, take: MAX_LENGTH },
+    });
+  }
+
   deletePackage(id: string): Observable<boolean> {
     return this._http
       .delete(`${PACKAGE_ENDPOINT}/${id}`)
       .pipe(map((res) => true));
   }
+
   updatePackage(id: string, updates: any): Observable<any> {
     return this._http.patch(`${PACKAGE_ENDPOINT}/${id}`, updates);
   }

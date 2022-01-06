@@ -35,6 +35,7 @@ const components = [
   TitleCasePipe,
   SStatusTagComponent,
   MinMaxCurrencyPipe,
+  ServiceFormDirective,
 ];
 
 const modules = [
@@ -45,7 +46,7 @@ const modules = [
   ReactiveFormsModule,
 ];
 @NgModule({
-  declarations: [WebviewDirective, components, ServiceFormDirective],
+  declarations: [WebviewDirective, components],
   imports: [CommonModule, modules],
   exports: [WebviewDirective, modules, components],
 })

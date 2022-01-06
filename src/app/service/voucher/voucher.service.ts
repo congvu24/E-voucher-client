@@ -21,6 +21,12 @@ import {
 })
 export class VoucherService implements IVoucherService {
   constructor(private _http: HttpClient) {}
+  downloadReport(): Observable<any> {
+    return this._http.get(`${VOUCHER_ENDPOINT}/export`, {
+      params: { page: 1, take: 99 },
+      responseType: "arraybuffer",
+    });
+  }
   deleteVoucher(id: UUID): Observable<any> {
     return this._http.delete(`${VOUCHER_ENDPOINT}`, { params: { id } });
   }

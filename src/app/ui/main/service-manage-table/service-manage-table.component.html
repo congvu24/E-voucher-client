@@ -9,10 +9,10 @@
         <i nz-icon nzType="plus" style="font-size: 1.4em;" nzTheme="outline"></i
       ></a>
     </span>
-    <span nz-tooltip nzTooltipTitle="Download report" class="px-2">
-      <a href="/dealer/services/create">
-        <i nz-icon nzType="file-excel" style="font-size: 1.4em;"  nzTheme="outline"></i>
-      </a>
+    <span nz-tooltip nzTooltipTitle="Download report" class="px-2" (click)="downloadReport()">
+       <a>
+        <i nz-icon nzType="file-excel" style="font-size: 1.4em;"  nzTheme="outline" ></i>
+       </a>
     </span>
    </div>
   </div>
@@ -74,6 +74,7 @@
     [nzPageSize]="meta?.take"
     [nzTotal]="meta?.itemCount"
     (nzPageIndexChange)="onPageIndexChange($event)"
+    [nzLoading]="loading|async"
     >
       <thead>
         <tr>

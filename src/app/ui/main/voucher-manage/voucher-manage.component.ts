@@ -4,6 +4,7 @@ import { Voucher } from "../../../core/interface/voucher";
 import { Meta } from "../../../interface/api";
 import { IVoucherService } from "../../../interface/voucher-service.";
 import { VoucherService } from "../../../service/voucher/voucher.service";
+import { LoadingService } from "../../../shared/service/loading.service";
 
 @Component({
   selector: "app-voucher-manage",
@@ -16,9 +17,18 @@ export class VoucherManageComponent implements OnInit {
   data: any[] = [];
   meta: Meta;
   page = 1;
-  detailVisible = false; // detail form
+
+  // detail form
+  detailVisible = false;
   detail: any;
-  constructor(private _voucherService: IVoucherService) {
+
+  // UI controls
+  loading = this._loadingService.loading;
+
+  constructor(
+    private _voucherService: IVoucherService,
+    private _loadingService: LoadingService
+  ) {
     this.filter = new FormGroup({
       citizenName: new FormControl(null),
     });

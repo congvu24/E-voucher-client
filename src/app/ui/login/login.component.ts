@@ -4,6 +4,7 @@ import { mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import { UserRole } from "../../core/constant";
 import { RouterService } from "../../core/services";
 import { AuthService } from "../../service";
+import { LoadingService } from "../../shared/service/loading.service";
 
 @Component({
   selector: "app-login",
@@ -15,10 +16,12 @@ export class LoginComponent implements OnInit {
 
   //ui control
   passwordVisible = false;
+  loading = this._loading.loading;
   constructor(
     private _auth: AuthService,
     private fb: FormBuilder,
-    private _router: RouterService
+    private _router: RouterService,
+    private _loading: LoadingService
   ) {
     this.validateForm = this.fb.group({
       userName: [null, [Validators.required, Validators.email]],
@@ -40,8 +43,6 @@ export class LoginComponent implements OnInit {
 
       request.subscribe((res) => {
         if (res.success) {
-          console.log(res.role);
-
           this._router.goto(res.role.toLowerCase());
         }
       });

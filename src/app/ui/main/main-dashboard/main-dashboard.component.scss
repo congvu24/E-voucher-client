@@ -1,0 +1,22 @@
+ul {
+    list-style: none; /* Remove default bullets */
+    margin-bottom: 6px;
+  }
+  
+  ul li::before {
+    content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: #d9d9d9; /* Change the color */
+    font-weight: bold; /* If you want it to be bold */
+    display: inline-block; /* Needed to add space between the bullet and the text */
+    width: 1em; /* Also needed for space (tweak if needed) */
+    margin-left: -1em; /* Also needed for space (tweak if needed) */
+  }
+
+
+  :host ::ng-deep .advanced-pie-legend .total-value{
+    font-size: 24px;
+  }
+
+  :host ::ng-deep  .advanced-pie-legend .total-label {
+    font-size: 16px;
+  }

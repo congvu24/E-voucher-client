@@ -54,7 +54,7 @@
       </div>
       <div>
         <div nz-col [nzSpan]="24" class="text-right">
-          <button nz-button [nzType]="'primary'" class="mr-2">Search</button>
+          <button nz-button [nzType]="'primary'"  class="mr-2">Search</button>
           <button nz-button (click)="resetForm()">Clear</button>
         </div>
       </div>
@@ -67,6 +67,7 @@
       [nzPageSize]="meta?.take"
       [nzTotal]="meta?.itemCount"
       (nzPageIndexChange)="onPageIndexChange($event)"
+      [nzLoading]="loading |async"
     >
       <thead>
         <tr>
@@ -112,7 +113,7 @@
     </nz-table>
 
     
-    <nz-modal [(nzVisible)]="userInfoVisible" nzTitle="Preview information" nzWidth="800px" [nzOkDanger]="okText=== 'reject'" [nzOkLoading]="loading" (nzOnOk)="handleOk()" (nzOnCancel)="closeInfo()" [nzOkText]="okText|titleCase" >
+    <nz-modal [(nzVisible)]="userInfoVisible" nzTitle="Preview information" nzWidth="800px" [nzOkDanger]="okText=== 'reject'" [nzOkLoading]="loading|async" (nzOnOk)="handleOk()" (nzOnCancel)="closeInfo()" [nzOkText]="okText|titleCase" >
       <ng-container *nzModalContent>
       <app-user-info [data]="requestInfo"></app-user-info>
       </ng-container>

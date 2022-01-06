@@ -32,7 +32,9 @@
     [nzPageSize]="meta?.take"
     [nzTotal]="meta?.itemCount"
     (nzPageIndexChange)="onPageIndexChange($event)"
-    nzTableLayout="fixed">
+    nzTableLayout="fixed"
+    [nzLoading]="loading|async"
+    >
         <thead>
           <tr>
             <th [width]="50">#</th>

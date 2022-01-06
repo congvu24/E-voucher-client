@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from "@angular/forms";
 import { VoucherService } from "../../../service/voucher/voucher.service";
 import { IVoucherService } from "../../../interface/voucher-service.";
 import { throwIfEmpty } from "rxjs/operators";
+import { LoadingService } from "../../../shared/service/loading.service";
 @Component({
   selector: "app-voucher-request",
   templateUrl: "./voucher-request.component.html",
@@ -27,26 +28,27 @@ import { throwIfEmpty } from "rxjs/operators";
 export class VoucherRequestComponent implements OnInit {
   request: Request[]; // fake data
   types = ServiceType;
+  requestInfo: any;
 
   //ui control
   filter: FormGroup;
   meta: any;
-  id: string;
   page = 1;
-  type = VoucherType; //voucher type
-  status = RequesetStatus; //request status
-  loading = false;
+  loading = this._loadingService.loading;
   userInfoVisible = false;
-  requestInfo: any;
-
   okText: "accept" | "reject" = "reject";
   handleOk: () => void;
+
+  // render element
+  type = VoucherType;
+  status = RequesetStatus;
 
   constructor(
     private _requestService: IRequestService,
     private _voucherService: IVoucherService,
     private _ui: UiService,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _loadingService: LoadingService
   ) {
     this.filter = _fb.group({ type: [null], status: [RequesetStatus.pending] });
   }
@@ -61,24 +63,20 @@ export class VoucherRequestComponent implements OnInit {
       });
   }
   acceptRequest(requestInfo: any): void {
-    this.loading = true;
     this._voucherService
       .createVoucher(requestInfo.id, requestInfo.type)
       .subscribe((res) => {
         this.request = this.request.filter((rq) => rq.id !== requestInfo.id);
         this._ui.showSuccess("Accept success, voucher is ready to use");
         this.userInfoVisible = false;
-        this.loading = false;
       });
   }
 
   rejectRequest(requestInfo: any): void {
-    this.loading = true;
     this._requestService.rejectRequest(requestInfo.id).subscribe((res) => {
       this.request = this.request.filter((rq) => rq.id !== requestInfo.id);
       this._ui.showSuccess("Reject success");
       this.userInfoVisible = false;
-      this.loading = false;
     });
   }
 

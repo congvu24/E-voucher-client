@@ -33,6 +33,12 @@ import {
   QrcodeOutline,
   CodeSandboxOutline,
   SafetyCertificateTwoTone,
+  DollarTwoTone,
+  CarryOutOutline,
+  TransactionOutline,
+  FireOutline,
+  TrophyOutline,
+  MoneyCollectOutline,
 } from "@ant-design/icons-angular/icons";
 
 const icons: IconDefinition[] = [
@@ -69,6 +75,12 @@ const icons: IconDefinition[] = [
   QrcodeOutline,
   CodeSandboxOutline,
   SafetyCertificateTwoTone,
+  DollarTwoTone,
+  CarryOutOutline,
+  TransactionOutline,
+  FireOutline,
+  TrophyOutline,
+  MoneyCollectOutline,
 ];
 @NgModule({
   declarations: [],
