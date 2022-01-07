@@ -1,5 +1,6 @@
 import { Observable } from "rxjs";
 import { Register } from "../core/interface/register";
+import { AgencyAnalyticInput } from "../service/inputPorts";
 
 export abstract class IRegisterService {
   abstract getRegisters(
@@ -7,9 +8,5 @@ export abstract class IRegisterService {
   ): Observable<{ data: Register[]; meta: any }>;
   abstract acceptRegister(citizenId: UUID): Observable<Register>;
   abstract rejectRegister(citizenId: UUID): Observable<Register>;
-  abstract getStatistic(): Observable<{
-    thisMonthCitizen: number;
-    allCitizen: number;
-    pendingCitizen: number;
-  }>;
+  abstract getStatistic(): Observable<AgencyAnalyticInput>;
 }

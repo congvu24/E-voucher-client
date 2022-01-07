@@ -10,6 +10,7 @@ import { isThisTypeNode } from "typescript/lib/tsserverlibrary";
 import { Register } from "../../../core/interface/register";
 import { StorageService, UiService } from "../../../core/services";
 import { IRegisterService } from "../../../interface/register-service";
+import { AgencyAnalyticInput } from "../../../service/inputPorts";
 import { RegisterService } from "../../../service/register/register.service";
 
 @Component({
@@ -24,16 +25,7 @@ export class RegisterComponent implements OnInit {
   meta: any;
 
   //statistic
-  registerData = [
-    {
-      name: "Accepted",
-      value: "29",
-    },
-    {
-      name: "Rejected",
-      value: "10",
-    },
-  ];
+  registerData: AgencyAnalyticInput;
 
   //table props
   checked = false;
@@ -149,8 +141,8 @@ export class RegisterComponent implements OnInit {
         this.registers = data;
         this.meta = meta;
       });
-    // this._register.getStatistic().subscribe((res) => {
-    //   this.registerData = res;
-    // });
+    this._register.getStatistic().subscribe((res) => {
+      this.registerData = res;
+    });
   }
 }

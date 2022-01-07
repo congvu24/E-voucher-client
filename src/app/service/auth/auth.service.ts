@@ -11,9 +11,10 @@ import { LOGIN_ENDPOINT } from "../../shared/router";
   providedIn: "root",
 })
 export class AuthService implements IAuthService {
-  isLogin = false;
+  private _isLogin = false;
 
-  roleAs: string;
+  private _name: string;
+  private _roleAs: string;
 
   constructor(
     private _http: HttpService,
@@ -21,11 +22,11 @@ export class AuthService implements IAuthService {
     private http: HttpClient
   ) {}
   logout() {
-    this.isLogin = false;
-    this.roleAs = "";
+    this._isLogin = false;
+    this._roleAs = "";
     this._storage.setToken("STATE", "false");
     this._storage.setToken("ROLE", "");
-    return of({ success: !this.isLogin, role: "" });
+    return of({ success: !this._isLogin, role: "" });
     // window.location.href = "/login";
   }
   login(email: string, password: string) {
@@ -33,23 +34,29 @@ export class AuthService implements IAuthService {
   }
 
   saveCredential(user, token): Observable<{ success: boolean; role: string }> {
-    this.isLogin = true;
-    this.roleAs = user.role;
+    this._isLogin = true;
+    this._roleAs = user.role;
+    this._name = user.name;
     this._storage.setToken("STATE", "true");
-    this._storage.setToken("ROLE", this.roleAs);
+    this._storage.setToken("ROLE", this._roleAs);
     this._storage.setToken("auth", token.accessToken, token.expiresIn);
-    return of({ success: this.isLogin, role: this.roleAs });
+    return of({ success: this._isLogin, role: this._roleAs });
   }
 
   isLoggedIn() {
     const loggedIn = this._storage.getToken("STATE");
-    this.isLogin = JSON.parse(loggedIn);
-    return this.isLogin;
+    this._isLogin = loggedIn === "true";
+    console.log(this.isLoggedIn);
+
+    return this._isLogin;
   }
 
   getRole() {
-    this.roleAs = this._storage.getToken("ROLE");
-    return this.roleAs;
+    this._roleAs = this._storage.getToken("ROLE");
+    return this._roleAs;
+  }
+  get name(): string {
+    return this._name;
   }
 }
 

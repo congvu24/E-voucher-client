@@ -8,7 +8,7 @@ import { RouterService } from "../../../../core/services/router/router.service";
   styleUrls: ["./step-three.component.scss"],
 })
 export class StepThreeComponent implements OnInit {
-  @Input() status: string;
+  @Input() status: any;
   title = "There is an error when creating your service";
   description = "Try again or contact administrator for help";
   constructor(private _router: Router) {}

@@ -26,7 +26,7 @@ import { LoadingService } from "../../../shared/service/loading.service";
   ],
 })
 export class VoucherRequestComponent implements OnInit {
-  request: Request[]; // fake data
+  request: any[]; // fake data
   types = ServiceType;
   requestInfo: any;
 

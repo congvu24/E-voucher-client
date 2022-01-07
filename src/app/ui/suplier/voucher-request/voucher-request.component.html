@@ -84,8 +84,8 @@
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
           <td >{{ i + 1 + meta?.take * (page - 1) }}</td>
-          <td>{{ data.citizen.name }}</td>
-          <td>{{ data.citizen.email }}</td>
+          <td>{{ data?.citizen.name }}</td>
+          <td>{{ data?.citizen.email }}</td>
           <td><app-r-status-tag [status]="data.status"></app-r-status-tag></td>
           <td >{{data.note}}</td>
           <td>{{ data.createdAt | date }}</td>

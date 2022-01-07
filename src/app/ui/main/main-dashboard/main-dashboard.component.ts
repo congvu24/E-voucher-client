@@ -59,11 +59,11 @@ export class MainDashboardComponent implements OnInit {
   ];
   profitPerPackage = [
     {
-      name: "United States",
+      name: "Gói nhu yếu phẩm 1 tuần",
       value: 50000,
     },
     {
-      name: "Italy",
+      name: "Gói nhu yếu phẩm 3 ngày",
       value: 35800,
     },
     {

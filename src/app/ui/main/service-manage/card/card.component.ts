@@ -15,7 +15,6 @@ export class CardComponent implements OnInit {
   @Input() openView: (_: Package) => void;
   @Input() endView: () => void;
   @Input() openEdit: () => void;
-  @Input() endEdit: () => void;
   imgHost = APP_CONFIG.apiUrl;
   constructor() {}
 
@@ -25,8 +24,6 @@ export class CardComponent implements OnInit {
   endChildView() {
     this.endView();
   }
-  endChildEdit() {
-    this.endEdit();
-  }
+
   ngOnInit(): void {}
 }

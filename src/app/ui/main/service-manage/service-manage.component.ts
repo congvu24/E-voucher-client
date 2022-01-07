@@ -1,7 +1,6 @@
 import { Component, OnInit, Type, ViewChild } from "@angular/core";
 
 import { NzModalService } from "ng-zorro-antd/modal";
-import { fakeservice } from "../../../../assets/fakedata";
 import { ServiceType } from "../../../core/constant";
 import { Package } from "../../../core/interface/package";
 import { Meta } from "../../../interface/api";

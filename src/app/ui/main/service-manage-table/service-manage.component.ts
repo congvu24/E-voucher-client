@@ -8,7 +8,6 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd/modal";
-import { fakeservice } from "../../../../assets/fakedata";
 import { ServiceType } from "../../../core/constant";
 import { Package } from "../../../core/interface/package";
 import { UiService } from "../../../core/services";

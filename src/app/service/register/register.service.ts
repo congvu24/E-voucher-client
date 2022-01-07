@@ -1,35 +1,37 @@
+/* eslint-disable id-blacklist */
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { Register } from "../../core/interface/register";
+import { RequesetStatus } from "../../core/interface/request";
 import { HttpService } from "../../core/services";
+import { toTitleCase } from "../../core/services/until/help";
 import { Meta } from "../../interface/api";
 import { IRegisterService } from "../../interface/register-service";
+import { AgencyAnalyticInput } from "../inputPorts";
 
 @Injectable({
   providedIn: "root",
 })
 export class RegisterService implements IRegisterService {
   constructor(private _http: HttpClient) {}
-  getStatistic(): Observable<{
-    thisMonthCitizen: number;
-    allCitizen: number;
-    pendingCitizen: number;
-  }> {
-    return this._http
-      .get<{
-        thisMonthCitizen: number;
-        allCitizen: number;
-        pendingCitizen: number;
-      }>("analytic/citizen")
-      .pipe(
-        map(({ thisMonthCitizen, allCitizen, pendingCitizen }) => ({
-          thisMonthCitizen,
-          allCitizen,
-          pendingCitizen,
-        }))
-      );
+  getStatistic(): Observable<AgencyAnalyticInput> {
+    return this._http.get("analytics/agency", {}).pipe(
+      map((res: any) => {
+        const temp: { name: string; value: number }[] = [];
+        res.countRegisterByStatus.forEach(
+          (e: { name: string; number: number }) => {
+            temp.unshift({
+              name: toTitleCase(e.name),
+              value: e.number,
+            });
+          }
+        );
+        res.countRegisterByStatus = temp;
+        return res;
+      })
+    );
   }
 
   acceptRegister(citizenId: UUID): Observable<Register> {

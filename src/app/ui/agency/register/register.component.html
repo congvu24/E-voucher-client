@@ -11,7 +11,7 @@
           style="font-size: 2em"
         ></i>
         <nz-statistic
-          [nzValue]="(10 | number)!"
+          [nzValue]="(registerData?.allCitizen | number)!"
           [nzTitle]="'Total user'"
         ></nz-statistic>
       </div>
@@ -21,7 +21,7 @@
       >
         <i nz-icon nzType="trophy" nzTheme="outline" style="font-size: 2em"></i>
         <nz-statistic
-          [nzValue]="(12 | number)!"
+          [nzValue]="( registerData?.thisMonthCitizen| number)!"
           [nzTitle]="'Accepted this month'"
         ></nz-statistic>
       </div>
@@ -36,13 +36,13 @@
           style="font-size: 2em"
         ></i>
         <nz-statistic
-          [nzValue]="(0 | number)!"
+          [nzValue]="( registerData.thisMonthCitizen | number)!"
           [nzTitle]="'New register'"
         ></nz-statistic>
       </div>
       <div class="col-span-2 h-70" #profitTpl>
         <ngx-charts-advanced-pie-chart
-          [results]="registerData"
+          [results]="registerData?.countRegisterByStatus"
           [view]="[profitTpl.offsetWidth, profitTpl.offsetHeight]"
           label="Register"
           [scheme]="colorScheme"
@@ -90,7 +90,7 @@
               <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
               <td>{{ data.name | titlecase }}</td>
               <td>{{ data.email | titleCase }}</td>
-              <td>{{ data.identify | number }}</td>
+              <td>{{ data.identify  }}</td>
               <td>{{ data.job | titleCase }}</td>
               <td>{{ data.address | titlecase }}</td>
               <td>{{ data.phone }}</td>

@@ -1874,10 +1874,10 @@
   resolved "https://registry.npmjs.org/@sindresorhus/is/-/is-4.2.0.tgz#667bfc6186ae7c9e0b45a08960c551437176e1ca"
   integrity sha512-VkE3KLBmJwcCaVARtQpfuKcKv8gcBmUubrfHGF84dXuuW6jgsRYxPtzcIhPyK9WAPpRt2/xY6zkD9MnRaJzSyw==
 
-"@swimlane/ngx-charts@19.2.0":
-  version "19.2.0"
-  resolved "https://registry.npmjs.org/@swimlane/ngx-charts/-/ngx-charts-19.2.0.tgz#42b888a6eeb7926199272343d271705ff694588e"
-  integrity sha512-FJuDuwxti8U6BfMC0m/KfcyBqbn6mmkAX7NANbcoUaNUrngq+JBZYGVJhM66RDt54m82S7IIZV5kOK/jDTry+w==
+"@swimlane/ngx-charts@18.0.1":
+  version "18.0.1"
+  resolved "https://registry.npmjs.org/@swimlane/ngx-charts/-/ngx-charts-18.0.1.tgz#84c9996d5a66590d911c8e218ffb2761880c22cf"
+  integrity sha512-yTSKIPyzcrR13wUnJf5K4cem+nrYhfKeywdipLM+7/qgJiLcs7HFRvcUhCTp3jQl2K+y8a6OWJAAmS8azcAshg==
   dependencies:
     "@types/d3-shape" "^2.0.0"
     d3-array "^2.9.1"

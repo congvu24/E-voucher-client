@@ -16,11 +16,10 @@
           class="mb-0"
           nz-typography
           nzCopyable
-          [nzCopyTooltips]="[tooltip]"
+          [nzCopyTooltips]="[data.id, 'Copied']"
           nzContent="Id"
           [nzCopyText]="data.id"
         ></p>
-        <ng-template #tooltip> {{ data.id }} </ng-template>
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Time created">{{data.createdAt|date}}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Voucher"><app-v-type-tag [type]="data.type"></app-v-type-tag></nz-descriptions-item>
