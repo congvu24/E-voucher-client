@@ -12,6 +12,26 @@ import { IRegisterService } from "../../interface/register-service";
 })
 export class RegisterService implements IRegisterService {
   constructor(private _http: HttpClient) {}
+  getStatistic(): Observable<{
+    thisMonthCitizen: number;
+    allCitizen: number;
+    pendingCitizen: number;
+  }> {
+    return this._http
+      .get<{
+        thisMonthCitizen: number;
+        allCitizen: number;
+        pendingCitizen: number;
+      }>("analytic/citizen")
+      .pipe(
+        map(({ thisMonthCitizen, allCitizen, pendingCitizen }) => ({
+          thisMonthCitizen,
+          allCitizen,
+          pendingCitizen,
+        }))
+      );
+  }
+
   acceptRegister(citizenId: UUID): Observable<Register> {
     return this._http
       .put(`goverment/citizen/${citizenId}`, {}, { params: { isValid: true } })

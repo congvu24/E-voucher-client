@@ -1,96 +1,149 @@
-<div class="relative pb-12">
-  <div>
-    <div>
-      <app-page-title title="Pending register"></app-page-title>
-    </div>
-    <div class="mx-6">
-      <nz-table
-        #basicTable
-        [nzData]="registers"
-        [nzPageSize]="meta?.take"
-        [nzTotal]="meta?.itemCount"
-        nzSize="middle"
-        (nzPageIndexChange)="onPageIndexChange($event)"
+<div class="mx-6">
+  <div >
+    <div class="grid grid-cols-5 gap-6 mb-20 mt-6" *ngIf="openStatistic">
+      <div
+        class="h-40 border-0 border-b-8 pt-10 border-solid border-primary shadow-app text-center"
+      >
+        <i
+          nz-icon
+          nzType="money-collect"
+          nzTheme="outline"
+          style="font-size: 2em"
+        ></i>
+        <nz-statistic
+          [nzValue]="(10 | number)!"
+          [nzTitle]="'Total user'"
+        ></nz-statistic>
+      </div>
+      <div
+        class="h-40 border-0 border-b-8 pt-10 border-solid shadow-app text-center"
+        style="border-color: #ffc900"
+      >
+        <i nz-icon nzType="trophy" nzTheme="outline" style="font-size: 2em"></i>
+        <nz-statistic
+          [nzValue]="(12 | number)!"
+          [nzTitle]="'Accepted this month'"
+        ></nz-statistic>
+      </div>
+      <div
+        class="h-40 border-0 border-b-8 pt-10 border-solid shadow-app text-center"
+        style="border-color: #9a0680"
+      >
+        <i
+          nz-icon
+          nzType="code-sandbox"
+          nzTheme="outline"
+          style="font-size: 2em"
+        ></i>
+        <nz-statistic
+          [nzValue]="(0 | number)!"
+          [nzTitle]="'New register'"
+        ></nz-statistic>
+      </div>
+      <div class="col-span-2 h-70" #profitTpl>
+        <ngx-charts-advanced-pie-chart
+          [results]="registerData"
+          [view]="[profitTpl.offsetWidth, profitTpl.offsetHeight]"
+          label="Register"
+          [scheme]="colorScheme"
         >
-        <!-- (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" -->
-        <thead>
-          <tr>
-            <th
-              [(nzChecked)]="checked"
-              (nzCheckedChange)="onAllChecked($event)"
-              [nzIndeterminate]="indeterminate"
-            ></th>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>National id</th>
-            <th>Job</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Request created</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let data of basicTable.data; let i= index">
-            <td
-              [nzChecked]="setOfCheckedId.has(data.id)"
-              (nzCheckedChange)="onItemChecked(data.id, $event)"
-            ></td>
-            <td>{{ i + 1 + meta?.take * (page-1) }}</td>
-            <td>{{ data.name |titlecase}}</td>
-            <td>{{ data.email |titleCase}}</td>
-            <td>{{ data.identify |number}}</td>
-            <td>{{ data.job |titleCase}}</td>
-            <td>{{ data.address |titlecase}}</td>
-            <td>{{ data.phone }}</td>
-            <td>{{ data.createdAt|date }}</td>
-            <td>
-              <nz-tag
-                nzColor="success"
-                class="cursor-pointer"
-                (click)="confirmAccept(data.id)"
-              >
-                <i nz-icon nzType="check" nzTheme="outline"></i>
-                <span>Accept</span>
-              </nz-tag>
-              <nz-tag
-                nzColor="error"
-                class="cursor-pointer"
-                (click)="confirmReject(data.id)"
-              >
-                <i nz-icon nzType="close" nzTheme="outline"></i>
-                <span>Reject</span>
-              </nz-tag>
-            
-            </td>
-          </tr>
-        </tbody>
-      </nz-table>
+        </ngx-charts-advanced-pie-chart>
+      </div>
+      </div>
+      <div>
+        <button nz-button nzType="link" (click)="toggleStatistic()">{{openStatistic? 'View statistic': "Hide statistic"}}</button>
+      </div>
+      <div>
+        <nz-table
+          #basicTable
+          [nzData]="registers"
+          [nzPageSize]="meta?.take"
+          [nzTotal]="meta?.itemCount"
+          nzSize="middle"
+          (nzPageIndexChange)="onPageIndexChange($event)"
+        >
+          <!-- (nzCurrentPageDataChange)="onCurrentPageDataChange($event)" -->
+          <thead>
+            <tr>
+              <th
+                [(nzChecked)]="checked"
+                (nzCheckedChange)="onAllChecked($event)"
+                [nzIndeterminate]="indeterminate"
+              ></th>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>National id</th>
+              <th>Job</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Request created</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td
+                [nzChecked]="setOfCheckedId.has(data.id)"
+                (nzCheckedChange)="onItemChecked(data.id, $event)"
+              ></td>
+              <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
+              <td>{{ data.name | titlecase }}</td>
+              <td>{{ data.email | titleCase }}</td>
+              <td>{{ data.identify | number }}</td>
+              <td>{{ data.job | titleCase }}</td>
+              <td>{{ data.address | titlecase }}</td>
+              <td>{{ data.phone }}</td>
+              <td>{{ data.createdAt | date }}</td>
+              <td>
+                <nz-tag
+                  nzColor="success"
+                  class="cursor-pointer"
+                  (click)="confirmAccept(data.id)"
+                >
+                  <i nz-icon nzType="check" nzTheme="outline"></i>
+                  <span>Accept</span>
+                </nz-tag>
+                <nz-tag
+                  nzColor="error"
+                  class="cursor-pointer"
+                  (click)="confirmReject(data.id)"
+                >
+                  <i nz-icon nzType="close" nzTheme="outline"></i>
+                  <span>Reject</span>
+                </nz-tag>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+    <div
+      class="fixed flex justify-between items-center right-0 bottom-0 w-full bg-secondary shadow-app1"
+      style="
+        padding-left: 70px;
+        padding-right: 40px;
+        padding-top: 0.4rem;
+        padding-bottom: 0.4rem;
+      "
+      *ngIf="setOfCheckedId.size > 0"
+    >
+      <p class="mb-0 text-white">
+        Selected
+        <span class="font-bold">{{ setOfCheckedId.size }}</span> rows
+      </p>
+      <div>
+        <button
+          nz-button
+          class="mr-2 inline"
+          nzType="primary"
+          (click)="rejectBulk()"
+        >
+          Reject selected
+        </button>
+        <button nz-button class="inline" (click)="acceptBulk()">
+          Accept selected
+        </button>
+      </div>
     </div>
   </div>
-  <div
-    class="
-      fixed
-      flex
-      justify-between
-      items-center
-      right-0
-      bottom-0
-      w-full
-      bg-secondary
-      shadow-app1
-    "
-    style="padding-left: 70px; padding-right: 40px; padding-top: 0.4rem; padding-bottom: 0.4rem"
-    *ngIf="setOfCheckedId.size > 0"
-  >
-    <p class="mb-0 text-white">
-      Selected
-      <span class=" font-bold">{{ setOfCheckedId.size }}</span> rows
-    </p>
-    <div>
-      <button nz-button class="mr-2 inline" nzType="primary"  (click)="rejectBulk()">Reject selected</button>
-      <button nz-button class="inline" (click)="acceptBulk()" >Accept selected</button>
-    </div>
-  </div>
-</div>

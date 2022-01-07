@@ -23,6 +23,18 @@ export class RegisterComponent implements OnInit {
   registers: Register[];
   meta: any;
 
+  //statistic
+  registerData = [
+    {
+      name: "Accepted",
+      value: "29",
+    },
+    {
+      name: "Rejected",
+      value: "10",
+    },
+  ];
+
   //table props
   checked = false;
   indeterminate = false;
@@ -32,12 +44,20 @@ export class RegisterComponent implements OnInit {
   filter: FormGroup;
   page = 1;
   loading = false;
+  colorScheme = {
+    domain: ["#1890ff", "#d3342d"],
+  };
+  openStatistic = true;
 
   constructor(
     private _register: IRegisterService,
     private _ui: UiService,
     private _modal: NzModalService
   ) {}
+
+  toggleStatistic() {
+    this.openStatistic = !this.openStatistic;
+  }
 
   rejectRegister(id: string): void {
     this._ui.showInfo("Processing");
@@ -129,5 +149,8 @@ export class RegisterComponent implements OnInit {
         this.registers = data;
         this.meta = meta;
       });
+    // this._register.getStatistic().subscribe((res) => {
+    //   this.registerData = res;
+    // });
   }
 }
