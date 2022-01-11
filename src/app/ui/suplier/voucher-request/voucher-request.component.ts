@@ -117,7 +117,7 @@ export class VoucherRequestComponent implements OnInit {
   }
   ngOnInit(): void {
     this._requestService
-      .getRequests({ page: this.page, ...this.filter.value })
+      .getRequests({ page: this.page, ...this.filter.value, order: "DESC" })
       .subscribe(({ data, meta }) => {
         this.request = data;
         this.meta = meta;

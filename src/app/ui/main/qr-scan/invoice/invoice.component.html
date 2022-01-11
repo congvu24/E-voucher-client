@@ -5,14 +5,14 @@
 *ngIf="invoiceDetail"
 nzStatus="success"
 nzTitle="Package claimed"
-nzSubTitle="'Order number: {{invoiceDetail.id}} Package is prepairing and will takes 1-5 minutes to arrive, please wait.'"
+nzSubTitle="Package is prepairing and will takes 1-5 minutes to arrive, please wait"
 >
 <div nz-result-content>
-    <nz-descriptions nzTitle="Invoice detail">
+    <nz-descriptions nzTitle="Invoice detail" [nzColumn]="2">
         <nz-descriptions-item nzTitle="Citizen name">{{invoiceDetail.citizenName}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Dealer name">{{invoiceDetail.servicePackage.dealer.name}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Package name">{{invoiceDetail.servicePackage.name}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="From">{{invoiceDetail.servicePackage.dealer.name}}</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Value">{{invoiceDetail.value}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Value">{{invoiceDetail.value |currency: 'USD':true:'2.0'}}</nz-descriptions-item>
     </nz-descriptions>
 </div>   
 <div nz-result-extra>

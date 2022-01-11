@@ -137,16 +137,7 @@
             <h3 class="mb-6 text-xl font-bold">
               {{ "Request history" | titlecase }}
             </h3>
-            <nz-select nzPlaceHolder="6 Month" nzAllowClear>
-              <nz-option [nzLabel]="'3 Month'" [nzValue]="'3 Month'">
-              </nz-option>
-              <nz-option [nzLabel]="'6 Month'" [nzValue]="'6 Month'">
-              </nz-option>
-              <nz-option [nzLabel]="'9 Month'" [nzValue]="'9 Month'">
-              </nz-option>
-              <nz-option [nzLabel]="'12 Month'" [nzValue]="'12 Month'">
-              </nz-option>
-            </nz-select>
+           <button nz-button (click)="openRequestHistory()"> View detail</button>
           </div>
 
           <div>
@@ -174,6 +165,7 @@
           </div>
         </div>
 
+        <!-- recent voucher-->
         <div class="px-3 py-5">
           <div class="flex justify-between items-center mb-6">
             <h3 class="text-xl font-bold">
@@ -182,11 +174,12 @@
             <button nz-button (click)="openVoucherRequest()">View more</button>
           </div>
           <div class="flex justify-between items-center">
-            <p class="font-medium" style="color: hsl(0, 0%, 75%)">
-              {{ "type" | uppercase }}
+            <p class="text-sm col-span-2" style="color: #cdd3e0">
+              {{ "type" | titleCase }}
             </p>
-            <p class="font-medium" style="color: hsl(0, 0%, 75%)">
-              {{ "value" | uppercase }}
+           
+            <p class="text-sm col-span-2" style="color: #cdd3e0">
+              {{ "value" | titleCase }}
             </p>
           </div>
           <nz-list nzItemLayout="horizontal">
@@ -196,7 +189,7 @@
                 nzDescription="Created at Jan 4, 2022"
               >
                 <nz-list-item-meta-title>
-                  {{ item.title }}
+                  {{ item.type |titlecase }}
                 </nz-list-item-meta-title>
                 <ng-template #avt>
                   <div class="flex items-center rounded-full border border-solid border-base-gray px-2 py-2" style="border-color:#FEE7E8 ;">
@@ -204,12 +197,14 @@
                       nz-icon
                       nzType="fire"
                       nzTheme="outline"
-                      style="color: #f5222d; font-size: large;"
+                      style="font-size: large;"
+                      appHighlightColor
+                    [voucherType]="item.type"
                     ></i>
                   </div>
                 </ng-template>
               </nz-list-item-meta>
-              <p class="font-bold text-base">{{ item.value | currency }}</p>
+              <p class="font-bold text-base">{{ item.value | currency: 'USD':'symbol':'2.0' }}</p>
             </nz-list-item>
             <nz-list-empty
               *ngIf="recentVoucherData.length === 0"
@@ -242,7 +237,7 @@
             class="font-bold mb-0 text-2xl leading-none"
             style="font-size: 1.6rem"
           >
-            {{ "5596" | currency }}
+            {{ "5596" | currency: 'USD':'symbol':'2.0' }}
           </h2>
         </div>
       </div>
@@ -270,7 +265,7 @@
               class="font-bold mb-0 text-2xl leading-none"
               style="font-size: 1.6rem"
             >
-              {{ "3982" | currency }}
+              {{ "3982" | currency: 'USD':'symbol':'2.0' }}
             </h2>
           </div>
         </div>
@@ -295,7 +290,7 @@
               class="font-bold mb-0 text-2xl leading-none"
               style="font-size: 1.6rem"
             >
-              {{ "1414" | currency }}
+              {{ "1414" | currency: 'USD':'symbol':'2.0' }}
             </h2>
           </div>
         </div>

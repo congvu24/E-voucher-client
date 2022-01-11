@@ -19,17 +19,14 @@ export class RegisterService implements IRegisterService {
   getStatistic(): Observable<AgencyAnalyticInput> {
     return this._http.get("analytics/agency", {}).pipe(
       map((res: any) => {
-        const temp: { name: string; value: number }[] = [];
-        res.countRegisterByStatus.forEach(
-          (e: { name: string; number: number }) => {
-            temp.unshift({
-              name: toTitleCase(e.name),
-              value: e.number,
-            });
-          }
-        );
-        res.countRegisterByStatus = temp;
-        return res;
+        const response = { ...res };
+        response.countRegisterByStatus = res.countRegisterByStatus
+          .reverse()
+          .map((element) => ({
+            name: toTitleCase(element.name),
+            value: element.value,
+          }));
+        return response;
       })
     );
   }

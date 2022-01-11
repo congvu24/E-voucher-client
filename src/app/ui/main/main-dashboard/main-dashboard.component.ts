@@ -1,10 +1,14 @@
 import { CurrencyPipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { IAnalyticService } from "../../../interface/analytic-service";
+import { IVoucherService } from "../../../interface/voucher-service.";
+import { AnalyticService } from "../../../service/analytic/analytic.service";
 
 @Component({
   selector: "app-main-dashboard",
   templateUrl: "./main-dashboard.component.html",
   styleUrls: ["./main-dashboard.component.scss"],
+  providers: [{ provide: IAnalyticService, useClass: AnalyticService }],
 })
 export class MainDashboardComponent implements OnInit {
   packageData = [
@@ -57,84 +61,30 @@ export class MainDashboardComponent implements OnInit {
       name: "Dec",
     },
   ];
-  profitPerPackage = [
-    {
-      name: "Gói nhu yếu phẩm 1 tuần",
-      value: 50000,
-    },
-    {
-      name: "Gói nhu yếu phẩm 3 ngày",
-      value: 35800,
-    },
-    {
-      name: "Malawi",
-      value: 21458,
-    },
-    {
-      name: "Azerbaijan",
-      value: 30705,
-    },
-    {
-      name: "Serbia",
-      value: 23458,
-    },
-    {
-      name: "Ireland",
-      value: 38467,
-    },
-    {
-      name: "Nauru",
-      value: 37988,
-    },
-    {
-      name: "Cocos (Keeling) Islands",
-      value: 57795,
-    },
-    {
-      name: "Moldova",
-      value: 26371,
-    },
-    {
-      name: "Isle of Man",
-      value: 11049,
-    },
-    {
-      name: "Poland",
-      value: 39214,
-    },
-    {
-      name: "Uruguay",
-      value: 51676,
-    },
-    {
-      name: "Faroe Islands",
-      value: 26096,
-    },
-  ];
+  profitPerPackage: { name: string; value: number }[] = [];
   blue = {
     domain: ["#1890ff"],
   };
+  packageRank: {
+    name: string;
+    value: number;
+    thumbnail: string;
+    numberClaim: number;
+  }[] = [];
+  totalProfit = 0;
+  numberPackage = 0;
+  numberVoucherClaimed = 0;
 
-  packages = [
-    {
-      name: "Lorem ipsum dolor, sit amet",
-    },
-    {
-      name: "Lorem ipsum dolor, sit amet",
-    },
-    {
-      name: "Lorem ipsum dolor, sit amet",
-    },
-    {
-      name: "Lorem ipsum dolor, sit amet",
-    },
-    {
-      name: "Lorem ipsum dolor, sit amet",
-    },
-  ];
-
-  constructor() {}
+  constructor(private _analyticService: IAnalyticService) {}
   formatCurrency = (value) => `$${value.toLocaleString()}`;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this._analyticService.getDealerAnalytic().subscribe((res) => {
+      this.profitPerPackage = res.sumMoneyByPackage;
+      this.totalProfit = res.sumValue;
+      this.numberVoucherClaimed = res.allOrder;
+      this.numberPackage = res.numberPackage;
+      this.packageRank = res.packageRank;
+    });
+  }
 }

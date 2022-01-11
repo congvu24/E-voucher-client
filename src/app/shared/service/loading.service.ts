@@ -27,8 +27,6 @@ export class LoadingService {
    * @param url {string}
    */
   setLoading(loading: boolean, url: string): void {
-    console.log("appliction loading");
-
     if (!url) {
       throw new Error(
         "The request URL must be provided to the LoadingService.setLoading function"

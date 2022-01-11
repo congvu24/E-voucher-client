@@ -4,15 +4,15 @@
     <div class="grid grid-cols-5 gap-6 mb-20">
       <div class="h-40 border-0 border-b-8 pt-10 border-solid border-primary shadow-app text-center">
         <i nz-icon nzType="money-collect" nzTheme="outline" style="font-size: 2em;"></i>
-        <nz-statistic [nzValue]="(3948028  | currency: 'USD':true:'2.0')!" [nzTitle]="'Current profit'"></nz-statistic>
+        <nz-statistic [nzValue]="(totalProfit  | currency: 'USD':true:'2.0')!" [nzTitle]="'Current profit'"></nz-statistic>
       </div>
       <div class="h-40 border-0 border-b-8 pt-10 border-solid  shadow-app text-center" style="border-color: #FFC900;">
         <i nz-icon nzType="trophy" nzTheme="outline" style="font-size: 2em;"></i>
-        <nz-statistic [nzValue]="(1949101 | number)!" [nzTitle]="'Voucher claimed'"></nz-statistic>
+        <nz-statistic [nzValue]="(numberVoucherClaimed | number)!" [nzTitle]="'Voucher claimed'"></nz-statistic>
       </div>
       <div class="h-40 border-0 border-b-8 pt-10 border-solid shadow-app text-center" style="border-color: #9A0680;">
         <i nz-icon nzType="code-sandbox" nzTheme="outline" style="font-size: 2em;"></i>
-        <nz-statistic [nzValue]="(39 | number)!" [nzTitle]="'Package'"></nz-statistic>
+        <nz-statistic [nzValue]="(numberPackage | number)!" [nzTitle]="'Package'"></nz-statistic>
       </div>
      
       <div class="col-span-2 h-70" #profitTpl>
@@ -36,7 +36,7 @@
         <h3 class="mb-6 text-xl font-bold">
           {{ "Voucher claimed" | titlecase }}
         </h3>
-        <div class="h-350">
+        <div class="h-350 pt-12">
           <ngx-charts-bar-vertical
             [results]="packageData"
             [roundEdges]="false"
@@ -58,7 +58,7 @@
                 {{ "Rank" | titleCase }}
               </p>
           </div>
-          <div nz-col class="gutter-row" [nzSpan]="14">
+          <div nz-col class="gutter-row" [nzSpan]="19">
             <p class="text-sm" style="color: #cdd3e0; grid-column: 18">
               {{ "package name" | titleCase }}
             </p>
@@ -68,28 +68,28 @@
               {{ "claimed" | titleCase }}
             </p>
           </div>
-          <div nz-col class="gutter-row" [nzSpan]="5">
+          <!-- <div nz-col class="gutter-row" [nzSpan]="5">
             <p class="text-sm col-span-2 text-right" style="color: #cdd3e0">
               {{ "Position" | titleCase }}
             </p>
-          </div>
+          </div> -->
         </div>
-      <ng-container *ngFor="let item of packages; let i=index">
+      <ng-container *ngFor="let item of packageRank; let i=index">
         <!-- item -->
         <div nz-row [nzGutter]="16">
           <div nz-col class="gutter-row" [nzSpan]="2">
             <p class="text-base font-semibold text-center h-full py-2 mb-0" style="color: #777;">{{ i + 1 | number: "2.0" }}.</p>
           </div>
-          <div nz-col class="gutter-row" [nzSpan]="14">
+          <div nz-col class="gutter-row" [nzSpan]="19">
             <div class="flex gap-3 items-center">
               <img src="https://source.unsplash.com/random?" alt="" class="w-10 h-10 object-cover rounded">
               <p>{{item.name}}</p>
             </div>
           </div>
           <div nz-col class="gutter-row" [nzSpan]="3">
-            <p class="text-right">{{ 3232 | number }}</p>
+            <p class="text-center">{{ item.numberClaim | number }}</p>
           </div>
-          <div nz-col class="gutter-row" [nzSpan]="5">
+          <!-- <div nz-col class="gutter-row" [nzSpan]="5">
             <p class="tracking-tight text-right">
               <i
                 nz-icon
@@ -99,10 +99,10 @@
               ></i>
               2 Position
             </p>
-        </div>
+        </div> -->
         </div>
         <!-- spacing between 2 item -->
-        <div *ngIf="i !== packages.length - 1 ">
+        <div *ngIf="i !== packageRank.length - 1 ">
           <ul class="leading-3 pl-6">
             <li></li>
             <li></li>

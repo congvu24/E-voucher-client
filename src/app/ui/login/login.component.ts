@@ -55,6 +55,9 @@ export class LoginComponent implements OnInit {
       });
     }
   }
+  navigateExternal(url: string) {
+    window.open(url, "_blank");
+  }
   login() {
     this._auth.login("duy", "gmail").subscribe((d) => console.log(d));
   }

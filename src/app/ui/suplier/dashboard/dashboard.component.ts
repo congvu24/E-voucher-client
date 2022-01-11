@@ -1,10 +1,15 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as line from "d3-shape";
+import { RequesetStatus } from "../../../core/interface/request";
+import { Voucher } from "../../../core/interface/voucher";
+import { IVoucherService } from "../../../interface/voucher-service.";
+import { VoucherService } from "../../../service/voucher/voucher.service";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
+  providers: [{ provide: IVoucherService, useClass: VoucherService }],
 })
 export class SupplierDashboardComponent implements OnInit {
   supportVoucherData = [
@@ -155,21 +160,10 @@ export class SupplierDashboardComponent implements OnInit {
       ],
     },
   ];
-  recentVoucherData = [
-    {
-      title: "Urgent",
-      value: "2390",
-    },
-    {
-      title: "Urgent",
-      value: "2390",
-    },
-    {
-      title: "Urgent",
-      value: "2390",
-    },
-  ];
+
+  recentVoucherData: Voucher[] = [];
   reqHistoryActive = [{ name: "Request" }];
+  chartFilterValue = 12;
   orange = {
     domain: ["#faad67"],
   };
@@ -184,9 +178,24 @@ export class SupplierDashboardComponent implements OnInit {
   };
   curveSmall = line.curveBumpX;
   curve = line.curveBumpX;
-  constructor(private _router: Router) {}
+  constructor(private _router: Router, private _voucherSv: IVoucherService) {}
   openVoucherRequest() {
     this._router.navigate(["supplier/request"]);
   }
-  ngOnInit(): void {}
+  openRequestHistory() {
+    this._router.navigate(["supplier/request"]);
+  }
+  ngOnInit(): void {
+    this._voucherSv.getVouchers().subscribe(({ data, meta }) => {
+      this.recentVoucherData = data
+        .sort((prev, next) =>
+          prev.createdAt < next.createdAt
+            ? 1
+            : prev.createdAt === next.createdAt
+            ? 0
+            : -1
+        )
+        .slice(0, 4);
+    });
+  }
 }

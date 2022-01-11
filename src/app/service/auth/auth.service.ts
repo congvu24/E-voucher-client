@@ -38,6 +38,7 @@ export class AuthService implements IAuthService {
     this._roleAs = user.role;
     this._name = user.name;
     this._storage.setToken("STATE", "true");
+    this._storage.setToken("USERNAME", this._name);
     this._storage.setToken("ROLE", this._roleAs);
     this._storage.setToken("auth", token.accessToken, token.expiresIn);
     return of({ success: this._isLogin, role: this._roleAs });
@@ -46,7 +47,6 @@ export class AuthService implements IAuthService {
   isLoggedIn() {
     const loggedIn = this._storage.getToken("STATE");
     this._isLogin = loggedIn === "true";
-    console.log(this.isLoggedIn);
 
     return this._isLogin;
   }
@@ -56,6 +56,7 @@ export class AuthService implements IAuthService {
     return this._roleAs;
   }
   get name(): string {
+    this._name = this._storage.getToken("USERNAME");
     return this._name;
   }
 }

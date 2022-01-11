@@ -1,4 +1,4 @@
-import { Location } from "@angular/common";
+import { AsyncPipe, Location } from "@angular/common";
 import {
   AfterViewInit,
   Component,
@@ -16,6 +16,7 @@ import { UiService } from "../../../core/services";
 import { QrResult } from "../../../interface/common";
 import { IVoucherService } from "../../../interface/voucher-service.";
 import { VoucherService } from "../../../service/voucher/voucher.service";
+import { LoadingService } from "../../../shared/service/loading.service";
 import { InvoiceComponent } from "./invoice/invoice.component";
 
 @Component({
@@ -27,9 +28,10 @@ import { InvoiceComponent } from "./invoice/invoice.component";
 export class QrScanComponent implements OnInit, AfterViewInit, OnDestroy {
   result: any | undefined;
   package: Package;
-  //temp input
+
   claimed = true;
   loading = true;
+  _httpLoading = false;
   private scaner: QrScanner;
 
   constructor(
@@ -37,7 +39,8 @@ export class QrScanComponent implements OnInit, AfterViewInit, OnDestroy {
     private _location: Location,
     private _modal: NzModalService,
     private _ui: UiService,
-    private _vcr: ViewContainerRef
+    private _vcr: ViewContainerRef,
+    private _loading: LoadingService
   ) {
     // woker MUST in assert folder
     QrScanner.WORKER_PATH =
@@ -81,11 +84,15 @@ export class QrScanComponent implements OnInit, AfterViewInit, OnDestroy {
         nzMaskClosable: false,
         nzFooter: null,
         nzClosable: false,
+        nzOkLoading: this._httpLoading,
       });
     });
   }
   ngOnInit(): void {
     this.package = history.state;
+    this._loading.loading.subscribe(
+      (isLoading) => (this._httpLoading = isLoading)
+    );
   }
   ngAfterViewInit(): void {
     const video = document.getElementById("video") as HTMLVideoElement;

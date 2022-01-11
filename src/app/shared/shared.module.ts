@@ -21,6 +21,7 @@ import { RStatusTagComponent } from "./components/r-status-tag/r-status-tag.comp
 import { TitleCasePipe } from "./pipe/title-case.pipe";
 import { SStatusTagComponent } from "./components/s-status-tag/s-status-tag.component";
 import { MinMaxCurrencyPipe } from "./pipe/min-max-currency.pipe";
+import { HighlightColorDirective } from "./directives/dealer/highlight-color.directive";
 
 const components = [
   HeaderComponent,
@@ -36,6 +37,7 @@ const components = [
   SStatusTagComponent,
   MinMaxCurrencyPipe,
   ServiceFormDirective,
+  HighlightColorDirective,
 ];
 
 const modules = [

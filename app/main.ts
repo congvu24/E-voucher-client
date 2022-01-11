@@ -12,8 +12,8 @@ const args = process.argv.slice(1),
 
 function createWindow(): BrowserWindow {
   const electronScreen = screen;
-  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
-  var size = { width: 1440, height: 1024 };
+  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  // var size = { width: 1440, height: 1024 };
 
   // Create the browser window.
   win = new BrowserWindow({

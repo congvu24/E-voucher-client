@@ -12,7 +12,6 @@ export class SideNavComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log("role", this.role);
     if (this.role === UserRole.agency) {
       this.routes = AGENCY_ROUTES;
     } else if (this.role === UserRole.suppier) {
