@@ -39,7 +39,7 @@
             </ngx-charts-area-chart>
           </div>
           <div>
-            <h2 class="font-bold text-4xl mb-0">{{ 2342 | number }}</h2>
+            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType[voucherType.support] | number }}</h2>
             <p class="tracking-wide" style="color: #777">
               Support voucher created
             </p>
@@ -81,7 +81,7 @@
             </ngx-charts-area-chart>
           </div>
           <div>
-            <h2 class="font-bold text-4xl mb-0">{{ 2359 | number }}</h2>
+            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType[voucherType.help] | number }}</h2>
             <p class="tracking-wide" style="color: #777">
               Help voucher created
             </p>
@@ -123,9 +123,9 @@
             </ngx-charts-area-chart>
           </div>
           <div>
-            <h2 class="font-bold text-4xl mb-0">{{ 1875 | number }}</h2>
+            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType[voucherType.urgent] | number }}</h2>
             <p class="tracking-wide" style="color: #777">
-              Urgen voucher created
+              Urgent voucher created
             </p>
           </div>
         </div>

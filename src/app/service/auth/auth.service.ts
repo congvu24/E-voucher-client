@@ -34,6 +34,8 @@ export class AuthService implements IAuthService {
   }
 
   saveCredential(user, token): Observable<{ success: boolean; role: string }> {
+    console.log("saving credential");
+
     this._isLogin = true;
     this._roleAs = user.role;
     this._name = user.name;

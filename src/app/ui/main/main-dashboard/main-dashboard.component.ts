@@ -1,7 +1,6 @@
-import { CurrencyPipe } from "@angular/common";
 import { Component, OnInit } from "@angular/core";
+import { APP_CONFIG } from "../../../../environments/environment";
 import { IAnalyticService } from "../../../interface/analytic-service";
-import { IVoucherService } from "../../../interface/voucher-service.";
 import { AnalyticService } from "../../../service/analytic/analytic.service";
 
 @Component({
@@ -11,6 +10,8 @@ import { AnalyticService } from "../../../service/analytic/analytic.service";
   providers: [{ provide: IAnalyticService, useClass: AnalyticService }],
 })
 export class MainDashboardComponent implements OnInit {
+  imgHost = APP_CONFIG.apiUrl;
+
   packageData = [
     {
       value: 1589,

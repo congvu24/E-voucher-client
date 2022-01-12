@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import * as dayjs from "dayjs";
 
 import { TOKEN_EXPRISE_SEC } from "../../constant";
 import { UntilService } from "../until/until.service";
@@ -13,8 +14,13 @@ export class StorageService {
     token: string,
     expiresIn = TOKEN_EXPRISE_SEC
   ): boolean {
+    console.log(name, token);
     try {
-      this._until.setCookie(name, token, expiresIn);
+      const object = {
+        token,
+        expiresIn: dayjs().add(expiresIn, "second").toDate(),
+      };
+      localStorage.setItem(name, JSON.stringify(object));
       return true;
     } catch (error) {
       return false;
@@ -22,13 +28,25 @@ export class StorageService {
   }
   deleteToken(name = "user"): boolean {
     try {
-      this._until.deleteCookie(name);
+      localStorage.removeItem(name);
       return true;
     } catch (error) {
       return false;
     }
   }
   getToken(name = "user"): string {
-    return this._until.getCookie(name);
+    const storage: { token: string; expiresIn: any } = JSON.parse(
+      localStorage.getItem(name)
+    );
+    console.log(storage);
+
+    const currentTime = new Date();
+
+    if (currentTime > storage?.expiresIn || !storage) {
+      this.deleteToken(name);
+      return undefined;
+    }
+
+    return storage.token;
   }
 }

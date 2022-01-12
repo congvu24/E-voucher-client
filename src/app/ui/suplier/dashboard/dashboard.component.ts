@@ -2,14 +2,20 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as line from "d3-shape";
 import { RequesetStatus } from "../../../core/interface/request";
-import { Voucher } from "../../../core/interface/voucher";
+import { Voucher, VoucherType } from "../../../core/interface/voucher";
+import { IAnalyticService } from "../../../interface/analytic-service";
 import { IVoucherService } from "../../../interface/voucher-service.";
+import { AnalyticService } from "../../../service/analytic/analytic.service";
+import { SupplierAnalyticPort } from "../../../service/inputPorts";
 import { VoucherService } from "../../../service/voucher/voucher.service";
 @Component({
   selector: "app-dashboard",
   templateUrl: "./dashboard.component.html",
   styleUrls: ["./dashboard.component.scss"],
-  providers: [{ provide: IVoucherService, useClass: VoucherService }],
+  providers: [
+    { provide: IVoucherService, useClass: VoucherService },
+    { provide: IAnalyticService, useClass: AnalyticService },
+  ],
 })
 export class SupplierDashboardComponent implements OnInit {
   supportVoucherData = [
@@ -160,7 +166,8 @@ export class SupplierDashboardComponent implements OnInit {
       ],
     },
   ];
-
+  countVoucherByType: any;
+  voucherType = VoucherType;
   recentVoucherData: Voucher[] = [];
   reqHistoryActive = [{ name: "Request" }];
   chartFilterValue = 12;
@@ -178,7 +185,11 @@ export class SupplierDashboardComponent implements OnInit {
   };
   curveSmall = line.curveBumpX;
   curve = line.curveBumpX;
-  constructor(private _router: Router, private _voucherSv: IVoucherService) {}
+  constructor(
+    private _router: Router,
+    private _voucherSv: IVoucherService,
+    private _analyticService: IAnalyticService
+  ) {}
   openVoucherRequest() {
     this._router.navigate(["supplier/request"]);
   }
@@ -197,5 +208,8 @@ export class SupplierDashboardComponent implements OnInit {
         )
         .slice(0, 4);
     });
+    this._analyticService
+      .getSupplierAnalytic()
+      .subscribe((res) => (this.countVoucherByType = res.countVoucherByType));
   }
 }

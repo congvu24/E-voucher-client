@@ -1,6 +1,10 @@
 import { Observable } from "rxjs";
-import { DealerAnalyticInputPort } from "../service/inputPorts";
+import {
+  DealerAnalyticInputPort,
+  SupplierAnalyticPort,
+} from "../service/inputPorts";
 
 export abstract class IAnalyticService {
   abstract getDealerAnalytic(): Observable<DealerAnalyticInputPort>;
+  abstract getSupplierAnalytic(): Observable<SupplierAnalyticPort>;
 }

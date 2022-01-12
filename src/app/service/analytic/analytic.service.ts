@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { IAnalyticService } from "../../interface/analytic-service";
-import { DealerAnalyticInputPort } from "../inputPorts";
+import { DealerAnalyticInputPort, SupplierAnalyticPort } from "../inputPorts";
 
 @Injectable({
   providedIn: "root",
@@ -33,6 +33,22 @@ export class AnalyticService implements IAnalyticService {
           .sort((prev, next) => next.numberClaim - prev.numberClaim)
           .splice(0, 5);
 
+        return response;
+      })
+    );
+  }
+  getSupplierAnalytic(): Observable<SupplierAnalyticPort> {
+    return this._http.get<any>("analytics/supplier").pipe(
+      map((res) => {
+        const response: SupplierAnalyticPort = { ...res };
+
+        response.countVoucherByType = res.countVoucherByType.reduce(
+          (prev, next) => {
+            const object = { [next.name]: next.value };
+            return Object.assign(prev, object);
+          },
+          {}
+        );
         return response;
       })
     );
