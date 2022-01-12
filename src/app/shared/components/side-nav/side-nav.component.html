@@ -1,15 +1,8 @@
-  <!-- <ul nz-menu nzMode="inline" class="sider-menu ">
-    <li nz-menu-item nzMatchRouter *ngFor="let route of routes" [href]="route.path" [routerLink]="route.path.toString()">
-      
-        <i
-          nz-icon
-          nzType="{{ route.iconType }}"
-          nzTheme="outline"
-          style="font-size: 18px; margin-right: 8px"
-        ></i>
-        <span>{{ route.label }}</span>
-      
-    </li>
-  </ul> -->
+    <ul nz-menu nzMode="inline" class="menu"   class="sider-menu " style="width: 240px;">
+      <li nz-menu-item nzMatchRouter  *ngFor="let route of routes">
+       <a routerLink="{{route.path.toString()}}" > <i nz-icon nzType="{{ route.iconType }}" nzTheme="outline" style="font-size: 18px; margin-right: 8px;" ></i>
+        {{route.label}}</a>
+      </li>
+    </ul>
 
-
+    

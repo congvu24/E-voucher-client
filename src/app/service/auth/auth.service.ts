@@ -23,6 +23,7 @@ export class AuthService implements IAuthService {
     this._storage.deleteToken("STATE");
     this._storage.deleteToken("ROLE");
     this._storage.deleteToken("AUTH");
+    this._storage.deleteToken("USERNAME");
     return of({ success: !this._isLogin, role: "" });
     // window.location.href = "/login";
   }

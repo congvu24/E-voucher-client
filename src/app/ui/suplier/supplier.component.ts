@@ -9,10 +9,12 @@ import { SUPPLIER_ROUTES } from "../../shared/router";
 })
 export class SupplierComponent implements OnInit {
   role: string;
-  routes: UserRoute[] = SUPPLIER_ROUTES;
+  routes: UserRoute[] = [];
   constructor() {
     this.role = UserRole.suppier;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.routes = SUPPLIER_ROUTES;
+  }
 }

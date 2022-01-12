@@ -4,7 +4,7 @@
     <div class="grid grid-cols-5 gap-6 mb-20">
       <div class="h-40 border-0 border-b-8 pt-10 border-solid border-primary shadow-app text-center">
         <i nz-icon nzType="money-collect" nzTheme="outline" style="font-size: 2em;"></i>
-        <nz-statistic [nzValue]="(totalProfit  | currency: 'USD':true:'2.0')!" [nzTitle]="'Current profit'"></nz-statistic>
+        <nz-statistic [nzValue]="(totalProfit  | currency: 'USD':'symbol':'2.0')!" [nzTitle]="'Current profit'"></nz-statistic>
       </div>
       <div class="h-40 border-0 border-b-8 pt-10 border-solid  shadow-app text-center" style="border-color: #FFC900;">
         <i nz-icon nzType="trophy" nzTheme="outline" style="font-size: 2em;"></i>
@@ -18,10 +18,7 @@
       <div class="col-span-2 h-70" #profitTpl>
         <ngx-charts-advanced-pie-chart
         [results]="profitPerPackage"
-        [view]="[
-        profitTpl.offsetWidth,
-        profitTpl.offsetHeight
-      ]"
+      
       label="Total profit"
       scheme="picnic"
       [valueFormatting]="formatCurrency"
@@ -68,11 +65,7 @@
               {{ "claimed" | titleCase }}
             </p>
           </div>
-          <!-- <div nz-col class="gutter-row" [nzSpan]="5">
-            <p class="text-sm col-span-2 text-right" style="color: #cdd3e0">
-              {{ "Position" | titleCase }}
-            </p>
-          </div> -->
+    
         </div>
       <ng-container *ngFor="let item of packageRank; let i=index">
         <!-- item -->
@@ -89,17 +82,7 @@
           <div nz-col class="gutter-row" [nzSpan]="3">
             <p class="text-center">{{ item.numberClaim | number }}</p>
           </div>
-          <!-- <div nz-col class="gutter-row" [nzSpan]="5">
-            <p class="tracking-tight text-right">
-              <i
-                nz-icon
-                nzType="arrow-up"
-                nzTheme="outline"
-                style="color: #52c41a; font-size: 12px"
-              ></i>
-              2 Position
-            </p>
-        </div> -->
+       
         </div>
         <!-- spacing between 2 item -->
         <div *ngIf="i !== packageRank.length - 1 ">
