@@ -14,7 +14,6 @@ export class StorageService {
     token: string,
     expiresIn = TOKEN_EXPRISE_SEC
   ): boolean {
-    console.log(name, token);
     try {
       const object = {
         token,
@@ -38,15 +37,25 @@ export class StorageService {
     const storage: { token: string; expiresIn: any } = JSON.parse(
       localStorage.getItem(name)
     );
-    console.log(storage);
 
-    const currentTime = new Date();
-
-    if (currentTime > storage?.expiresIn || !storage) {
+    // check token validity
+    if (!this.isTokenValid(storage)) {
       this.deleteToken(name);
       return undefined;
     }
 
     return storage.token;
+  }
+
+  private isTokenValid(storageToken: {
+    token: string;
+    expiresIn: any;
+  }): boolean {
+    const currentTime = new Date();
+
+    if (currentTime > storageToken?.expiresIn || !storageToken) {
+      return false;
+    }
+    return true;
   }
 }

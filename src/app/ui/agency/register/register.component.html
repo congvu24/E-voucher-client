@@ -36,7 +36,7 @@
           style="font-size: 2em"
         ></i>
         <nz-statistic
-          [nzValue]="( registerData.thisMonthCitizen | number)!"
+          [nzValue]="( registerData?.thisMonthCitizen | number)!"
           [nzTitle]="'New register'"
         ></nz-statistic>
       </div>
@@ -73,6 +73,7 @@
               <th>#</th>
               <th>Name</th>
               <th>Email</th>
+              <th>Email verified</th>
               <th>National id</th>
               <th>Job</th>
               <th>Address</th>
@@ -90,6 +91,10 @@
               <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
               <td>{{ data.name | titlecase }}</td>
               <td>{{ data.email | titleCase }}</td>
+              <td>
+<nz-badge  [nzStatus]="data.isActive? 'success': 'error'">{{data.isActive?'Yes':'No'}}</nz-badge>
+                
+              </td>
               <td>{{ data.identify  }}</td>
               <td>{{ data.job | titleCase }}</td>
               <td>{{ data.address | titlecase }}</td>

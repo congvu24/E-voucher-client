@@ -44,12 +44,14 @@ export class VoucherCreatedComponent implements OnInit {
 
   downloadReport() {
     this._voucher.downloadReport().subscribe((response) => {
-      const filename = `Packagelist ${Date.parse(new Date().toString())}`; // random suffix
+      const filename = `Voucher created ${Date.parse(
+        new Date().toString()
+      )}.csv`; // random suffix
       const binaryData = [];
       binaryData.push(response);
       const downloadLink = document.createElement("a");
       downloadLink.href = window.URL.createObjectURL(
-        new Blob(binaryData, { type: "application/ms-excel" })
+        new Blob(binaryData, { type: "text/csv" })
       );
       downloadLink.setAttribute("download", filename);
       document.body.appendChild(downloadLink);

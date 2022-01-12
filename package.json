@@ -2,11 +2,6 @@
   "name": "voucher-manager",
   "version": "10.1.0",
   "description": "Angular 12 with Electron (Typescript + SASS + Hot Reload)",
-  "homepage": "https://github.com/maximegris/angular-electron",
-  "author": {
-    "name": "Maxime GRIS",
-    "email": "maxime.gris@gmail.com"
-  },
   "keywords": [
     "angular",
     "angular 12",

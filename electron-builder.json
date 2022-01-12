@@ -1,4 +1,5 @@
 {
+  "productName":"E-voucher Management",
   "asar": false,
   "directories": {
     "output": "release/"
@@ -26,7 +27,7 @@
     ]
   },
   "portable": {
-    "splashImage": "dist/assets/icons/electron.bmp"
+    "splashImage": "dist/assets/icons/splash.bmp"
   },
   "mac": {
     "icon": "dist/assets/icons",

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { UserRole } from "../../core/constant";
+import { AGENCY_ROUTES } from "../../shared/router";
 
 @Component({
   selector: "app-agency",
@@ -8,6 +9,7 @@ import { UserRole } from "../../core/constant";
 })
 export class AgencyComponent implements OnInit {
   role: string;
+  routes: UserRoute[] = AGENCY_ROUTES;
   constructor() {
     this.role = UserRole.agency;
   }

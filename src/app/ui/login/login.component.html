@@ -1,10 +1,10 @@
   <div class="flex items-center justify-center h-full flex-col">
-<nz-spin [nzTip]="'Loading...'" nzSpinning="{{ loading | async }}">
+<nz-spin [nzTip]="loginStatus |titleCase" nzSpinning="{{ loading | async }}">
 
     <div class="w-350">
-      <h2>E-voucher-client</h2>
+      <h2>E-voucher Management</h2>
       <div class="border border-solid px-4 pb-5 pt-4 shadow drop-shadow">
-        <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+        <form nz-form [formGroup]="validateForm" (ngSubmit)="login()">
           <nz-form-item>
             <nz-form-control [nzErrorTip]="usernameErrorTpl">
               <nz-input-group nzPrefixIcon="user">
@@ -54,12 +54,12 @@
           </nz-form-item>
           <div nz-row class="mb-4">
             <div nz-col [nzSpan]="12">
-              <label nz-checkbox formControlName="remember">
+              <label nz-checkbox formControlName="remember" >
                 <span>Remember me</span>
               </label>
             </div>
             <div nz-col [nzSpan]="12">
-              <a class="float-right underline text-black">Forgot password</a>
+              <a class="float-right underline text-black ">Forgot password</a>
             </div>
           </div>
           <button nz-button class="w-full mb-4" [nzType]="'primary'">

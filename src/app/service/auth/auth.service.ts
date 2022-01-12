@@ -16,16 +16,13 @@ export class AuthService implements IAuthService {
   private _name: string;
   private _roleAs: string;
 
-  constructor(
-    private _http: HttpService,
-    private _storage: StorageService,
-    private http: HttpClient
-  ) {}
+  constructor(private _storage: StorageService, private http: HttpClient) {}
   logout() {
     this._isLogin = false;
     this._roleAs = "";
-    this._storage.setToken("STATE", "false");
-    this._storage.setToken("ROLE", "");
+    this._storage.deleteToken("STATE");
+    this._storage.deleteToken("ROLE");
+    this._storage.deleteToken("AUTH");
     return of({ success: !this._isLogin, role: "" });
     // window.location.href = "/login";
   }
@@ -42,18 +39,18 @@ export class AuthService implements IAuthService {
     this._storage.setToken("STATE", "true");
     this._storage.setToken("USERNAME", this._name);
     this._storage.setToken("ROLE", this._roleAs);
-    this._storage.setToken("auth", token.accessToken, token.expiresIn);
+    this._storage.setToken("AUTH", token.accessToken, token.expiresIn);
     return of({ success: this._isLogin, role: this._roleAs });
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     const loggedIn = this._storage.getToken("STATE");
     this._isLogin = loggedIn === "true";
 
     return this._isLogin;
   }
 
-  getRole() {
+  getRole(): string {
     this._roleAs = this._storage.getToken("ROLE");
     return this._roleAs;
   }

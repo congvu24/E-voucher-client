@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { mergeMap, switchMap, withLatestFrom } from "rxjs/operators";
 import { UserRole } from "../../core/constant";
 import { RouterService } from "../../core/services";
+import { IAuthService } from "../../interface/auth-service";
 import { AuthService } from "../../service";
 import { LoadingService } from "../../shared/service/loading.service";
 
@@ -10,6 +11,7 @@ import { LoadingService } from "../../shared/service/loading.service";
   selector: "app-login",
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
+  providers: [{ provide: IAuthService, useClass: AuthService }],
 })
 export class LoginComponent implements OnInit {
   validateForm!: FormGroup;
@@ -17,8 +19,9 @@ export class LoginComponent implements OnInit {
   //ui control
   passwordVisible = false;
   loading = this._loading.loading;
+  loginStatus = "Loading...";
   constructor(
-    private _auth: AuthService,
+    private _auth: IAuthService,
     private fb: FormBuilder,
     private _router: RouterService,
     private _loading: LoadingService
@@ -30,8 +33,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  submitForm(): void {
+  login(): void {
     if (this.validateForm.valid) {
+      this.loginStatus = "Logging you in";
       const { password, userName } = this.validateForm.value;
       const request = this._auth
         .login(userName, password)
@@ -58,8 +62,15 @@ export class LoginComponent implements OnInit {
   navigateExternal(url: string) {
     window.open(url, "_blank");
   }
-  login() {
-    this._auth.login("duy", "gmail").subscribe((d) => console.log(d));
+
+  ngOnInit(): void {
+    if (this._auth.isLoggedIn()) {
+      this._loading.setLoading(true, location.pathname);
+      this.loginStatus = "Logging you in";
+      setTimeout(() => {
+        this._loading.setLoading(false, location.pathname);
+        this._router.goto(this._auth.getRole().toLowerCase());
+      }, 1000);
+    }
   }
-  ngOnInit(): void {}
 }
