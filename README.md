@@ -36,6 +36,13 @@ git clone https://github.com/congvu24/E-voucher-client.git
 npm install
 ```
 
+*Account for testing:*
+| Actor | Username | Password |
+| ---- | ---- | ---- |
+|Dealer|deader1@gmail.com| dealer1 |
+|Supplier|supplier1@gmail.com| supplier1 |
+|Goverment|goverment1@gmail.com| goverment1 |
+
 There is an issue with `yarn` and `node_modules` when the application is built by the packager. Please use `npm` as dependencies manager.
 
 ## To build for development
