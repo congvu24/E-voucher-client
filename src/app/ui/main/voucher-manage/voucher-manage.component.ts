@@ -1,51 +1,72 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
-import { vouchers } from "../../../../assets/fakedata";
-import { ServiceType } from "../../../core/constant";
+import { FormControl, FormGroup } from "@angular/forms";
+import { Voucher } from "../../../core/interface/voucher";
+import { Meta } from "../../../interface/api";
+import { IVoucherService } from "../../../interface/voucher-service.";
+import { VoucherService } from "../../../service/voucher/voucher.service";
+import { LoadingService } from "../../../shared/service/loading.service";
 
 @Component({
   selector: "app-voucher-manage",
   templateUrl: "./voucher-manage.component.html",
   styleUrls: ["./voucher-manage.component.scss"],
+  providers: [{ provide: IVoucherService, useClass: VoucherService }],
 })
 export class VoucherManageComponent implements OnInit {
-  dataSet: any;
   filter: FormGroup;
+  data: any[] = [];
+  meta: Meta;
+  page = 1;
 
-  serviceType: { label: string; value: string }[];
+  // detail form
+  detailVisible = false;
+  detail: any;
 
-  constructor(private _fb: FormBuilder) {
-    this.dataSet = vouchers;
-    this.filter = _fb.group({
-      name: [null],
-      value: [null],
-      type: [null],
-      supplierName: [null],
+  // UI controls
+  loading = this._loadingService.loading;
+
+  constructor(
+    private _voucherService: IVoucherService,
+    private _loadingService: LoadingService
+  ) {
+    this.filter = new FormGroup({
+      citizenName: new FormControl(null),
     });
-    this.serviceType = Object.keys(ServiceType).map((key) => ({
-      label: key,
-      value: ServiceType[key],
-    }));
   }
   onFilter() {
-    console.log(this.filter.value);
-    return true;
+    this._voucherService
+      .getClaimedVouchers({ ...this.filter.value, page: this.page })
+      .subscribe(({ data, meta }) => {
+        this.data = data;
+        this.meta = meta;
+      });
   }
   resetForm() {
-    this.filter = this._fb.group({
-      name: [null],
-      value: [null],
-      type: [null],
-      supplierName: [null],
-    });
+    this.filter.reset();
+  }
+  onPageIndexChange(page: number) {
+    this.page = page;
+    this._voucherService
+      .getClaimedVouchers({ ...this.filter.value, page: this.page })
+      .subscribe(({ data, meta }) => {
+        this.data = data;
+        this.meta = meta;
+      });
   }
 
-  ngOnInit(): void {}
-}
-
-interface ServiceFilter {
-  name: string;
-  value: string;
-  type: ServiceType;
-  supplierName: string;
+  closeDetail() {
+    this.detailVisible = false;
+  }
+  openDetailForm(data: any) {
+    this.detail = data;
+    this.detailVisible = true;
+  }
+  ngOnInit(): void {
+    this._voucherService
+      .getClaimedVouchers({ page: this.page })
+      .subscribe(({ data, meta }) => {
+        this.data = data;
+        this.meta = meta;
+      });
+  }
 }

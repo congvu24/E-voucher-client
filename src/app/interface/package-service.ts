@@ -5,7 +5,8 @@ import { Meta } from "./api";
 export abstract class IPackageService {
   abstract deletePackage(id: UUID): Observable<boolean>;
   abstract getPackages(
-    params: any
+    params?: any
   ): Observable<{ meta: Meta; data: Package[] }>;
-  abstract updatePackage(id: UUID, updates: any): Observable<any>;
+  abstract updatePackage(id: UUID, updates: any): Observable<Package>;
+  abstract downloadReport(): Observable<any>;
 }

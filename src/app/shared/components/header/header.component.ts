@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
-import { RouterService } from "../../../core/services";
+import { RouterService, StorageService } from "../../../core/services";
 import { AuthService } from "../../../service";
 
 @Component({
@@ -9,16 +9,20 @@ import { AuthService } from "../../../service";
 })
 export class HeaderComponent implements OnInit {
   @Input() role: string;
+
+  name: string;
+  splitName: string;
   constructor(private _auth: AuthService, private _route: RouterService) {}
 
   logout() {
     this._auth.logout().subscribe(({ success }) => {
-      console.log(success);
-
       if (success) {
         this._route.goto("login");
       }
     });
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.name = this._auth.name;
+    this.splitName = this.name.charAt(0).toUpperCase();
+  }
 }

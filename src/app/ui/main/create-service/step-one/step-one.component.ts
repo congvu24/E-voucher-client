@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import {
   AbstractControl,
   FormBuilder,
@@ -11,6 +11,8 @@ import {
 import { NzMessageService } from "ng-zorro-antd/message";
 import { NzUploadFile } from "ng-zorro-antd/upload";
 import { Observable, Observer } from "rxjs";
+import { Package } from "../../../../core/interface/package";
+import { CreatePackageService } from "../../../../service/package/create-package.service";
 
 @Component({
   selector: "app-step-one",
@@ -19,36 +21,47 @@ import { Observable, Observer } from "rxjs";
 })
 export class StepOneComponent {
   packageForm: FormGroup;
-  avatarUrl?: string;
+  thumbnail: NzUploadFile; // package thumbnail
+  thumbnailString: string | undefined = ""; // package thumbnail converted to base64
   loading = false; // upload loading
 
-  constructor(private fb: FormBuilder, private msg: NzMessageService) {
+  constructor(
+    private msg: NzMessageService,
+    private _packageService: CreatePackageService
+  ) {
     this.packageForm = new FormGroup({
-      name: new FormControl(null, [
+      name: new FormControl("", [Validators.required, Validators.minLength(4)]),
+      description: new FormControl("", [
         Validators.required,
         Validators.minLength(4),
       ]),
-      description: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(4),
-      ]),
-      min: new FormControl(3, [Validators.required, Validators.min(0)]),
-      max: new FormControl(1, [Validators.required, Validators.min(0)]),
+      min: new FormControl(null, [Validators.required, Validators.min(0)]),
+      max: new FormControl(null, [Validators.required, Validators.min(0)]),
     });
   }
-  get min() {
-    return this.packageForm.get("min");
-  }
-  get max() {
-    return this.packageForm.get("max");
-  }
-  submitForm(): void {
+
+  submitForm() {
+    if (!this.thumbnailString) {
+      throw new Error("Thumbnail is missing");
+    }
     if (this.packageForm.valid) {
+      this._packageService.package = this._packageService.build(
+        this.packageForm.value
+      );
+      if (this._packageService.package.validateMinAndMax()) {
+      } else {
+        const min = this.packageForm.get("min").value;
+        const max = this.packageForm.get("max").value;
+        if (min >= max) {
+          throw new Error("Min value must smaller than Max value");
+        }
+      }
     } else {
       Object.values(this.packageForm.controls).forEach((control) => {
         if (control.invalid) {
           control.markAsDirty();
           control.updateValueAndValidity({ onlySelf: true });
+          throw new Error("invalid properties");
         }
       });
     }
@@ -72,28 +85,18 @@ export class StepOneComponent {
         observer.complete();
         return;
       }
-      observer.next(isJpgOrPng && isLt2M);
+      const convert: unknown = file as unknown;
+      this._packageService.thumbnail = file;
+      this.loading = true;
+      this.getBase64(convert as File, (img: string) => {
+        this.loading = false;
+        this.thumbnailString = img;
+      });
+      observer.next(false);
+
       observer.complete();
     });
 
-  handleChange(info: { file: NzUploadFile }): void {
-    switch (info.file.status) {
-      case "uploading":
-        this.loading = true;
-        break;
-      case "done":
-        // Get this url from response in real world.
-        this.getBase64(info.file?.originFileObj, (img: string) => {
-          this.loading = false;
-          this.avatarUrl = img;
-        });
-        break;
-      case "error":
-        this.msg.error("Network error");
-        this.loading = false;
-        break;
-    }
-  }
   private getBase64(img: File, callback: (img: string) => void): void {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result?.toString()));

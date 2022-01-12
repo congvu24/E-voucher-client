@@ -9,20 +9,26 @@
   ></i>
   <div class="w-full h-350">
     <img
+      src={{imgHost+service.thumbnail}}
+      alt="There is some error loading thumbnail"
+      class="object-cover w-full h-full"
+    />
+    <!-- <img
       src="https://source.unsplash.com/random?"
       alt=""
       class="object-cover w-full h-full"
-    />
+    /> -->
   </div>
   <div class="flex flex-col">
     <div class="flex-grow flex-shrink w-full">
       <div class="p-4 flex flex-col">
-        <h3>Lorem ipsum</h3>
-        <p>Lorem ipsum dolor sit amet</p>
-        <h1>99 ~ 1000$</h1>
+        <h3>{{ service.name }}</h3>
+        <p>{{ service.description }}</p>
+        <h1>{{ service?.minValue | minMaxCurrency: service?.maxValue }}</h1>
       </div>
+     
       <a
-        href="dealer/vouchers/select-service/{{ service }}/scanner"
+      [routerLink]="['../scanner', service.id]" [state]="service"
         class="
           bg-primary
           block

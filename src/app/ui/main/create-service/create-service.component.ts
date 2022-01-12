@@ -1,14 +1,21 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { merge, Observable, Observer, timer } from "rxjs";
-import { delay, finalize, map, scan } from "rxjs/operators";
+import { catchError, delay, finalize, map, scan } from "rxjs/operators";
 import { NzUploadFile } from "ng-zorro-antd/upload";
 import { NzMessageService } from "ng-zorro-antd/message";
+import { FormBuilder } from "@angular/forms";
+import { Package } from "../../../core/interface/package";
+import { CreatePackageService } from "../../../service/package/create-package.service";
+import { StepOneComponent } from "./step-one/step-one.component";
+import { UiService } from "../../../core/services";
 @Component({
   selector: "app-create-service",
   templateUrl: "./create-service.component.html",
   styleUrls: ["./create-service.component.scss"],
+  providers: [CreatePackageService],
 })
 export class CreateServiceComponent implements OnInit {
+  @ViewChild(StepOneComponent) stepOneRef: StepOneComponent;
   current = 0;
   processing = false;
   steps: Step[] = [
@@ -24,51 +31,48 @@ export class CreateServiceComponent implements OnInit {
       title: "Verify",
       description: "Review information",
       async: true,
-      percentage: 0,
+      percentage: null,
     },
     {
       id: 3,
       title: "Done",
       description: "Service is ready!!",
-      async: true,
-      percentage: 0,
+      async: false,
+      percentage: null,
     },
   ];
 
-  constructor() {}
+  stepThreeStatus = "error";
 
-  pre(): void {
-    this.current -= 1;
-  }
-
-  next(): void {
+  constructor(
+    private _packageService: CreatePackageService,
+    private _ui: UiService
+  ) {}
+  createPackage() {
     this.loadingAndStep();
   }
-
-  done(): void {
-    // this.loadingAndStep();
-    // console.log("done");
+  continue() {
+    try {
+      this.stepOneRef.submitForm();
+      this.loadingAndStep();
+    } catch (error: any) {
+      this._ui.showError(error.message);
+    }
+  }
+  pre(): void {
+    this.current -= 1;
   }
 
   loadingAndStep(): void {
     if (this.current < this.steps.length) {
       const step = this.steps[this.current];
       if (step.async) {
-        // this.processing = true;
-        // mockAsyncStep()
-
-        //   .pipe(
-        //     finalize(() => {
-        //       step.percentage = 0;
-        //       this.processing = false;
-        //       this.current += 1;
-        //     })
-        //   )
-        //   .subscribe((p) => {
-        //     step.percentage = p;
-        //   });
-        // alert("call http here");
-        this.current += 1;
+        this.processing = true;
+        this._packageService.create().subscribe((res) => {
+          step.percentage = 1;
+          this.stepThreeStatus = "success";
+          this.current += 1;
+        });
       } else {
         this.current += 1;
       }

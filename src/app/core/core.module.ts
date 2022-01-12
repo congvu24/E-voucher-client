@@ -13,6 +13,7 @@ import { UntilService } from "./services/until/until.service";
 import { NZ_I18N, en_US } from "ng-zorro-antd/i18n";
 import { ErrorInterceptor } from "./services/interceptor/error.interceptor";
 import { APP_CONFIG } from "../../environments/environment";
+import { NetworkInterceptor } from "./services/interceptor/network.interceptor";
 @NgModule({
   providers: [
     ErrorService,
@@ -22,6 +23,7 @@ import { APP_CONFIG } from "../../environments/environment";
     UntilService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: NetworkInterceptor, multi: true },
     { provide: NZ_I18N, useValue: en_US },
     { provide: "BASE_API_URL", useValue: APP_CONFIG.apiUrl },
   ],

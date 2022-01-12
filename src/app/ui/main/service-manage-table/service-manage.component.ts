@@ -8,12 +8,13 @@ import {
 } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd/modal";
-import { fakeservice } from "../../../../assets/fakedata";
 import { ServiceType } from "../../../core/constant";
 import { Package } from "../../../core/interface/package";
+import { UiService } from "../../../core/services";
 import { Meta } from "../../../interface/api";
 import { IPackageService } from "../../../interface/package-service";
 import { PackageService } from "../../../service/package/package.service";
+import { LoadingService } from "../../../shared/service/loading.service";
 import { FormComponent } from "./form/form.component";
 
 @Component({
@@ -25,19 +26,25 @@ import { FormComponent } from "./form/form.component";
 export class ServiceManageTableComponent implements OnInit {
   @ViewChild(FormComponent) editForm: FormComponent;
 
-  packages: Package[]; // fake data
-  types = ServiceType;
-  meta: Meta;
-
   filter: FormGroup;
-  editData: Package; // fake edit form data, it should be Package instead of number
-  editing = false;
+  packages: Package[];
+  meta: Meta;
   page = 1;
+
+  // render elements
+  types = ServiceType;
+  editData: Package;
+
+  // UI controls
+  editing = false;
+  loading = this._loading.loading;
 
   constructor(
     private _modal: NzModalService,
     private _fb: FormBuilder,
-    private _package: IPackageService
+    private _package: IPackageService,
+    private _ui: UiService,
+    private _loading: LoadingService
   ) {
     this.filter = _fb.group({
       name: [null],
@@ -72,18 +79,37 @@ export class ServiceManageTableComponent implements OnInit {
    * save edit result
    */
   saveResult() {
-    this.editForm.submitForm().subscribe((update: Package) => {
-      //update UI
-      const item = this.packages.find((p) => p.id === update.id);
-      Object.assign(item, update);
-      this.editing = false;
-    });
+    try {
+      this.editForm.submitForm().subscribe((update: Package) => {
+        //update UI
+        const item = this.packages.find((p) => p.id === update.id);
+        Object.assign(item, update);
+        this.editing = false;
+        this._ui.showSuccess("Package updated");
+      });
+    } catch (error: any) {
+      this._ui.showError(error.message);
+    }
   }
 
+  downloadReport() {
+    this._package.downloadReport().subscribe((response) => {
+      const filename = `Packagelist ${Date.parse(new Date().toString())}.csv`; // random suffix
+      const binaryData = [];
+      binaryData.push(response);
+      const downloadLink = document.createElement("a");
+      downloadLink.href = window.URL.createObjectURL(
+        new Blob(binaryData, { type: "text/csv" })
+      );
+      downloadLink.setAttribute("download", filename);
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+    });
+  }
   deletePackage(id: UUID) {
     this._package.deletePackage(id).subscribe((res) => {
-      const index = this.packages.findIndex((p) => p.id === id);
-      this.packages = this.packages.splice(index, 1);
+      this.packages = this.packages.filter((p) => p.id !== id);
+      this._ui.showSuccess("Service deleted");
     });
   }
   showDeleteConfirm(id: UUID, name: string): void {

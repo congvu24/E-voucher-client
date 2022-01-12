@@ -1,0 +1,124 @@
+<!-- left -->
+<div class="bg-white h-full">
+  <div class="mx-12 gap-12 pt-10">
+    <div class="grid grid-cols-5 gap-6 mb-20">
+      <div class="h-40 border-0 border-b-8 pt-10 border-solid border-primary shadow-app text-center">
+        <i nz-icon nzType="money-collect" nzTheme="outline" style="font-size: 2em;"></i>
+        <nz-statistic [nzValue]="(totalProfit  | currency: 'USD':true:'2.0')!" [nzTitle]="'Current profit'"></nz-statistic>
+      </div>
+      <div class="h-40 border-0 border-b-8 pt-10 border-solid  shadow-app text-center" style="border-color: #FFC900;">
+        <i nz-icon nzType="trophy" nzTheme="outline" style="font-size: 2em;"></i>
+        <nz-statistic [nzValue]="(numberVoucherClaimed | number)!" [nzTitle]="'Voucher claimed'"></nz-statistic>
+      </div>
+      <div class="h-40 border-0 border-b-8 pt-10 border-solid shadow-app text-center" style="border-color: #9A0680;">
+        <i nz-icon nzType="code-sandbox" nzTheme="outline" style="font-size: 2em;"></i>
+        <nz-statistic [nzValue]="(numberPackage | number)!" [nzTitle]="'Package'"></nz-statistic>
+      </div>
+     
+      <div class="col-span-2 h-70" #profitTpl>
+        <ngx-charts-advanced-pie-chart
+        [results]="profitPerPackage"
+        [view]="[
+        profitTpl.offsetWidth,
+        profitTpl.offsetHeight
+      ]"
+      label="Total profit"
+      scheme="picnic"
+      [valueFormatting]="formatCurrency"
+        >
+
+        </ngx-charts-advanced-pie-chart>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-5 gap-10">
+      <div class="col-span-3">
+        <h3 class="mb-6 text-xl font-bold">
+          {{ "Voucher claimed" | titlecase }}
+        </h3>
+        <div class="h-350 pt-12">
+          <ngx-charts-bar-vertical
+            [results]="packageData"
+            [roundEdges]="false"
+            [scheme]="blue"
+            [showGridLines]="true"
+            [yAxis]="true"
+            [xAxis]="true"
+          >
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+      <div class="col-span-2">
+        <h3 class="mb-6 text-xl font-bold">
+          {{ "Package ranking" | titlecase }}
+        </h3>
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzSpan]="2">
+              <p class="text-sm col-span-2" style="color: #cdd3e0">
+                {{ "Rank" | titleCase }}
+              </p>
+          </div>
+          <div nz-col class="gutter-row" [nzSpan]="19">
+            <p class="text-sm" style="color: #cdd3e0; grid-column: 18">
+              {{ "package name" | titleCase }}
+            </p>
+          </div>
+          <div nz-col class="gutter-row" [nzSpan]="3">
+            <p class="text-sm col-span-2" style="color: #cdd3e0">
+              {{ "claimed" | titleCase }}
+            </p>
+          </div>
+          <!-- <div nz-col class="gutter-row" [nzSpan]="5">
+            <p class="text-sm col-span-2 text-right" style="color: #cdd3e0">
+              {{ "Position" | titleCase }}
+            </p>
+          </div> -->
+        </div>
+      <ng-container *ngFor="let item of packageRank; let i=index">
+        <!-- item -->
+        <div nz-row [nzGutter]="16">
+          <div nz-col class="gutter-row" [nzSpan]="2">
+            <p class="text-base font-semibold text-center h-full py-2 mb-0" style="color: #777;">{{ i + 1 | number: "2.0" }}.</p>
+          </div>
+          <div nz-col class="gutter-row" [nzSpan]="19">
+            <div class="flex gap-3 items-center">
+              <img src="{{imgHost + item.thumbnail}}" alt="" class="w-10 h-10 object-cover rounded">
+              <p>{{item.name}}</p>
+            </div>
+          </div>
+          <div nz-col class="gutter-row" [nzSpan]="3">
+            <p class="text-center">{{ item.numberClaim | number }}</p>
+          </div>
+          <!-- <div nz-col class="gutter-row" [nzSpan]="5">
+            <p class="tracking-tight text-right">
+              <i
+                nz-icon
+                nzType="arrow-up"
+                nzTheme="outline"
+                style="color: #52c41a; font-size: 12px"
+              ></i>
+              2 Position
+            </p>
+        </div> -->
+        </div>
+        <!-- spacing between 2 item -->
+        <div *ngIf="i !== packageRank.length - 1 ">
+          <ul class="leading-3 pl-6">
+            <li></li>
+            <li></li>
+            <li></li>
+          </ul>
+        </div>
+      </ng-container>
+      
+        
+        
+      </div>
+    </div>
+  </div>
+
+
+<!-- down -->
+<!-- <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 17l-4 4m0 0l-4-4m4 4V3" />
+  </svg> -->

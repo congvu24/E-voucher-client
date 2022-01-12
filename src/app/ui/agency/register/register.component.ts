@@ -6,9 +6,11 @@ import {
 } from "@angular/core";
 import { FormGroup } from "@angular/forms";
 import { NzModalService } from "ng-zorro-antd/modal";
+import { isThisTypeNode } from "typescript/lib/tsserverlibrary";
 import { Register } from "../../../core/interface/register";
 import { StorageService, UiService } from "../../../core/services";
 import { IRegisterService } from "../../../interface/register-service";
+import { AgencyAnalyticInput } from "../../../service/inputPorts";
 import { RegisterService } from "../../../service/register/register.service";
 
 @Component({
@@ -22,6 +24,9 @@ export class RegisterComponent implements OnInit {
   registers: Register[];
   meta: any;
 
+  //statistic
+  registerData: AgencyAnalyticInput;
+
   //table props
   checked = false;
   indeterminate = false;
@@ -30,6 +35,11 @@ export class RegisterComponent implements OnInit {
   //ui control
   filter: FormGroup;
   page = 1;
+  loading = false;
+  colorScheme = {
+    domain: ["#1890ff", "#d3342d"],
+  };
+  openStatistic = true;
 
   constructor(
     private _register: IRegisterService,
@@ -37,22 +47,23 @@ export class RegisterComponent implements OnInit {
     private _modal: NzModalService
   ) {}
 
+  toggleStatistic() {
+    this.openStatistic = !this.openStatistic;
+  }
+
   rejectRegister(id: string): void {
-    this._register.editRegisterById(id, false).subscribe((res) => {
-      const index = this.registers.findIndex((item) => item.id === id);
-      if (index === -1) {
-        this.registers.splice(index, 1);
-        this._ui.showSuccess("Reject success");
-      }
+    this._ui.showInfo("Processing");
+    this._register.rejectRegister(id).subscribe((res) => {
+      this.registers = this.registers.filter((r) => r.id !== id);
+      this._ui.showSuccess("Reject success");
+      this.loading = false;
     });
   }
-  acceptRegister(id: string): void {
-    this._register.editRegisterById(id, true).subscribe((res) => {
-      const index = this.registers.findIndex((item) => item.id === id);
-      if (index === -1) {
-        this.registers.splice(index, 1);
-        this._ui.showSuccess("Accept success");
-      }
+  acceptRegister(id: UUID): void {
+    this._ui.showInfo("Processing");
+    this._register.acceptRegister(id).subscribe((res) => {
+      this.registers = this.registers.filter((r) => r.id !== id);
+      this._ui.showSuccess("Accept success");
     });
   }
   acceptBulk(): void {
@@ -130,5 +141,8 @@ export class RegisterComponent implements OnInit {
         this.registers = data;
         this.meta = meta;
       });
+    this._register.getStatistic().subscribe((res) => {
+      this.registerData = res;
+    });
   }
 }

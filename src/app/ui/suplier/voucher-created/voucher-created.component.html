@@ -1,5 +1,13 @@
 <div>
-  <app-page-title title="Voucher created"></app-page-title>
+  <div class="flex justify-between items-center bg-white mb-6 pt-3 pb-1 px-6">
+  <h1>Voucher created</h1>
+
+  <span nz-tooltip nzTooltipTitle="Download voucher created list" class="px-2" (click)="downloadReport()">
+    <a>
+     <i nz-icon nzType="file-excel" style="font-size: 1.4em;"  nzTheme="outline" ></i>
+    </a>
+ </span>
+ </div> 
   <div class="m-6 py-6 bg-white px-2">
     <form
       nz-form
@@ -15,7 +23,7 @@
               <input
                 type="text"
                 nz-input
-                placeholder="xxxxx-xxxx-xxxx-xxxx-xxxxxxxxxx"
+                placeholder="Voucher id"
                 formControlName="name"
               />
             </nz-form-control>
@@ -25,11 +33,8 @@
           <nz-form-item class="mb-0">
             <nz-form-label>Type</nz-form-label>
             <nz-form-control>
-              <nz-select
-                formControlName="type"
-                nzPlaceHolder="All"
-              >
-                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+              <nz-select formControlName="type" nzPlaceHolder="All">
+                <nz-option nzValue="{{ null }}" nzLabel="All"></nz-option>
                 <nz-option
                   *ngFor="let item of type | keyvalue"
                   [nzValue]="item.value"
@@ -44,11 +49,8 @@
           <nz-form-item class="mb-0">
             <nz-form-label>Status</nz-form-label>
             <nz-form-control>
-              <nz-select
-                formControlName="status"
-                nzPlaceHolder="All"
-              >
-                <nz-option nzValue="{{null}}" nzLabel="All"></nz-option>
+              <nz-select formControlName="status" nzPlaceHolder="All">
+                <nz-option nzValue="{{ null }}" nzLabel="All"></nz-option>
                 <nz-option
                   *ngFor="let item of status | keyvalue"
                   [nzValue]="item.value"
@@ -72,7 +74,7 @@
 
   <!-- table -->
   <div class="mx-6">
-    <nz-table #basicTable [nzData]="vouchers">
+    <nz-table #basicTable [nzData]="vouchers" [nzLoading]="loading |async">
       <thead>
         <tr>
           <th>#</th>
@@ -80,24 +82,42 @@
           <th>Type</th>
           <th>Value</th>
           <th>Status</th>
-          <th>Start day</th>
-          <th>End day</th>
+          <th>Created day</th>
+          <th>Expries day</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         <tr *ngFor="let data of basicTable.data; let i = index">
-          <td>{{ i + 1 + meta?.take * (page -1) }}</td>
-          <p
-            nz-typography
-            nzCopyable
-            [nzCopyTooltips]="'Copy voucher id'"
-            [(nzContent)]="data.id"
-          ></p>
+          <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
+          <td>
+            <p
+              class="mb-0"
+              nz-typography
+              nzCopyable
+              [nzCopyTooltips]="['Copy voucher id', 'Copied']"
+              [(nzContent)]="data.id"
+            ></p>
+          </td>
           <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td>{{ data.value }}</td>
           <td><app-v-status-tag [status]="data.status"></app-v-status-tag></td>
           <td>{{ data.createdAt | date }}</td>
           <td>{{ data.validDate | date }}</td>
+          <td>
+            <nz-tag
+              class="cursor-pointer"
+              nzColor="processing"
+              (click)="viewVoucherDetail(data.id)"
+              >View detail</nz-tag
+            >
+            <nz-tag
+              nzColor="error"
+              class="cursor-pointer"
+              (click)="deleteVoucher(data.id)"
+              >Delete</nz-tag
+            >
+          </td>
         </tr>
       </tbody>
     </nz-table>

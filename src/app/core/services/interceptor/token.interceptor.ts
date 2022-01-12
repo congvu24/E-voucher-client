@@ -27,20 +27,21 @@ export class TokenInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    //clean params
+    // clean params
     let cleanedParams = new HttpParams();
     request.params.keys().forEach((x) => {
       const paramvalue = request.params.get(x);
-      if (paramvalue) {
+      if (paramvalue !== undefined && paramvalue != null && paramvalue !== "") {
         cleanedParams = cleanedParams.append(x, paramvalue);
       }
     });
-    //clean body
+
+    // // clean body
     const cleanedBody = cleanObject(request.body);
+
     request = request.clone({
       setHeaders: {
-        // Authorization: `Bearer ${this._storage.getToken()}`
-        Authorization: `Bearer ${this._storage.getToken("auth")}`,
+        Authorization: `Bearer ${this._storage.getToken("AUTH")}`,
       },
       url: `${this.baseUrl}${request.url}`,
       params: cleanedParams,

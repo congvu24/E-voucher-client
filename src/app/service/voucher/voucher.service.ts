@@ -1,5 +1,7 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Meta } from "@angular/platform-browser";
+import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import {
   Voucher,
@@ -7,48 +9,59 @@ import {
   VoucherType,
 } from "../../core/interface/voucher";
 import { HttpService } from "../../core/services";
+import { QrResult } from "../../interface/common";
 import { IVoucherService } from "../../interface/voucher-service.";
+import {
+  VOUCHER_ENDPOINT,
+  VOUCHER_REQUEST_ENDPOINT,
+} from "../../shared/router";
 
 @Injectable({
   providedIn: "root",
 })
 export class VoucherService implements IVoucherService {
-  constructor(private _http: HttpService) {}
-  createVoucher(id: string, type: VoucherType): Observable<any> {
-    throw new Error("Method not implemented.");
+  constructor(private _http: HttpClient) {}
+  downloadReport(): Observable<any> {
+    return this._http.get(`${VOUCHER_ENDPOINT}/export`, {
+      params: { page: 1, take: 99 },
+      responseType: "arraybuffer",
+    });
   }
-  getVouchers(params?: any): Observable<{ data: Voucher[]; meta: any }> {
-    return this._http
-      .get("voucher", params)
-      .pipe(map((res) => ({ data: res.data, meta: res.meta })));
+  deleteVoucher(id: UUID): Observable<any> {
+    return this._http.delete(`${VOUCHER_ENDPOINT}`, { params: { id } });
   }
-
-  // getVouchers(): Voucher[] {
-  //   const vouchers: Array<Voucher> = [];
-  //   for (let index = 0; index < 12; index++) {
-  //     const iv: Voucher = {
-  //       id: "123",
-  //       type: VoucherType.help,
-  //       status: VoucherStatus.used,
-  //       value: 12321,
-  //       validDate: "2021-11-22T15:37:33.911Z",
-  //       createdAt: "2021-11-22T15:37:33.911Z",
-  //       udatedAt: "2021-11-22T15:37:33.911Z",
-  //     };
-  //     vouchers.push(iv);
-  //   }
-  //   return vouchers;
-  // }
-  getVoucherByIds(): Voucher[] {
-    throw new Error("Method not implemented.");
+  claimVoucher(info: any): Observable<any> {
+    return this._http.put(
+      `${VOUCHER_ENDPOINT}/claim?${Object.keys(info)
+        .map((key) => `${key}=${info[key]}`)
+        .join("&")}`,
+      {}
+    );
   }
-  deleteVoucher(): void {
-    throw new Error("Method not implemented.");
+  createVoucher(requestId: UUID, type: VoucherType): Observable<any> {
+    return this._http.post(`${VOUCHER_ENDPOINT}/create`, {
+      requestId,
+      type,
+    });
   }
-  editVoucherById(): Voucher {
-    throw new Error("Method not implemented.");
+  getVouchers(params?: any): Observable<{ data: Voucher[]; meta: Meta }> {
+    return this._http.get(VOUCHER_ENDPOINT, { params }).pipe(
+      map((res: any) => {
+        const meta: Meta = res.meta;
+        const data = res.data.map((item) => item as Voucher);
+        return { meta, data };
+      })
+    );
   }
-  commitVoucher(info: string): boolean {
-    throw new Error("Method not implemented.");
+  getClaimedVouchers(
+    params?: any
+  ): Observable<{ data: Voucher[]; meta: Meta }> {
+    return this._http.get(`${VOUCHER_ENDPOINT}/claimed`, { params }).pipe(
+      map((res: any) => {
+        const meta: Meta = res.meta;
+        const data = res.data.map((item) => item as Voucher);
+        return { meta, data };
+      })
+    );
   }
 }

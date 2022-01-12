@@ -12,7 +12,7 @@ const routes: Routes = [
       import("./login/login.module").then((m) => m.LoginModule),
   },
   {
-    path: "dealer",
+    path: UserRole.dealer.toLowerCase(),
     loadChildren: () => import("./main/main.module").then((m) => m.MainModule),
     canActivate: [AuthGuard],
     data: {
@@ -20,7 +20,7 @@ const routes: Routes = [
     },
   },
   {
-    path: "supplier",
+    path: UserRole.suppier.toLowerCase(),
     loadChildren: () =>
       import("./suplier/supplier.module").then((m) => m.SupplierModule),
     canActivate: [AuthGuard],
@@ -29,7 +29,7 @@ const routes: Routes = [
     },
   },
   {
-    path: "agency",
+    path: UserRole.agency.toLowerCase(),
     loadChildren: () =>
       import("./agency/agency.module").then((m) => m.AgencyModule),
     canActivate: [AuthGuard],

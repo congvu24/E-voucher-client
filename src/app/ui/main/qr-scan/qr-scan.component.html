@@ -1,69 +1,58 @@
-<!-- <div class="">
-  <div class="m-auto w-xl">
-    <div class="bg-white">
-      <button nz-button nzType="link" (click)="back()">
-        <i nz-icon nzType="arrow-left" nzTheme="outline" class="mt-5"> </i>
-        Back
-      </button>
-      <h1 class="text-center">Scan voucher code</h1>
-    </div>
+<div class="flex-grow h-full relative">
+  <span
+    class="absolute top-10 left-52 z-20 text-white cursor-pointer"
+    (click)="backPreviousPage()"
+  >
+    < Back
+  </span>
+  <nz-spin [nzTip]="'Scaner initializing...'" [nzSpinning]="loading">
+    <video id="video" class="h-full w-full"></video>
 
     <div
+      *ngIf="!loading"
       class="
-        w-530
-        h-530
-        m-auto
-        relative
+        absolute
+        top-0
+        left-0
+        w-full
+        h-full
         flex
         items-center
-        flex-col
         justify-center
-        overflow-hidden
       "
     >
-      <video id="video" class="min-h-full min-w-full"></video>
-      <div
-        class="
-          min-h-full min-w-full
-          border-2 border-solid border-primary
-          absolute
-          top-0
-          left-0
-          z-40
-        "
-      ></div>
+      <div class="w-350 h-350 border border-solid border-primary"></div>
     </div>
-  
-   
-</div> -->
-
-
-
-<div class="flex-grow h-full relative">
-  <!-- <p class="bg-gray-800 min-h-full min-w-full">s</p> -->
-  <video id="video" class="min-h-full min-w-full"></video>
-
- <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
-  <div class="w-350 h-350 border border-solid border-primary  "></div>
- </div>
- <div class="flex justify-center w-full gap-2 py-8">
-  <button
-    nz-button
-    *ngIf="!!result"
-    [disabled]="!result"
-    (click)="commitVoucher()"
-    nzSize="large"
+  </nz-spin>
+  <nz-modal
+    [(nzVisible)]="result"
+    (nzOnOk)="handleOk()"
+    nzOkText="Process to checkout"
+    nzWidth="600px"
+    [nzClosable]="false"
+    [nzMaskClosable]="false"
   >
-    Rescan
-  </button>
-  <button
-    nz-button
-    nzType="primary"
-    [disabled]="!result"
-    (click)="commitVoucher()"
-    nzSize="large"
-  >
-    Done
-  </button>
-</div>
+    <ng-container *nzModalTitle>
+      <div class="flex items-center gap-2">
+        <i
+          nz-icon
+          [nzType]="'check-circle'"
+          [nzTheme]="'twotone'"
+          style="font-size: 1.4em"
+          [nzTwotoneColor]="'#52c41a'"
+        ></i>
+        <span> Scan success</span>
+      </div>
+    </ng-container>
+    <ng-container *nzModalContent>
+      <app-checkout [checkoutInfo]="result"></app-checkout>
+    </ng-container>
+    <ng-container *nzModalFooter="">
+      <button nz-button (click)="back()" [nzLoading]="loading">Cancel</button>
+      <button nz-button nzType="primary" nz-icon (click)="claimVoucher()" [nzLoading]="loading">
+        <i nz-icon nzType="safety-certificate" nzTheme="twotone" nzTwotoneColor="#1DA57A"></i>
+        Process to checkout
+      </button>
+    </ng-container>
+  </nz-modal>
 </div>

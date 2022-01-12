@@ -13,7 +13,7 @@ export enum ServiceType {
 export enum UserRole {
   dealer = "DEALER",
   suppier = "SUPPLIER",
-  agency = "AGENCY",
+  agency = "GOVERMENT",
 }
 
 export const TOKEN_EXPRISE_SEC = 3600;

@@ -4,15 +4,14 @@
     <h1 class="mb-0">Select service</h1>
     <p class="text-lg">Select a service to scan or have a quick look at service information  <i nz-icon nzType="info-circle" nzTheme="outline"></i></p>
    </div>
-   <img src="../../../../assets/card_title.png" width="160px" >
+   <img src="assets/card_title.png" width="160px" >
   </div>
   <div class="flex flex-wrap">
-    <div class="p-4 w-1/3" *ngFor="let item of items">
+    <div class="p-4 w-1/3" *ngFor="let item of packages">
       <service-card
         [openView]="openView"
         [endView]="endView"
         [service]="item"
-        [endEdit]="endEdit"
         
       ></service-card>
     </div>
@@ -27,21 +26,18 @@
   >
     <ng-container *nzModalContent>
       <nz-descriptions class="py-3" nzBordered [nzColumn]="1">
-        <nz-descriptions-item nzTitle="Id">#5342l1h32ln34</nz-descriptions-item>
+        <!-- <nz-descriptions-item nzTitle="Id"></nz-descriptions-item> -->
         <nz-descriptions-item nzTitle="Name"
-          >Cloud Database</nz-descriptions-item
+          >{{viewingPackage?.name |titleCase}}</nz-descriptions-item
         >
         <nz-descriptions-item nzTitle="Description"
-          >Prepaid</nz-descriptions-item
+        >{{viewingPackage?.description |titleCase}}</nz-descriptions-item
         >
-        <nz-descriptions-item nzTitle="Min">10$</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Max Time">20$</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Min">{{viewingPackage?.minValue |currency}}</nz-descriptions-item>
+        <nz-descriptions-item nzTitle="Max Time">{{viewingPackage?.maxValue |currency}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="In use">Yes</nz-descriptions-item>
-        <nz-descriptions-item nzTitle="Currently used by"
-          >UIT tech</nz-descriptions-item
-        >
         <nz-descriptions-item nzTitle="Created at"
-          >12:00:00AM 12/11/2021</nz-descriptions-item
+          >{{viewingPackage?.createdAt|date}}</nz-descriptions-item
         >
       </nz-descriptions>
     </ng-container>

@@ -1,5 +1,7 @@
 {
-  "name": "e-voucher-client",
+  
+  "name":"e-voucher-management",
+  "displayName": "E-voucher Management",
   "version": "10.1.0",
   "main": "main.js",
   "private": true,

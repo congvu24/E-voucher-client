@@ -11,21 +11,19 @@ import { LOGIN_ENDPOINT } from "../../shared/router";
   providedIn: "root",
 })
 export class AuthService implements IAuthService {
-  isLogin = false;
+  private _isLogin = false;
 
-  roleAs: string;
+  private _name: string;
+  private _roleAs: string;
 
-  constructor(
-    private _http: HttpService,
-    private _storage: StorageService,
-    private http: HttpClient
-  ) {}
+  constructor(private _storage: StorageService, private http: HttpClient) {}
   logout() {
-    this.isLogin = false;
-    this.roleAs = "";
-    this._storage.setToken("STATE", "false");
-    this._storage.setToken("ROLE", "");
-    return of({ success: !this.isLogin, role: "" });
+    this._isLogin = false;
+    this._roleAs = "";
+    this._storage.deleteToken("STATE");
+    this._storage.deleteToken("ROLE");
+    this._storage.deleteToken("AUTH");
+    return of({ success: !this._isLogin, role: "" });
     // window.location.href = "/login";
   }
   login(email: string, password: string) {
@@ -33,23 +31,32 @@ export class AuthService implements IAuthService {
   }
 
   saveCredential(user, token): Observable<{ success: boolean; role: string }> {
-    this.isLogin = true;
-    this.roleAs = user.role;
+    console.log("saving credential");
+
+    this._isLogin = true;
+    this._roleAs = user.role;
+    this._name = user.name;
     this._storage.setToken("STATE", "true");
-    this._storage.setToken("ROLE", this.roleAs);
-    this._storage.setToken("auth", token.accessToken, token.expiresIn);
-    return of({ success: this.isLogin, role: this.roleAs });
+    this._storage.setToken("USERNAME", this._name);
+    this._storage.setToken("ROLE", this._roleAs);
+    this._storage.setToken("AUTH", token.accessToken, token.expiresIn);
+    return of({ success: this._isLogin, role: this._roleAs });
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     const loggedIn = this._storage.getToken("STATE");
-    this.isLogin = JSON.parse(loggedIn);
-    return this.isLogin;
+    this._isLogin = loggedIn === "true";
+
+    return this._isLogin;
   }
 
-  getRole() {
-    this.roleAs = this._storage.getToken("ROLE");
-    return this.roleAs;
+  getRole(): string {
+    this._roleAs = this._storage.getToken("ROLE");
+    return this._roleAs;
+  }
+  get name(): string {
+    this._name = this._storage.getToken("USERNAME");
+    return this._name;
   }
 }
 

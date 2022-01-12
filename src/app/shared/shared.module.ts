@@ -21,6 +21,7 @@ import { RStatusTagComponent } from "./components/r-status-tag/r-status-tag.comp
 import { TitleCasePipe } from "./pipe/title-case.pipe";
 import { SStatusTagComponent } from "./components/s-status-tag/s-status-tag.component";
 import { MinMaxCurrencyPipe } from "./pipe/min-max-currency.pipe";
+import { HighlightColorDirective } from "./directives/dealer/highlight-color.directive";
 
 const components = [
   HeaderComponent,
@@ -35,6 +36,8 @@ const components = [
   TitleCasePipe,
   SStatusTagComponent,
   MinMaxCurrencyPipe,
+  ServiceFormDirective,
+  HighlightColorDirective,
 ];
 
 const modules = [
@@ -45,7 +48,7 @@ const modules = [
   ReactiveFormsModule,
 ];
 @NgModule({
-  declarations: [WebviewDirective, components, ServiceFormDirective],
+  declarations: [WebviewDirective, components],
   imports: [CommonModule, modules],
   exports: [WebviewDirective, modules, components],
 })

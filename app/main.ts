@@ -12,8 +12,8 @@ const args = process.argv.slice(1),
 
 function createWindow(): BrowserWindow {
   const electronScreen = screen;
-  // const size = electronScreen.getPrimaryDisplay().workAreaSize;
-  var size = { width: 1440, height: 1024 };
+  const size = electronScreen.getPrimaryDisplay().workAreaSize;
+  // var size = { width: 1440, height: 1024 };
 
   // Create the browser window.
   win = new BrowserWindow({
@@ -21,12 +21,15 @@ function createWindow(): BrowserWindow {
     y: 0,
     width: size.width,
     height: size.height,
+    autoHideMenuBar: true,
     webPreferences: {
       nodeIntegration: true,
       allowRunningInsecureContent: serve ? true : false,
       contextIsolation: false, // false if you want to run e2e test with Spectron
       enableRemoteModule: true, // true if you want to run e2e test with Spectron or use remote module in renderer context (ie. Angular)
     },
+    maximizable: true,
+    resizable: false,
   });
 
   if (serve) {

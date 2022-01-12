@@ -3,11 +3,18 @@
   <div class="flex justify-between items-center bg-white mb-6 pt-3 pb-1 px-6">
     <h1>Service</h1>
     <!-- create service -->
-    <span nz-tooltip nzTooltipTitle="Create new sevice">
+   <div>
+    <span nz-tooltip nzTooltipTitle="Create new sevice" class="px-2">
       <a href="/dealer/services/create">
-        <i nz-icon nzType="plus" nzTheme="outline"></i
+        <i nz-icon nzType="plus" style="font-size: 1.4em;" nzTheme="outline"></i
       ></a>
     </span>
+    <span nz-tooltip nzTooltipTitle="Download service list" class="px-2" (click)="downloadReport()">
+       <a>
+        <i nz-icon nzType="file-excel" style="font-size: 1.4em;"  nzTheme="outline" ></i>
+       </a>
+    </span>
+   </div>
   </div>
 <!-- filter -->
 <div class="m-6 py-6 bg-white px-2">
@@ -67,6 +74,7 @@
     [nzPageSize]="meta?.take"
     [nzTotal]="meta?.itemCount"
     (nzPageIndexChange)="onPageIndexChange($event)"
+    [nzLoading]="loading|async"
     >
       <thead>
         <tr>
@@ -118,7 +126,7 @@
     (nzOnCancel)="endEdit()"
   >
     <ng-container *nzModalContent>
-      <service-edit-form [package]="editData"></service-edit-form>
+      <service-edit-form [package]="editData" ></service-edit-form>
     </ng-container>
 
     <div *nzModalFooter>

@@ -1,9 +1,31 @@
-<div class="bg-background" >
+<nz-layout class="bg-background">
   <app-header [role]="role"></app-header>
-  <div class="flex">
-    <app-side-nav [role]="role" class="inline"></app-side-nav>
-    <div class="flex-grow">
-      <router-outlet></router-outlet>
-    </div>
-  </div>
-</div>
+  <nz-layout style="min-height: 100vh">
+    <nz-sider nzCollapsible nzTheme="light" nzWidth="240px">
+      <nz-sider nzCollapsible nzTheme="light" nzWidth="240px">
+        <ul nz-menu nzMode="inline" class="sider-menu">
+          <li
+            nz-menu-item
+            nzMatchRouter
+            *ngFor="let route of routes"
+            [href]="route.path"
+            [routerLink]="route.path.toString()"
+          >
+            <i
+              nz-icon
+              nzType="{{ route.iconType }}"
+              nzTheme="outline"
+              style="font-size: 18px; margin-right: 8px"
+            ></i>
+            <span>{{ route.label }}</span>
+          </li>
+        </ul>
+      </nz-sider>
+    </nz-sider>
+    <nz-layout>
+      <nz-content>
+        <router-outlet></router-outlet>
+      </nz-content>
+    </nz-layout>
+  </nz-layout>
+</nz-layout>
