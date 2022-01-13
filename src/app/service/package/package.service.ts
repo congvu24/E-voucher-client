@@ -17,7 +17,7 @@ export class PackageService implements IPackageService {
   constructor(private _http: HttpClient) {}
 
   downloadReport(): Observable<any> {
-    const MAX_LENGTH = 20;
+    const MAX_LENGTH = 99;
     return this._http.get(`${PACKAGE_ENDPOINT}/export`, {
       responseType: "arraybuffer",
       params: { page: 1, take: MAX_LENGTH },
