@@ -35,18 +35,26 @@ export class TokenInterceptor implements HttpInterceptor {
         cleanedParams = cleanedParams.append(x, paramvalue);
       }
     });
-
     // // clean body
     const cleanedBody = cleanObject(request.body);
 
-    request = request.clone({
-      setHeaders: {
-        Authorization: `Bearer ${this._storage.getToken("AUTH")}`,
-      },
-      url: `${this.baseUrl}${request.url}`,
-      params: cleanedParams,
-      body: cleanedBody,
-    });
+    if (request.url.includes("login")) {
+      request = request.clone({
+        url: `${this.baseUrl}${request.url}`,
+        params: cleanedParams,
+        body: cleanedBody,
+      });
+    } else {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this._storage.getToken("AUTH")}`,
+        },
+        url: `${this.baseUrl}${request.url}`,
+        params: cleanedParams,
+        body: cleanedBody,
+      });
+    }
+
     return next.handle(request);
   }
 }

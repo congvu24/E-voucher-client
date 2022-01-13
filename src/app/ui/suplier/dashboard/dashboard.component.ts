@@ -1,4 +1,5 @@
-import { Component, OnInit } from "@angular/core";
+/* eslint-disable @typescript-eslint/naming-convention */
+import { AfterContentInit, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import * as line from "d3-shape";
 import { RequesetStatus } from "../../../core/interface/request";
@@ -17,7 +18,7 @@ import { VoucherService } from "../../../service/voucher/voucher.service";
     { provide: IAnalyticService, useClass: AnalyticService },
   ],
 })
-export class SupplierDashboardComponent implements OnInit {
+export class SupplierDashboardComponent implements AfterContentInit {
   supportVoucherData = [
     {
       name: "Support voucher",
@@ -166,7 +167,8 @@ export class SupplierDashboardComponent implements OnInit {
       ],
     },
   ];
-  countVoucherByType: any;
+  countVoucherByType: { SUPPORT: number; HELP: number; URGENT: number };
+
   voucherType = VoucherType;
   recentVoucherData: Voucher[] = [];
   reqHistoryActive = [{ name: "Request" }];
@@ -196,7 +198,7 @@ export class SupplierDashboardComponent implements OnInit {
   openRequestHistory() {
     this._router.navigate(["supplier/request"]);
   }
-  ngOnInit(): void {
+  ngAfterContentInit(): void {
     this._voucherSv.getVouchers().subscribe(({ data, meta }) => {
       this.recentVoucherData = data
         .sort((prev, next) =>
@@ -208,8 +210,9 @@ export class SupplierDashboardComponent implements OnInit {
         )
         .slice(0, 4);
     });
-    this._analyticService
-      .getSupplierAnalytic()
-      .subscribe((res) => (this.countVoucherByType = res.countVoucherByType));
+    this._analyticService.getSupplierAnalytic().subscribe((res) => {
+      this.countVoucherByType = res.countVoucherByType;
+      console.log(this.countVoucherByType);
+    });
   }
 }

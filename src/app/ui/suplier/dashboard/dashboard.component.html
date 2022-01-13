@@ -29,8 +29,8 @@
           <!-- chart -->
           <div style="height: 150px" #containerRef>
             <ngx-charts-area-chart
-              [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
-              [results]="supportVoucherData"
+            [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+            [results]="supportVoucherData"
               activate="true"
               [scheme]="orange"
               [gradient]="true"
@@ -39,7 +39,7 @@
             </ngx-charts-area-chart>
           </div>
           <div>
-            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType[voucherType.support] | number }}</h2>
+            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType?.SUPPORT | number }}</h2>
             <p class="tracking-wide" style="color: #777">
               Support voucher created
             </p>
@@ -69,9 +69,9 @@
             {{ "Compare with last month" | titleCase }}
           </p>
           <!-- chart -->
-          <div style="height: 150px" #containerRef>
+          <div style="height: 150px" #containerRef1>
             <ngx-charts-area-chart
-              [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+            [view]="[containerRef1.offsetWidth, containerRef1.offsetHeight]"
               [results]="helpVoucherData"
               activate="true"
               [scheme]="green"
@@ -81,7 +81,7 @@
             </ngx-charts-area-chart>
           </div>
           <div>
-            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType[voucherType.help] | number }}</h2>
+            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType?.HELP| number }}</h2>
             <p class="tracking-wide" style="color: #777">
               Help voucher created
             </p>
@@ -111,9 +111,9 @@
             {{ "Compare with last month" | titleCase }}
           </p>
           <!-- chart -->
-          <div style="height: 150px" #containerRef>
+          <div style="height: 150px" #containerRef2>
             <ngx-charts-area-chart
-              [view]="[containerRef.offsetWidth, containerRef.offsetHeight]"
+            [view]="[containerRef2.offsetWidth, containerRef2.offsetHeight]"
               [results]="urgentVoucherData"
               activate="true"
               [scheme]="red"
@@ -123,7 +123,7 @@
             </ngx-charts-area-chart>
           </div>
           <div>
-            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType[voucherType.urgent] | number }}</h2>
+            <h2 class="font-bold text-4xl mb-0">{{ countVoucherByType?.URGENT | number }}</h2>
             <p class="tracking-wide" style="color: #777">
               Urgent voucher created
             </p>
@@ -147,12 +147,13 @@
             <h2 class="font-bold">{{ 20000 | number }} times</h2>
           </div>
           <div class="h-72" #requestContainter>
+           
             <ngx-charts-line-chart
               [results]="requestHistoryData"
               [view]="[
-                requestContainter.offsetWidth,
-                requestContainter.offsetHeight
-              ]"
+            requestContainter.offsetWidth,
+            requestContainter.offsetHeight
+          ]"
               activate="true"
               [scheme]="blue"
               [gradient]="true"
