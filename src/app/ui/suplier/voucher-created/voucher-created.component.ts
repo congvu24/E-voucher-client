@@ -39,7 +39,11 @@ export class VoucherCreatedComponent implements OnInit {
     private _vcr: ViewContainerRef,
     private _loadingService: LoadingService
   ) {
-    this.filter = _fb.group({ name: [null], type: [null], status: [null] });
+    this.filter = _fb.group({
+      citizenName: [null],
+      type: [null],
+      status: [null],
+    });
   }
 
   downloadReport() {
@@ -114,6 +118,16 @@ export class VoucherCreatedComponent implements OnInit {
       });
   }
 
+  onPageIndexChange(page: number) {
+    this.page = page;
+    this._voucher
+      .getVouchers({ ...this.filter.value, page: this.page })
+      .subscribe(({ data, meta }) => {
+        this.vouchers = data;
+        this.meta = meta;
+      });
+  }
+
   resetForm() {
     this.filter = this._fb.group({
       name: [null],
@@ -125,6 +139,7 @@ export class VoucherCreatedComponent implements OnInit {
     this._voucher.getVouchers({ page: this.page }).subscribe((res) => {
       this.vouchers = res.data;
       this.meta = res.meta;
+      console.log(this.vouchers);
     });
   }
 }

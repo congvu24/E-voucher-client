@@ -18,13 +18,13 @@
       <div class="antform grid grid-cols-24 gap-4">
         <div class="col-span-6">
           <nz-form-item class="mb-0">
-            <nz-form-label>Id</nz-form-label>
+            <nz-form-label>Citizen name</nz-form-label>
             <nz-form-control>
               <input
                 type="text"
                 nz-input
-                placeholder="Voucher id"
-                formControlName="name"
+                placeholder="Nguyen Van A"
+                formControlName="citizenName"
               />
             </nz-form-control>
           </nz-form-item>
@@ -74,11 +74,13 @@
 
   <!-- table -->
   <div class="mx-6">
-    <nz-table #basicTable [nzData]="vouchers" [nzLoading]="loading |async">
+    <nz-table #basicTable [nzData]="vouchers" [nzLoading]="loading |async"
+    (nzPageIndexChange)="onPageIndexChange($event)"
+    >
       <thead>
         <tr>
           <th>#</th>
-          <th>Voucher id</th>
+          <th>Citizen name</th>
           <th>Type</th>
           <th>Value</th>
           <th>Status</th>
@@ -91,13 +93,7 @@
         <tr *ngFor="let data of basicTable.data; let i = index">
           <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
           <td>
-            <p
-              class="mb-0"
-              nz-typography
-              nzCopyable
-              [nzCopyTooltips]="['Copy voucher id', 'Copied']"
-              [(nzContent)]="data.id"
-            ></p>
+           {{data.citizen.name}}
           </td>
           <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td>{{ data.value }}</td>
@@ -106,16 +102,18 @@
           <td>{{ data.validDate | date }}</td>
           <td>
             <nz-tag
-              class="cursor-pointer"
+              class="cursor-pointer mr-3 "
               nzColor="processing"
               (click)="viewVoucherDetail(data.id)"
-              >View detail</nz-tag
+              ><i nz-icon nzType="eye"></i>
+              View detail</nz-tag
             >
             <nz-tag
               nzColor="error"
               class="cursor-pointer"
               (click)="deleteVoucher(data.id)"
-              >Delete</nz-tag
+              ><i nz-icon nzType="delete"></i>
+              Delete</nz-tag
             >
           </td>
         </tr>

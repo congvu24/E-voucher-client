@@ -1,6 +1,6 @@
 <div  *ngIf="data" >
     <nz-descriptions nzTitle="Citizen" [nzColumn]="2">
-      <nz-descriptions-item nzTitle="Citizen name">{{citizen.name | titlecase}}</nz-descriptions-item>
+      <nz-descriptions-item nzTitle="Name">{{citizen.name | titlecase}}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Email">{{citizen.email |titleCase}}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Birth">{{citizen.dob|date}}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Phone">{{citizen.phone}}</nz-descriptions-item>
@@ -11,15 +11,17 @@
     </nz-descriptions>
     <nz-divider></nz-divider>
     <nz-descriptions nzTitle="Voucher" [nzColumn]="2">
-        <nz-descriptions-item nzTitle="id"
+        <nz-descriptions-item nzTitle="Id"
         ><p
           class="mb-0"
           nz-typography
-          nzCopyable
+          nzCopyable  
           [nzCopyTooltips]="[data.id, 'Copied']"
-          nzContent="Id"
+          nzContent="Copy voucher ID"
           [nzCopyText]="data.id"
         ></p>
+       
+        
       </nz-descriptions-item>
       <nz-descriptions-item nzTitle="Time created">{{data.createdAt|date}}</nz-descriptions-item>
       <nz-descriptions-item nzTitle="Voucher"><app-v-type-tag [type]="data.type"></app-v-type-tag></nz-descriptions-item>

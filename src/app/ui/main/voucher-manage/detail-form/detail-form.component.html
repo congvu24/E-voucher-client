@@ -1,11 +1,11 @@
 <div class="max-w-lg mx-auto" *ngIf="data" >
-    <nz-descriptions class="p-3 mb-3 bg-white" nzTitle="Basic info"  nzBordered [nzColumn]="1" >
+    <nz-descriptions class="p-3 mb-3 bg-white" nzTitle="Receiver"  nzBordered [nzColumn]="1" >
         <nz-descriptions-item nzTitle="Name">{{data.citizenName | titlecase}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Email">{{data.citizenEmail |titleCase}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Voucher created">{{data.createdAt |date}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Value ">{{data.value |currency}}</nz-descriptions-item>
       </nz-descriptions>
-      <nz-descriptions class="p-3 mb-3 bg-white" nzTitle="Service info"  nzBordered [nzColumn]="1" *ngIf="service">
+      <nz-descriptions class="p-3 mb-3 bg-white" nzTitle="Service"  nzBordered [nzColumn]="1" *ngIf="service">
         <nz-descriptions-item nzTitle="Name">{{service.name |titleCase}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Description">{{service.description |titleCase}}</nz-descriptions-item>
         <nz-descriptions-item nzTitle="Min">{{service.minValue |currency}}</nz-descriptions-item>

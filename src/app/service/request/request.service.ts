@@ -17,7 +17,13 @@ export class RequestService implements IRequestService {
 
     return this._http.get("supplier/request", { params }).pipe(
       map((res: any) => ({
-        data: res.data,
+        data: res.data.sort((prev, next) =>
+          prev.createdAt < next.createdAt
+            ? 1
+            : prev.createdAt === next.createdAt
+            ? 0
+            : -1
+        ),
         meta: res.meta,
       }))
     );
