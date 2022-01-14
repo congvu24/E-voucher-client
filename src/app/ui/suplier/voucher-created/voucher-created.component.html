@@ -18,13 +18,13 @@
       <div class="antform grid grid-cols-24 gap-4">
         <div class="col-span-6">
           <nz-form-item class="mb-0">
-            <nz-form-label>ID</nz-form-label>
+            <nz-form-label>Citizen name</nz-form-label>
             <nz-form-control>
               <input
                 type="text"
                 nz-input
-                placeholder="Voucher ID"
-                formControlName="id"
+                placeholder="Nguyen Van A"
+                formControlName="citizenName"
               />
             </nz-form-control>
           </nz-form-item>
@@ -80,7 +80,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Voucher id</th>
+          <th>Citizen name</th>
           <th>Type</th>
           <th>Value</th>
           <th>Status</th>
@@ -93,13 +93,7 @@
         <tr *ngFor="let data of basicTable.data; let i = index">
           <td>{{ i + 1 + meta?.take * (page - 1) }}</td>
           <td>
-            <p
-              class="mb-0"
-              nz-typography
-              nzCopyable
-              [nzCopyTooltips]="['Copy voucher id', 'Copied']"
-              [(nzContent)]="data.id"
-            ></p>
+           {{data.citizen.name}}
           </td>
           <td><app-v-type-tag [type]="data.type"></app-v-type-tag></td>
           <td>{{ data.value }}</td>

@@ -22,10 +22,13 @@ export class RegisterService implements IRegisterService {
         const response = { ...res };
         response.countRegisterByStatus = res.countRegisterByStatus
           .reverse()
-          .map((element) => ({
-            name: toTitleCase(element.name),
-            value: element.value,
-          }));
+          .map((element) => {
+            if (element.name === "REJECTED") {
+              return { name: toTitleCase("PENDING"), value: element.value };
+            } else {
+              return { name: toTitleCase("PROCESSED"), value: element.value };
+            }
+          });
         return response;
       })
     );

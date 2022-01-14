@@ -38,7 +38,7 @@ export class RegisterComponent implements OnInit {
   page = 1;
   loading = false;
   colorScheme = {
-    domain: ["#1890ff", "#d3342d"],
+    domain: ["#52c41a", "#1890ff"],
   };
   openStatistic = true;
 

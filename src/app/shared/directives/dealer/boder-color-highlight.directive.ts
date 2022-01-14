@@ -7,26 +7,26 @@ import {
 import { VoucherType } from "../../../core/interface/voucher";
 
 @Directive({
-  selector: "[appHighlightColor]",
+  selector: "[appBoderColorHighlight]",
 })
-export class HighlightColorDirective implements AfterContentChecked {
+export class BoderColorHighlightDirective implements AfterContentChecked {
   @Input() voucherType = VoucherType.help;
+
   constructor(private _el: ElementRef) {}
   ngAfterContentChecked(): void {
     switch (this.voucherType) {
       case VoucherType.urgent:
-        this.changeColor("#f5222d");
+        this.changeBoderColor("#FCACAF");
         break;
       case VoucherType.support:
-        this.changeColor("#fadb14");
+        this.changeBoderColor("#FCF1AC");
         break;
       default:
-        this.changeColor("#52c41a");
+        this.changeBoderColor("#C6FDAA");
         break;
     }
   }
-
-  private changeColor(color: string) {
-    this._el.nativeElement.style.color = color;
+  private changeBoderColor(color: string) {
+    this._el.nativeElement.style.borderColor = color;
   }
 }

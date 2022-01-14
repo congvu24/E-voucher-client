@@ -22,6 +22,7 @@ import { TitleCasePipe } from "./pipe/title-case.pipe";
 import { SStatusTagComponent } from "./components/s-status-tag/s-status-tag.component";
 import { MinMaxCurrencyPipe } from "./pipe/min-max-currency.pipe";
 import { HighlightColorDirective } from "./directives/dealer/highlight-color.directive";
+import { BoderColorHighlightDirective } from "./directives/dealer/boder-color-highlight.directive";
 
 const components = [
   HeaderComponent,
@@ -38,6 +39,7 @@ const components = [
   MinMaxCurrencyPipe,
   ServiceFormDirective,
   HighlightColorDirective,
+  BoderColorHighlightDirective,
 ];
 
 const modules = [

@@ -20,7 +20,7 @@ export class ErrorService {
   handleError(errorCode: number, msg: string) {
     switch (errorCode) {
       case ClientError.HTTP_0_TIME_OUT:
-        this._ui.showError("Request time out, try again");
+        this._ui.showError("Request timeout, try again later");
         break;
       case ClientError.HTTP_401_UNAUTH:
         this._ui.showError("Wrong email or password");
