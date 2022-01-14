@@ -39,7 +39,7 @@ export class VoucherCreatedComponent implements OnInit {
     private _vcr: ViewContainerRef,
     private _loadingService: LoadingService
   ) {
-    this.filter = _fb.group({ name: [null], type: [null], status: [null] });
+    this.filter = _fb.group({ id: [null], type: [null], status: [null] });
   }
 
   downloadReport() {
@@ -111,6 +111,16 @@ export class VoucherCreatedComponent implements OnInit {
       .subscribe((res) => {
         this.vouchers = res.data;
         this.meta = res.meta;
+      });
+  }
+
+  onPageIndexChange(page: number) {
+    this.page = page;
+    this._voucher
+      .getVouchers({ ...this.filter.value, page: this.page })
+      .subscribe(({ data, meta }) => {
+        this.vouchers = data;
+        this.meta = meta;
       });
   }
 
